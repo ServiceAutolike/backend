@@ -18,7 +18,7 @@ Route::group(['prefix' => 'account'], function (){
     Route::get('/login', 'AccountController@formLogin')->name('account.login');
     Route::post('/login', 'AccountController@login');
     Route::group(['middleware' => 'login'], function () {
-        Route::get('/logout', 'AccountController@logout');
+        Route::get('/logout', 'AccountController@logout')->name('account.logout');
     });
     Route::get('/register', 'AccountController@formRegister')->name('account.register');
     Route::post('/register', 'AccountController@register');
@@ -26,7 +26,7 @@ Route::group(['prefix' => 'account'], function (){
 Route::group(['middleware' => 'login'], function () {
     Route::get('/', 'HomeController@dash')->name('home.dash');
     Route::post('/find-id', 'HomeController@checkid');
-    Route::group(['prefix' => 'facebook-user'], function (){
+    Route::group(['prefix' => 'facebook'], function (){
         Route::get('/buff-follow', 'FacebookController@buffFollowUser')->name('faceUser.flow');
         Route::get('/buff-like', 'FacebookController@buffLikeUser')->name('faceUser.like');
         Route::post('/buff-like', 'FacebookController@buffLikeUserStore');

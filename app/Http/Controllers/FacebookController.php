@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Http\Request;
+use Config;
+
 
 class FacebookController extends Controller
 {
@@ -37,9 +39,9 @@ class FacebookController extends Controller
         ]);
 
 
-            $response = $client->post('https://agency.autolike.cc/public-api/v1/agency/services/create-V2',
-                ['body' => json_encode($data, true)]
-            );
+            // $response = $client->post('https://agency.autolike.cc/public-api/v1/agency/services/create-V2',
+            //     ['body' => json_encode($data, true)]
+            // );
 
 //            $dataBody =  json_decode($response->getBody(), true);
 //            $dataConfirm = [
@@ -50,7 +52,7 @@ class FacebookController extends Controller
 //                ['body' => json_encode($dataConfirm, true)]
 //            );
 
-            dd(json_decode($response->getBody()));
+            dd(Config::get('api.urlRequest.create'));
 
 
         return view('page.app.facebook.user.buff-like');

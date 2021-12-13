@@ -14,7 +14,7 @@ class HomeController extends Controller
     public function dash()
     {
 
-        return view('page.app.dash.index', compact('response'));
+        return view('page.app.dash.index');
     }
 
     public function findID()
