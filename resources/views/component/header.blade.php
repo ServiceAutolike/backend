@@ -132,7 +132,7 @@
                                             <!--begin::Menu separator-->
                                             <div class="separator my-2"></div>
                                             <!--end::Menu separator-->
-                            
+
                                         </div>
                                         <!--end::Menu sub-->
                                     </div>
@@ -148,7 +148,7 @@
                                             <span class="menu-title position-relative">
                                                 Ngôn Ngữ
                                                 <span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">
-                                                    English <img class="w-15px h-15px rounded-1 ms-2" src="Backend-Assets/media/flags/united-states.svg" alt="" />
+                                                    English <img class="w-15px h-15px rounded-1 ms-2" src="{{ url('Backend-Assets/media/flags/united-states.svg') }}" alt="" />
                                                 </span>
                                             </span>
                                         </a>
@@ -158,7 +158,7 @@
                                             <div class="menu-item px-3">
                                                 <a href="../../demo8/dist/account/settings.html" class="menu-link d-flex px-5 active">
                                                     <span class="symbol symbol-20px me-4">
-                                                        <img class="rounded-1" src="Backend-Assets/media/flags/united-states.svg" alt="" />
+                                                        <img class="rounded-1" src="{{ url('Backend-Assets/media/flags/united-states.svg') }}" alt="" />
                                                     </span>
                                                     English
                                                 </a>
@@ -168,7 +168,7 @@
                                             <div class="menu-item px-3">
                                                 <a href="../../demo8/dist/account/settings.html" class="menu-link d-flex px-5">
                                                     <span class="symbol symbol-20px me-4">
-                                                        <img class="rounded-1" src="Backend-Assets/media/flags/spain.svg" alt="" />
+                                                        <img class="rounded-1" src="{{ url('Backend-Assets/media/flags/spain.svg') }}" alt="" />
                                                     </span>
                                                     Spanish
                                                 </a>
@@ -178,7 +178,7 @@
                                             <div class="menu-item px-3">
                                                 <a href="../../demo8/dist/account/settings.html" class="menu-link d-flex px-5">
                                                     <span class="symbol symbol-20px me-4">
-                                                        <img class="rounded-1" src="Backend-Assets/media/flags/germany.svg" alt="" />
+                                                        <img class="rounded-1" src="{{ url('Backend-Assets/media/flags/germany.svg') }}" alt="" />
                                                     </span>
                                                     German
                                                 </a>
@@ -188,7 +188,7 @@
                                             <div class="menu-item px-3">
                                                 <a href="../../demo8/dist/account/settings.html" class="menu-link d-flex px-5">
                                                     <span class="symbol symbol-20px me-4">
-                                                        <img class="rounded-1" src="Backend-Assets/media/flags/japan.svg" alt="" />
+                                                        <img class="rounded-1" src="{{ url('Backend-Assets/media/flags/japan.svg') }}" alt="" />
                                                     </span>
                                                     Japanese
                                                 </a>
@@ -198,7 +198,7 @@
                                             <div class="menu-item px-3">
                                                 <a href="../../demo8/dist/account/settings.html" class="menu-link d-flex px-5">
                                                     <span class="symbol symbol-20px me-4">
-                                                        <img class="rounded-1" src="Backend-Assets/media/flags/france.svg" alt="" />
+                                                        <img class="rounded-1" src="{{ url('Backend-Assets/media/flags/france.svg') }}" alt="" />
                                                     </span>
                                                     French
                                                 </a>
@@ -221,7 +221,7 @@
                                     <!--begin::Menu separator-->
                                     <div class="separator my-2"></div>
                                     <!--end::Menu separator-->
-                                   
+
 
                                 </div>
                                 <!--end::Menu-->
@@ -493,7 +493,7 @@
                                 <span class="menu-arrow"></span>
                             </span>
                             <div class="menu-sub menu-sub-accordion menu-active-bg">
-                                
+
                                 <div class="menu-item">
                                     <a class="menu-link" href="../">
                                         <span class="menu-bullet">
@@ -556,7 +556,7 @@
                                 <span class="menu-arrow"></span>
                             </span>
                             <div class="menu-sub menu-sub-accordion menu-active-bg">
-                                
+
                                 <div class="menu-item">
                                     <a class="menu-link" href="../">
                                         <span class="menu-bullet">
@@ -715,7 +715,7 @@
                             </div>
                         </div>
                         <!-- //end Shopee -->
-                        
+
 
                         <!--- begin Tiket -->
                         <div data-kt-menu-trigger="click" class="menu-item menu-accordion mb-1">
@@ -931,7 +931,7 @@
                                 <!--begin::Label-->
                                 <span class="fs-7 text-gray-700 fw-bolder pe-3 d-none d-xxl-block">Số dư: <span class="badge badge-light-warning">0 VNĐ</span></span>
                                 <!--end::Label-->
-                               
+
                             </div>
                             <!--end::Action wrapper-->
                         </div>
@@ -941,6 +941,6 @@
                 </div>
             </div>
             <!--end::Header-->
- 
+
 
 

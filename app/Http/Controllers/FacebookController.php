@@ -33,13 +33,13 @@ class FacebookController extends Controller
         $client = new Client([
             'headers' => [
                 'Content-Type' => 'application/json',
-                'Token' => '2I6NGN4UXSKRN4IHZV772O',
-                'agency-secret-key' => '056bb791-5674-11ec-a4d4-56000335e4d7'
+                'Token' => Config::get('api.key.token'),
+                'agency-secret-key' => Config::get('api.key.agency'),
             ]
         ]);
 
 
-        
+
 
 
             // $response = $client->post('https://agency.autolike.cc/public-api/v1/agency/services/create-V2',

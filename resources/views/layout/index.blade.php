@@ -19,6 +19,9 @@
     <!--begin::Global Stylesheets Bundle(used by all pages)-->
     <link href="{{ asset('Backend-Assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('Backend-Assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('Backend-Assets/css/custom.css') }}" rel="stylesheet" type="text/css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <!--end::Global Stylesheets Bundle-->
 </head>
 <!--end::Head-->
@@ -26,7 +29,7 @@
 <body id="kt_body" class="header-tablet-and-mobile-fixed aside-enabled">
     <!--begin::Main-->
     <!--begin::Root-->
-    @include('component.header') 
+    @include('component.header')
     <!--begin::Content-->
     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
         <!--begin::Post-->
@@ -37,11 +40,12 @@
             </div>
         </div>
     </div>
-    @include('component.footer') 
-    
+    @include('component.footer')
+
     <!--end::Main-->
     <script>var hostUrl = "Backend-Assets/";</script>
     <!--begin::Javascript-->
+
     <!--begin::Global Javascript Bundle(used by all pages)-->
     <script src="{{ asset('Backend-Assets/plugins/global/plugins.bundle.js') }}"></script>
     <script src="{{ asset('Backend-Assets/js/scripts.bundle.js') }}"></script>
