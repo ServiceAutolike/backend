@@ -25,3 +25,6 @@ label {
     display: inline-block;
     margin-bottom: 0.5rem;
 }
+.table.gy-3 td, .table.gy-3 th {
+    font-size: 12px;
+}
