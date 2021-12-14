@@ -17,4 +17,8 @@ class RechargeController extends Controller
     public function rechargeCard() {
         return view('page.app.recharge.card');
     }
+
+    public function history() {
+        return view('page.app.recharge.history');
+    }
 }

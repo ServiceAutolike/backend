@@ -124,7 +124,7 @@
                                             <!--end::Menu item-->
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
-                                                <a href="../" class="menu-link d-flex flex-stack px-5">
+                                                <a href="{{ route("recharge.history") }}" class="menu-link d-flex flex-stack px-5">
                                                     Lịch Sử Nạp <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Lịch sử nạp tiền"></i>
                                                 </a>
                                             </div>
@@ -319,7 +319,7 @@
                                 </div>
 
                                 <div class="menu-item">
-                                    <a class="menu-link" href="../">
+                                    <a class="menu-link" href="{{ route("recharge.history") }}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>

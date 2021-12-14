@@ -22,21 +22,21 @@ class FacebookController extends Controller
 
     public function buffLikeUserStore(Request $request)
     {
-        $data = [
-            'url_service' => $request->id,
-            'speed' => 'high',
-            'number' => (int) $request->number,
-            'type' => 'facebook_bufflike',
-            'warranty_type' => (int) $request->warranty
-        ];
-
-        $client = new Client([
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Token' => Config::get('api.key.token'),
-                'agency-secret-key' => Config::get('api.key.agency'),
-            ]
-        ]);
+//        $data = [
+//            'url_service' => $request->id,
+//            'speed' => 'high',
+//            'number' => (int) $request->number,
+//            'type' => 'facebook_bufflike',
+//            'warranty_type' => (int) $request->warranty
+//        ];
+//
+//        $client = new Client([
+//            'headers' => [
+//                'Content-Type' => 'application/json',
+//                'Token' => Config::get('api.key.token'),
+//                'agency-secret-key' => Config::get('api.key.agency'),
+//            ]
+//        ]);
 
 
 
@@ -55,10 +55,7 @@ class FacebookController extends Controller
 //                ['body' => json_encode($dataConfirm, true)]
 //            );
 
-            dd(Config::get('api.urlRequest.create'));
-
-
-        return view('page.app.facebook.user.buff-like');
+//        return view('page.app.facebook.user.buff-like');
     }
 
     public function buffCommentUser()

@@ -4,7 +4,7 @@
 
     <div class="row">
         <div class="col-12 col-xl-7">
-            <form action="" method="post">
+            <form action="{{ route("faceUser.postLike") }}" method="post">
                 @csrf
                 <div class="card mb-5 mb-xl-10">
                     <div class="card-header card-header-stretch pb-0">
@@ -40,13 +40,30 @@
                         <!--begin::Tab create-->
                         <div id="create" class="tab-pane fade active show" role="tabpanel">
                             <div class="card-body">
-
                                 <input type="hidden" name="type" value="1"/>
                                 <div class="form-group">
                                     <label for="post_id">Nhập ID hoặc Link bài viết <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control form-control-solid" id="post_id" name="id"
-                                           placeholder="Nhập URL hoặc ID bài viết"/>
+                                    <div class="" id="loadCheck">
+                                        <input type="text" class="form-control form-control-solid" id="post_id" name="id" placeholder="Nhập URL hoặc ID bài viết"/>
+                                    </div>
                                 </div>
+                                <div id="result" style="display: none;">
+                                    <div class="d-flex align-items-center bg-light-success rounded p-5 mb-7">
+                                        <!--begin::Icon-->
+                                        <div class="svg-icon svg-icon-success me-5">
+                                            <img src="" id="avatar_fb">
+                                        </div>
+                                        <!--end::Icon-->
+                                        <!--begin::Title-->
+                                        <div class="flex-grow-1 me-2">
+                                            <span class="fw-bolder text-gray-800 text-hover-primary fs-6" id="name_fb"></span>
+                                            <span class="text-muted fw-bold d-block" id="id_fb"></span>
+                                        </div>
+                                        <!--end::Title-->
+                                    </div>
+                                </div>
+
+
                                 <div class="form-group">
                                     <label for="number">Số lượng cần tăng <span class="text-danger">*</span></label>
                                     <input type="number" class="form-control form-control-solid" id="number" name="number"
@@ -91,12 +108,14 @@
             </form>
         </div>
         <div class="col-12 col-xl-5">
-            <div class="card rounded-12 shadow-dark-80 border border-gray-200 h-100 bg-warning">
+            <div class="card rounded-12 shadow-dark-80 border border-gray-200 bg-warning">
+                <div class="card-header">
+                    <div class="card-title">Lưu ý</div>
+                </div>
                 <div class="card-body p-0">
                     <div class="p-3 p-xl-4">
                         <div class="pt-2 px-md-3 px-xl-0 px-xxl-3">
                             <div class="col ps-0 ps-md-1">
-                                <p>Chú ý:</p>
                                 <p>
                                     - Ngiêm cấm Buff các ID Seeding có nội dung vi phạm pháp luật, chính trị, đồ trụy...
                                     Nếu cố tình buff bạn sẽ bị trừ hết tiền và band khỏi hệ thống vĩnh viễn, và phải
@@ -139,17 +158,48 @@
     </div>
 
     <script>
-        $("#post_id").on("change paste keyup", function () {
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toastr-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+        $("#post_id").on("change key", function () {
+            $('#loadCheck').addClass('spinner spinner-success spinner-right');
+            var bodyData = {
+                "url": $('#post_id').val(),
+            }
             $.ajax({
-                type: "post",
-                url: "/api/findid",
-                data: {
-                    to: "hhh",
+                url: '/api/find-id',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify( bodyData ),
+                success: function(response){
+                    toastr.success("Lấy ID Facebook thành công!");
+                    const result = JSON.parse(JSON.stringify(response))
+                    $('#loadCheck').removeClass('spinner spinner-success spinner-right');
+                    $('#result').show();
+                    $('#avatar_fb').attr("src", 'http://graph.facebook.com/'+result.id+'/picture?type=square');
+                    $('#name_fb').text(result.name);
+                    $('#id_fb').text(result.id);
                 },
-                contentType: "application/json",
-                success: function (response) {
-                    $("#result").empty().append(response);
-                },
+                error: function(){
+                    $('#loadCheck').removeClass('spinner spinner-success spinner-right');
+                    toastr.error("URL lỗi hoặc ID không tồn tại, vui lòng kiểm tra lại!");
+                    $('#result').hide();
+                }
             });
         });
     </script>
