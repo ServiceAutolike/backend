@@ -8,7 +8,7 @@ use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
-
+use Config;
 class HomeController extends Controller
 {
     public function dash()
@@ -25,7 +25,8 @@ class HomeController extends Controller
     public function checkid(Request $request)
     {
         return response()->json($request->all());
-        $tokencheck = "EAAGNO4a7r2wBAOqWiFi9ePEZBkgySZCud4ZB7ufQSP80icL6Bqse0Gbp0s0H8MUTaDUTZCQWnL8IRPVglQN3W8ZArkkFPhH6lZCZBsDKKuDYF0cZALAF2xPiwoS58T7OQGDoTQiElKjrkPWrwlmH5ZBknfZCeGjFZB3nQK3VS7t5scDBT8N7WZBdZBJ9u1ZBFR1O17ZChAZD";
+        $tokencheck = Config::get('api.token.token1');
+        dd($tokencheck);
         $url = $request->id;
         $options  = array('http' => array(
             'method'=>"GET",

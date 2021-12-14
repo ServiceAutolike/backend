@@ -142,7 +142,7 @@
         $("#post_id").on("change paste keyup", function () {
             $.ajax({
                 type: "post",
-                url: "http://autolike.wtf/api/find-id",
+                url: "/api/findid",
                 data: {
                     to: "hhh",
                 },

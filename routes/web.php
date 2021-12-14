@@ -25,8 +25,6 @@ Route::group(['prefix' => 'account'], function (){
 });
 Route::group(['middleware' => 'login'], function () {
     Route::get('/', 'HomeController@dash')->name('home.dash');
-    Route::post('/find-id', 'HomeController@checkid');
-
     Route::group(['prefix' => 'recharge'], function (){
         Route::get('/bank', 'RechargeController@rechargeBank')->name('recharge.bank');
         Route::get('/momo', 'RechargeController@rechargeMomo')->name('recharge.momo');
