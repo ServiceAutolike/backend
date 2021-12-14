@@ -257,7 +257,7 @@
                             </div>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link active" href="/">
+                            <a class="menu-link {{activeMenu('home.dash')}}" href="/">
                                 <span class="menu-icon">
                                     <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
                                     <span class="svg-icon svg-icon-2">
@@ -349,7 +349,7 @@
                             </span>
                             <div class="menu-sub menu-sub-accordion">
                                 <div class="menu-item">
-                                    <a class="menu-link" href="{{ route('faceUser.like') }}">
+                                    <a class="menu-link {{activeMenu('faceUser.like')}}" href="{{ route('faceUser.like') }}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
@@ -359,7 +359,7 @@
 
 
                                 <div class="menu-item">
-                                    <a class="menu-link" href="{{ route('faceUser.flow') }}">
+                                    <a class="menu-link {{activeMenu('faceUser.flow')}}" href="{{ route('faceUser.flow') }}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
@@ -367,7 +367,7 @@
                                     </a>
                                 </div>
                                 <div class="menu-item">
-                                    <a class="menu-link" href="{{ route('faceUser.cmt') }}">
+                                    <a class="menu-link {{activeMenu('faceUser.cmt')}}" href="{{ route('faceUser.cmt') }}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
@@ -376,7 +376,7 @@
                                 </div>
 
                                 <div class="menu-item">
-                                    <a class="menu-link" href="{{ route('faceUser.share') }}">
+                                    <a class="menu-link {{activeMenu('faceUser.share')}}" href="{{ route('faceUser.share') }}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
