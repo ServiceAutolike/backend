@@ -26,6 +26,13 @@ Route::group(['prefix' => 'account'], function (){
 Route::group(['middleware' => 'login'], function () {
     Route::get('/', 'HomeController@dash')->name('home.dash');
     Route::post('/find-id', 'HomeController@checkid');
+
+    Route::group(['prefix' => 'recharge'], function (){
+        Route::get('/bank', 'RechargeController@rechargeBank')->name('recharge.bank');
+        Route::get('/momo', 'RechargeController@rechargeMomo')->name('recharge.momo');
+        Route::get('/card', 'RechargeController@rechargeCard')->name('recharge.card');
+    });
+
     Route::group(['prefix' => 'facebook'], function (){
         Route::get('/buff-follow', 'FacebookController@buffFollowUser')->name('faceUser.flow');
         Route::get('/buff-like', 'FacebookController@buffLikeUser')->name('faceUser.like');

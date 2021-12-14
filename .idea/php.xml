@@ -104,6 +104,8 @@
       <path value="$PROJECT_DIR$/vendor/pear/net_url2" />
       <path value="$PROJECT_DIR$/vendor/pear/http_request2" />
       <path value="$PROJECT_DIR$/vendor/pear/pear_exception" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-factory" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php81" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.2" />
