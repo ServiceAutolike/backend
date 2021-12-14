@@ -25,18 +25,17 @@ Route::group(['prefix' => 'account'], function (){
 });
 Route::group(['middleware' => 'login'], function () {
     Route::get('/', 'HomeController@dash')->name('home.dash');
-    Route::post('/find-id', 'HomeController@checkid');
-
     Route::group(['prefix' => 'recharge'], function (){
         Route::get('/bank', 'RechargeController@rechargeBank')->name('recharge.bank');
         Route::get('/momo', 'RechargeController@rechargeMomo')->name('recharge.momo');
         Route::get('/card', 'RechargeController@rechargeCard')->name('recharge.card');
+        Route::get('/history', 'RechargeController@history')->name('recharge.history');
     });
 
     Route::group(['prefix' => 'facebook'], function (){
         Route::get('/buff-follow', 'FacebookController@buffFollowUser')->name('faceUser.flow');
         Route::get('/buff-like', 'FacebookController@buffLikeUser')->name('faceUser.like');
-        Route::post('/buff-like', 'FacebookController@buffLikeUserStore');
+        Route::post('/buff-like', 'FacebookController@buffLikeUserStore')->name('faceUser.postLike');
         Route::get('/buff-comment', 'FacebookController@buffCommentUser')->name('faceUser.cmt');
         Route::get('/buff-share', 'FacebookController@buffShareUser')->name('faceUser.share');
     });
@@ -57,10 +56,6 @@ Route::group(['middleware' => 'login'], function () {
     Route::group(['middleware' => 'role'], function () {
         Route::group(['prefix' => 'user'], function (){
             Route::get('/', 'UserController@index')->name('user.index');
-        });
-        Route::group(['prefix' => 'find-id'], function (){
-            Route::get('/', 'HomeController@findID')->name('findID.index');
-            Route::post('/', 'HomeController@checkid');
         });
         Route::get('/welcome', function (){
             return view('welcome');

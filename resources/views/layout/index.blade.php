@@ -11,6 +11,7 @@
     <meta property="og:title" content="Auto LIke" />
     <meta property="og:url" content="https://autolike.com.vn" />
     <meta property="og:site_name" content="AutoLike.Com.Vn" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" href="{{ asset('Backend-Assets/media/logos/favicon.ico') }}" />
     <!--begin::Fonts-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
@@ -21,8 +22,10 @@
     <link href="{{ asset('Backend-Assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('Backend-Assets/css/custom.css') }}" rel="stylesheet" type="text/css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{{ asset('Backend-Assets/plugins/global/plugins.bundle.js') }}"></script>
 
-    <!--end::Global Stylesheets Bundle-->
+
+<!--end::Global Stylesheets Bundle-->
 </head>
 <!--end::Head-->
 <!--begin::Body-->
