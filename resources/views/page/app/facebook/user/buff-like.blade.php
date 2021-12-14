@@ -44,23 +44,26 @@
                                 <input type="hidden" name="type" value="1"/>
                                 <div class="form-group">
                                     <label for="post_id">Nhập ID hoặc Link bài viết <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="post_id" name="id"
+                                    <input type="text" class="form-control form-control-solid" id="post_id" name="id"
                                            placeholder="Nhập URL hoặc ID bài viết"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="number">Số lượng cần tăng <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" id="number" name="number"
+                                    <input type="number" class="form-control form-control-solid" id="number" name="number"
                                            placeholder="0"/>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="id_post">Chế độ bảo hành</label>
-                                    <select class="form-control" name="warranty">
+                                    <!--begin::Input-->
+                                    <select class="form-select form-select-solid" data-control="select2" data-placeholder="Select an option" name="warranty">
+                                        <option></option>
                                         <option selected value="1">Bảo hành 7 ngày</option>
                                         <option value="2">Bảo hành 30 ngày</option>
                                         <option value="3">Bảo hành 60 ngày</option>
                                         <option value="4">Bảo hành 90 ngày</option>
                                     </select>
+                                    <!--end::Input-->
                                 </div>
 
 

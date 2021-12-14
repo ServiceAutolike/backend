@@ -109,17 +109,17 @@
                                         <div class="menu-sub menu-sub-dropdown w-175px py-4">
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
-                                                <a href="../" class="menu-link px-5">Ngân Hàng</a>
+                                                <a href="{{ route("recharge.bank") }}" class="menu-link px-5">Ngân Hàng</a>
                                             </div>
                                             <!--end::Menu item-->
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
-                                                <a href="../" class="menu-link px-5">Ví Momo</a>
+                                                <a href="{{ route("recharge.momo") }}" class="menu-link px-5">Ví Momo</a>
                                             </div>
                                             <!--end::Menu item-->
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
-                                                <a href="../" class="menu-link px-5">Thẻ Điện Thoại</a>
+                                                <a href="{{ route("recharge.card") }}" class="menu-link px-5">Thẻ Điện Thoại</a>
                                             </div>
                                             <!--end::Menu item-->
                                             <!--begin::Menu item-->
@@ -293,7 +293,7 @@
                             </span>
                             <div class="menu-sub menu-sub-accordion menu-active-bg">
                                 <div class="menu-item">
-                                    <a class="menu-link" href="../">
+                                    <a class="menu-link" href="{{ route("recharge.bank") }}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
@@ -301,7 +301,7 @@
                                     </a>
                                 </div>
                                 <div class="menu-item">
-                                    <a class="menu-link" href="../">
+                                    <a class="menu-link" href="{{ route("recharge.momo") }}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
@@ -310,7 +310,7 @@
                                 </div>
 
                                 <div class="menu-item">
-                                    <a class="menu-link" href="../">
+                                    <a class="menu-link" href="{{ route("recharge.card") }}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
@@ -737,7 +737,9 @@
                                     </span>
                                     <!--end::Svg Icon-->
                                 </span>
-                                <span class="menu-title">Trung Tâm Hỗ Trợ</span>
+                                <span class="menu-title">Trung Tâm Hỗ Trợ <span class="menu-badge">
+                                                <span class="badge badge-light-danger badge-circle fw-bolder fs-7">3</span>
+                                            </span></span>
                                 <span class="menu-arrow"></span>
                             </span>
                             <div class="menu-sub menu-sub-accordion">
@@ -903,13 +905,13 @@
                         <!--begin::Page title-->
                         <div class="page-title d-flex flex-column me-5">
                             <!--begin::Title-->
-                            <h1 class="d-flex flex-column text-dark fw-bolder fs-3 mb-0">Bảng Điều Khiển</h1>
+                            <h1 class="d-flex flex-column text-dark fw-bolder fs-3 mb-0">@yield('title')</h1>
                             <!--end::Title-->
                             <!--begin::Breadcrumb-->
                             <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 pt-1">
                                 <!--begin::Item-->
                                 <li class="breadcrumb-item text-muted">
-                                    <a href="../../demo8/dist/index.html" class="text-muted text-hover-primary">Trang chủ</a>
+                                    <a href="/" class="text-muted text-hover-primary">Trang chủ</a>
                                 </li>
                                 <!--end::Item-->
                                 <!--begin::Item-->
@@ -918,7 +920,7 @@
                                 </li>
                                 <!--end::Item-->
                                 <!--begin::Item-->
-                                <li class="breadcrumb-item text-dark">Bảng Điều Khiển</li>
+                                <li class="breadcrumb-item text-dark">@yield('title')</li>
                                 <!--end::Item-->
                             </ul>
                             <!--end::Breadcrumb-->

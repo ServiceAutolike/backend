@@ -32,7 +32,7 @@
                         <div class="form-group row mt-4 align-items-center">
                             <div class="img-bank col-sm-4">
                                 <label class="col-form-label bold">Thông tin tài khoản</label>
-                                <img src="{{ url('Backend-Assets/media/bank/vcb.png') }}" width="100">
+                                <div><img src="{{ url('Backend-Assets/media/bank/vcb.png') }}" width="100"></div>
                             </div>
                             <div class="col-sm">
                                 <div class="card bg-dark hoverable card-xl-stretch ">
@@ -56,19 +56,10 @@
                                     Nội dung chuyển tiền <span class="text-danger">*</span></label>
                             </div>
                             <div class="col-lg-8">
-                                <form>
-                                    <div class="form-row row">
-                                        <div class="col-lg-10 col-sm-9 col-9">
-                                            <input type="text" id="syntax" class="form-control form-control-lg"
-                                                   value="naptien duyvn">
-                                        </div>
-                                        <div class="col-lg-2 col-sm-3 col-3">
-                                            <button type="button" class="btn btn-primary copy"
-                                                    data-clipboard-target="#syntax">Copy
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
+                                <div class="d-flex">
+                                    <input id="description_bank" type="text" class="form-control form-control-solid me-3 flex-grow-1" value="naptien {{ Auth::user()->name }}" />
+                                    <button id="bank_copy_btn" class="btn btn-light-primary btn-active-primary fw-bolder flex-shrink-0" data-clipboard-target="#description_bank">Copy</button>
+                                </div>
                             </div>
                         </div>
 
@@ -93,7 +84,7 @@
                                 <!--begin::Content-->
                                 <div class="fw-bold">
                                     <h4 class="text-gray-900 fw-bolder">Lưu ý!</h4>
-                                    <div class="fs-6 text-gray-700">- Nạp sai cú pháp vui lòng gửi Yêu cầu hỗ trợ hoặc
+                                    <div class="fs-6 text-gray-700">Nạp sai cú pháp vui lòng gửi Yêu cầu hỗ trợ hoặc
                                         liên hệ qua Zalo sau đó cung cấp hóa đơn chuyển tiền để được nạp thủ công.
                                     </div>
                                 </div>
@@ -114,9 +105,54 @@
             </div>
         </div>
         <div class="col-4 col-xl-4">
+            <div class="card bg-success hoverable card-xl-stretch mb-5 mb-xl-8">
+                <!--begin::Body-->
+                <div class="card-body">
+                    <!--begin::Svg Icon | path: icons/duotune/graphs/gra005.svg-->
+                    <span class="svg-icon svg-icon-white svg-icon-3x ms-n1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path opacity="0.3" d="M14 12V21H10V12C10 11.4 10.4 11 11 11H13C13.6 11 14 11.4 14 12ZM7 2H5C4.4 2 4 2.4 4 3V21H8V3C8 2.4 7.6 2 7 2Z" fill="black"></path>
+                            <path d="M21 20H20V16C20 15.4 19.6 15 19 15H17C16.4 15 16 15.4 16 16V20H3C2.4 20 2 20.4 2 21C2 21.6 2.4 22 3 22H21C21.6 22 22 21.6 22 21C22 20.4 21.6 20 21 20Z" fill="black"></path>
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                    <div class="text-white fw-bolder fs-2 mb-2 mt-5">0 VNĐ</div>
+                    <div class="fw-bold text-white">Số tiền hiện có</div>
+                </div>
+                <!--end::Body-->
+            </div>
+
+
+            <div class="card bg-danger hoverable card-xl-stretch mb-xl-8">
+                <!--begin::Body-->
+                <div class="card-body">
+                    <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm002.svg-->
+                    <span class="svg-icon svg-icon-white svg-icon-3x ms-n1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M21 10H13V11C13 11.6 12.6 12 12 12C11.4 12 11 11.6 11 11V10H3C2.4 10 2 10.4 2 11V13H22V11C22 10.4 21.6 10 21 10Z" fill="black"></path>
+                            <path opacity="0.3" d="M12 12C11.4 12 11 11.6 11 11V3C11 2.4 11.4 2 12 2C12.6 2 13 2.4 13 3V11C13 11.6 12.6 12 12 12Z" fill="black"></path>
+                            <path
+                                opacity="0.3"
+                                d="M18.1 21H5.9C5.4 21 4.9 20.6 4.8 20.1L3 13H21L19.2 20.1C19.1 20.6 18.6 21 18.1 21ZM13 18V15C13 14.4 12.6 14 12 14C11.4 14 11 14.4 11 15V18C11 18.6 11.4 19 12 19C12.6 19 13 18.6 13 18ZM17 18V15C17 14.4 16.6 14 16 14C15.4 14 15 14.4 15 15V18C15 18.6 15.4 19 16 19C16.6 19 17 18.6 17 18ZM9 18V15C9 14.4 8.6 14 8 14C7.4 14 7 14.4 7 15V18C7 18.6 7.4 19 8 19C8.6 19 9 18.6 9 18Z"
+                                fill="black"
+                            ></path>
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                    <div class="text-white fw-bolder fs-2 mb-2 mt-5">0 VNĐ</div>
+                    <div class="fw-bold text-white">Số tiền đã nạp</div>
+                </div>
+                <!--end::Body-->
+            </div>
+
+
+
+
+
+
             <div class="card">
                 <div class="card-header collapsible cursor-pointer rotate" data-bs-toggle="collapse"
-                     data-bs-target="#kt_docs_card_collapsible">
+                     data-bs-target="#history">
                     <h3 class="card-title">Lịch Sử Nạp Tiền</h3>
                     <div class="card-toolbar rotate-180">
                         <span class="svg-icon svg-icon-1">
@@ -148,6 +184,31 @@
                             <!--end::Table head-->
                             <!--begin::Table body-->
                             <tbody>
+                            <tr>
+                                <td>
+                                    <span class="time text-muted">12/05/2021 12:00</span>
+                                </td>
+                                <td>
+                                    <span class="fw-bold d-block fs-7">+12,000 VNĐ</span>
+                                </td>
+                                <td>
+                                    <span class="badge badge-success">Thành công</span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <span class="time text-muted">12/05/2021 12:00</span>
+                                </td>
+                                <td>
+                                    <span class="fw-bold d-block fs-7">+12,000 VNĐ</span>
+                                </td>
+                                <td>
+                                    <span class="badge badge-success">Thành công</span>
+                                </td>
+                            </tr>
+
+
                             <tr>
                                 <td>
                                     <span class="time text-muted">12/05/2021 12:00</span>
