@@ -42,13 +42,16 @@
                             <div class="card-body">
                                 <input type="hidden" name="type" value="1"/>
                                 <div class="form-group">
-                                    <label for="post_id">Nhập ID hoặc Link bài viết <span class="text-danger">*</span></label>
+                                    <label for="post_id">Nhập ID hoặc Link bài viết <span
+                                            class="text-danger">*</span></label>
                                     <div class="" id="loadCheck">
-                                        <input type="text" class="form-control form-control-solid" id="post_id" name="id" placeholder="Nhập URL hoặc ID bài viết"/>
+                                        <input type="text" class="form-control form-control-solid" id="post_id"
+                                               name="id" placeholder="Nhập URL hoặc ID bài viết"/>
                                     </div>
                                 </div>
                                 <div id="result" style="display: none;">
-                                    <div class="d-flex align-items-center bg-light-success rounded p-5 mb-7">
+                                    <div class="d-flex align-items-center rounded p-5 mb-7 alert alert-success"
+                                         id="classNoti">
                                         <!--begin::Icon-->
                                         <div class="svg-icon svg-icon-success me-5">
                                             <img src="" id="avatar_fb">
@@ -56,23 +59,142 @@
                                         <!--end::Icon-->
                                         <!--begin::Title-->
                                         <div class="flex-grow-1 me-2">
-                                            <span class="fw-bolder text-gray-800 text-hover-primary fs-6" id="name_fb"></span>
+                                            <span class="fw-bolder text-gray-800 text-hover-primary fs-6"
+                                                  id="name_fb"></span>
                                             <span class="text-muted fw-bold d-block" id="id_fb"></span>
                                         </div>
                                         <!--end::Title-->
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label for="sever">Chọn SEVER <span class="text-danger">*</span></label>
+                                    <div class="row g-9" data-kt-buttons="true" data-kt-buttons-target="[data-kt-button]">
+                                        <!--begin::Col-->
+                                        <div class="col-md-6 col-lg-12 col-xxl-6">
+                                            <label
+                                                class="btn btn-outline btn-outline-dashed btn-outline-default d-flex text-start p-6 active"
+                                                data-kt-button="true">
+                                                <!--begin::Radio button-->
+                                                <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
+                                                    <input class="form-check-input" type="radio" name="usage" value="1" checked="checked"/>
+                                                </span>
+                                                <!--end::Radio button-->
+                                                <span class="ms-5">
+                                                    <span class="fs-4 fw-bolder mb-1 d-block">Sever Like</span>
+                                                    <span class="fw-bold fs-7 text-gray-600">Ở SEVER này chỉ cho phép duy nhất cảm xúc là LIKE (giá rẻ)</span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <!--end::Col-->
+                                        <!--begin::Col-->
+                                        <div class="col-md-6 col-lg-12 col-xxl-6">
+                                            <label
+                                                class="btn btn-outline btn-outline-dashed btn-outline-default d-flex text-start p-6"
+                                                data-kt-button="true">
+                                                <!--begin::Radio button-->
+                                                <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
+                                                    <input class="form-check-input" type="radio" name="usage" value="2"/>
+                                                </span>
+                                                <!--end::Radio button-->
+                                                <span class="ms-5">
+                                                    <span class="fs-4 fw-bolder mb-1 d-block">Sever Cảm Xúc</span>
+                                                    <span class="fw-bold fs-7 text-gray-600">Bạn có thể chọn các loại cảm xúc được thực hiện cho bài viết</span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <!--end::Col-->
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="number">Chọn cảm xúc <span class="text-danger">*</span></label>
+                                    <div class="list-reaction mt-3">
+                                        <div class="icon-buff">
+                                            <input type="checkbox" value="like" name="reaction[]" class="" id="like"
+                                                   checked>
+                                            <div class="icon-reaction">
+                                                <label for="like">
+                                                    <img src="{{ url('Backend-Assets/media/icon/like.svg') }}"
+                                                         alt="Like icon" width="40"/>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="icon-buff">
+                                            <input type="checkbox" value="love" name="reaction[]" class="" id="love">
+                                            <div class="icon-reaction">
+                                                <label for="love">
+                                                    <img src="{{ url('Backend-Assets/media/icon/love.svg') }}"
+                                                         alt="love icon" width="40"/>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="icon-buff">
+                                            <input type="checkbox" value="care" name="reaction[]" class="" id="care">
+                                            <div class="icon-reaction">
+                                                <label for="care">
+                                                    <img src="{{ url('Backend-Assets/media/icon/care.svg') }}"
+                                                         alt="care icon" width="40"/>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="icon-buff">
+                                            <input type="checkbox" value="haha" name="reaction[]" class="" id="haha">
+                                            <div class="icon-reaction">
+                                                <label for="haha">
+                                                    <img src="{{ url('Backend-Assets/media/icon/haha.svg') }}"
+                                                         alt="haha icon" width="40"/>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="icon-buff">
+                                            <input type="checkbox" value="wow" name="reaction[]" class="" id="wow">
+                                            <div class="icon-reaction">
+                                                <label for="wow">
+                                                    <img src="{{ url('Backend-Assets/media/icon/wow.svg') }}"
+                                                         alt="wow icon" width="40"/>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="icon-buff">
+                                            <input type="checkbox" value="sad" name="reaction[]" class="" id="sad">
+                                            <div class="icon-reaction">
+                                                <label for="sad">
+                                                    <img src="{{ url('Backend-Assets/media/icon/sad.svg') }}"
+                                                         alt="sad icon" width="40"/>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="icon-buff">
+                                            <input type="checkbox" value="angry" name="reaction[]" class="" id="angry">
+                                            <div class="icon-reaction">
+                                                <label for="angry">
+                                                    <img src="{{ url('Backend-Assets/media/icon/angry.svg') }}"
+                                                         alt="angry icon" width="40"/>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
 
                                 <div class="form-group">
                                     <label for="number">Số lượng cần tăng <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control form-control-solid" id="number" name="number"
+                                    <input type="number" class="form-control form-control-solid" id="number"
+                                           name="number"
                                            placeholder="0"/>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="id_post">Chế độ bảo hành</label>
+                                    <label for="id_post">Chế độ bảo hành <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="" data-bs-original-title="Mặc định các ID đều được chúng tôi bảo hành trong 7 ngày." aria-label="Mặc định các ID đều được chúng tôi bảo hành trong 7 ngày."></i></label>
                                     <!--begin::Input-->
-                                    <select class="form-select form-select-solid" data-control="select2" data-placeholder="Select an option" name="warranty">
+                                    <select class="form-select form-select-solid" data-control="select2"
+                                            data-placeholder="Select an option" name="warranty">
                                         <option></option>
                                         <option selected value="7">Bảo hành 7 ngày</option>
                                         <option value="30">Bảo hành 30 ngày</option>
@@ -83,7 +205,8 @@
                                 </div>
 
 
-                                <div class="notice bg-light-warning rounded border-warning border border-dashed mt-3 p-6 text-center">
+                                <div
+                                    class="notice bg-light-warning rounded border-warning border border-dashed mt-3 p-6 text-center">
                                     <div class="fw-bold">
                                         <div class="fs-6 text-gray-500">Tổng Tiền Cần Thanh Toán</div>
                                         <h4 class="fw-bolder text-danger font-weight-semibold">12,000 VNĐ</h4>
@@ -185,17 +308,24 @@
                 url: '/api/find-id',
                 type: 'POST',
                 contentType: 'application/json',
-                data: JSON.stringify( bodyData ),
-                success: function(response){
-                    toastr.success("Lấy ID Facebook thành công!");
+                data: JSON.stringify(bodyData),
+                success: function (response) {
                     const result = JSON.parse(JSON.stringify(response))
                     $('#loadCheck').removeClass('spinner spinner-success spinner-right');
-                    $('#result').show();
-                    $('#avatar_fb').attr("src", 'http://graph.facebook.com/'+result.id+'/picture?type=square');
-                    $('#name_fb').text(result.name);
-                    $('#id_fb').text(result.id);
+                    if (result.code == 200) {
+                        toastr.success("Lấy ID Facebook thành công!");
+                        $('#result').show();
+                        $('#name_fb').text(result.message);
+                        $('#id_fb').text(result.time);
+                    } else {
+                        toastr.error(result.message);
+                        $('#result').hide();
+                        $('#classNoti').removeClass(".alert-success");
+                        $('#classNoti').addClass(".alert-danger");
+                    }
+
                 },
-                error: function(){
+                error: function () {
                     $('#loadCheck').removeClass('spinner spinner-success spinner-right');
                     toastr.error("URL lỗi hoặc ID không tồn tại, vui lòng kiểm tra lại!");
                     $('#result').hide();

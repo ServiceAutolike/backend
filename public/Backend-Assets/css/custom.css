@@ -291,3 +291,41 @@ label {
         transform: rotate(360deg);
     }
 }
+.list-reaction {
+    display: flex;
+}
+.icon-buff img {
+    margin-right: 15px;
+}
+.icon-buff input[type="checkbox"] {
+    display: none;
+}
+.icon-buff input[type="checkbox"]:not(:disabled) ~ .icon-reaction img {
+    cursor: pointer;
+    transition-duration: 0.2s;
+    filter: grayscale(100%);
+
+}
+
+.icon-buff label {
+    display: block;
+    cursor: pointer;
+    text-align: inherit;
+}
+
+.icon-buff input[type="checkbox"]#like:checked + .icon-reaction img,
+    input[type="checkbox"]#love:checked + .icon-reaction img,
+    input[type="checkbox"]#haha:checked + .icon-reaction img,
+    input[type="checkbox"]#cry:checked + .icon-reaction img,
+    input[type="checkbox"]#sad:checked + .icon-reaction img,
+    input[type="checkbox"]#care:checked + .icon-reaction img,
+    input[type="checkbox"]#wow:checked + .icon-reaction img,
+    input[type="checkbox"]#angry:checked + .icon-reaction img {
+        transition: transform .2s;
+        transform: scale(1.1);
+        margin-bottom: 10px;
+        filter: grayscale(0%);
+}
+
+
+
