@@ -22,8 +22,11 @@
     <list default="true" id="d639d075-b811-4092-a8f1-a8d91eb78831" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/FacebookController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/FacebookController.php" afterDir="false" />
+<<<<<<< HEAD
+=======
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterDir="false" />
+>>>>>>> bee7e1f668eb858c0b9bed10be04d9a0cc8b7c4b
       <change beforePath="$PROJECT_DIR$/resources/views/page/app/facebook/user/buff-like.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/page/app/facebook/user/buff-like.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

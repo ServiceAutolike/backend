@@ -25,9 +25,9 @@ class FacebookController extends Controller
         $data = [
             'url_service' => $request->id,
             'speed' => 'high',
-            'number' => (int) $request->number,
+            'number' => (int)$request->number,
             'type' => 'facebook_bufflike',
-            'warranty_type' => (int) $request->warranty
+            'warranty_type' => (int)$request->warranty
         ];
         $client = new Client([
             'headers' => [
@@ -45,6 +45,7 @@ class FacebookController extends Controller
         $dataConfirm = [
             'transaction_code' => $dataBody["data"]["transaction_code"],
         ];
+
         $confirm = $client->post(Config::get('api.urlRequest.confirm'),
             ['body' => json_encode($dataConfirm, true)]
         );
