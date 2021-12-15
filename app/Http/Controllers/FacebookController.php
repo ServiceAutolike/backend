@@ -22,40 +22,34 @@ class FacebookController extends Controller
 
     public function buffLikeUserStore(Request $request)
     {
-//        $data = [
-//            'url_service' => $request->id,
-//            'speed' => 'high',
-//            'number' => (int) $request->number,
-//            'type' => 'facebook_bufflike',
-//            'warranty_type' => (int) $request->warranty
-//        ];
-//
-//        $client = new Client([
-//            'headers' => [
-//                'Content-Type' => 'application/json',
-//                'Token' => Config::get('api.key.token'),
-//                'agency-secret-key' => Config::get('api.key.agency'),
-//            ]
-//        ]);
+        $data = [
+            'url_service' => $request->id,
+            'speed' => 'high',
+            'number' => (int) $request->number,
+            'type' => 'facebook_bufflike',
+            'warranty_type' => (int) $request->warranty
+        ];
+        $client = new Client([
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Token' => Config::get('api.key.token'),
+                'agency-secret-key' => Config::get('api.key.agency'),
+            ]
+        ]);
 
+        $response = $client->post(Config::get('api.urlRequest.create'),
+            ['body' => json_encode($data, true)]
+        );
 
-
-
-
-            // $response = $client->post('https://agency.autolike.cc/public-api/v1/agency/services/create-V2',
-            //     ['body' => json_encode($data, true)]
-            // );
-
-//            $dataBody =  json_decode($response->getBody(), true);
-//            $dataConfirm = [
-//                'transaction_code' => $dataBody["data"]["transaction_code"],
-//            ];
-//
-//            $confirm = $client->post('https://agency.autolike.cc/public-api/v1/agency/services/confirm',
-//                ['body' => json_encode($dataConfirm, true)]
-//            );
-
-//        return view('page.app.facebook.user.buff-like');
+        $dataBody = json_decode($response->getBody(), true);
+        $dataConfirm = [
+            'transaction_code' => $dataBody["data"]["transaction_code"],
+        ];
+        $confirm = $client->post(Config::get('api.urlRequest.confirm'),
+            ['body' => json_encode($dataConfirm, true)]
+        );
+        $datadata = json_decode($confirm->getBody(), true);
+        return $datadata;
     }
 
     public function buffCommentUser()

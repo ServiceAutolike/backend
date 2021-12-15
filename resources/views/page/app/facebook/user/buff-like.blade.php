@@ -75,10 +75,10 @@
                                     <!--begin::Input-->
                                     <select class="form-select form-select-solid" data-control="select2" data-placeholder="Select an option" name="warranty">
                                         <option></option>
-                                        <option selected value="1">Bảo hành 7 ngày</option>
-                                        <option value="2">Bảo hành 30 ngày</option>
-                                        <option value="3">Bảo hành 60 ngày</option>
-                                        <option value="4">Bảo hành 90 ngày</option>
+                                        <option selected value="7">Bảo hành 7 ngày</option>
+                                        <option value="30">Bảo hành 30 ngày</option>
+                                        <option value="60">Bảo hành 60 ngày</option>
+                                        <option value="90">Bảo hành 90 ngày</option>
                                     </select>
                                     <!--end::Input-->
                                 </div>
@@ -180,6 +180,7 @@
             $('#loadCheck').addClass('spinner spinner-success spinner-right');
             var bodyData = {
                 "url": $('#post_id').val(),
+                "type": "post"
             }
             $.ajax({
                 url: '/api/find-id',
