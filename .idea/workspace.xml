@@ -20,19 +20,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d639d075-b811-4092-a8f1-a8d91eb78831" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/resources/views/page/app/recharge/history.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/FacebookController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/FacebookController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/RechargeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/RechargeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Backend-Assets/css/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/Backend-Assets/css/custom.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/component/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/component/header.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layout/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layout/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/page/app/facebook/user/buff-like.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/page/app/facebook/user/buff-like.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/page/app/recharge/card.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/page/app/recharge/card.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

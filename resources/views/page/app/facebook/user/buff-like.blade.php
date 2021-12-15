@@ -63,7 +63,6 @@
                                     </div>
                                 </div>
 
-
                                 <div class="form-group">
                                     <label for="number">Số lượng cần tăng <span class="text-danger">*</span></label>
                                     <input type="number" class="form-control form-control-solid" id="number" name="number"
