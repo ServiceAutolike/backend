@@ -56,7 +56,9 @@
     <!--end::Page Vendors Javascript-->
     <!--begin::Page Custom Javascript(used by this page)-->
     <script src="{{ asset('Backend-Assets/js/custom/widgets.js') }}"></script>
+    <script src="{{ asset('Backend-Assets/js/custom/jquery-validation/jquery.validate.min.js') }}"></script>
     <!--end::Page Custom Javascript-->
+    <script src="{{ asset('Backend-Assets/js/services.js') }}"></script>
     <!--end::Javascript-->
 </body>
 <!--end::Body-->

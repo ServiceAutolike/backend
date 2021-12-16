@@ -10,6 +10,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Config;
+use App\Facebook;
 
 class HomeController extends Controller
 {
@@ -29,14 +30,46 @@ class HomeController extends Controller
         $url = (string) $request->url;
         $type = (string) $request->type;
         $tokenFB = Config::get('api.fb.token');
+        $p_id = '$2';
+        $u_id = '$3';
         try {
             if($type == "post") {
+                $Facebook = new Facebook();
                 if(is_numeric($url)) {
-                    $result = array(
-                        'code' => 200,
-                        'status' => 'success',
-                        'id' => $url,
-                    );
+                    try {
+                        $cawFB = $Facebook->login($url);
+                        $re = '/^.*(story_fbid=(\d+)&id=(\d+)).+/s';
+                        if(isset($cawFB['location'][1])) {
+                            $str = $cawFB['location'][1];
+                            $post_id = preg_replace($re, $p_id, $str, 1);
+                            $user_id = preg_replace($re, $u_id, $str, 1);
+                            $id_post_final = $user_id."_".$post_id;
+                            $requestName = json_decode(file_get_contents('https://graph.facebook.com/' . $id_post_final . '/?access_token=' . $tokenFB . ''), true);
+                            $time = $Facebook->GetLocalDateStringFromUTCString($requestName['created_time']);
+                            $result = array(
+                                'code' => 200,
+                                'status' => 'success',
+                                'time' => $time,
+                                'message' => $requestName['message']
+                            );
+                        }
+                        else {
+                            $result = array(
+                                'code' => 400,
+                                'status' => 'error',
+                                'message' => "Không tìm thấy thông tin bài viết của ID này tên Facebook!"
+                            );
+                        }
+
+                    }
+                    catch (Exception $exception) {
+                        $result = array(
+                            'code' => 400,
+                            'status' => 'error',
+                            'message' => "Không tìm thấy thông tin bài viết của ID này tên Facebook!"
+                        );
+                    }
+
                 }
                 else {
                     if(((strpos($url, 'permalink.php?story_fbid=')) !== false)) {
