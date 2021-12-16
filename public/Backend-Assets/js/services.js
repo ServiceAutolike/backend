@@ -148,17 +148,20 @@ jQuery(document).ready(function ($) {
                             data: data,
                             dataType: 'json',
                             success: function (response) {
-                                Swal.fire(
-                                    response.message ? 'Thành công' : 'Thất bại',
-                                    response.message,
-                                    response.message ? 'success' : 'error'
-                                )
+                                console.log(response.messages);
+                                if(response.code  != 400) {
+                                    Swal.fire("Thành công!", response.messages, response.status);
+                                }
+                                else {
+                                    Swal.fire("Có lỗi xảy ra!", response.messages, response.status);
+                                }
+
                             },
                             error: function (xhr, status, error) {
                                 var response = JSON.parse(xhr.responseText);
                                 Swal.fire(
                                     'Có lỗi xảy ra!',
-                                    response.message,
+                                    response.messages,
                                     'error'
                                 )
                             }
