@@ -326,6 +326,9 @@ label {
         margin-bottom: 10px;
         filter: grayscale(0%);
 }
+.d-none {
+    display: none !important;
+}
 
 
 
