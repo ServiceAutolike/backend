@@ -74,13 +74,18 @@
                                         <!--end::Thead-->
                                         <!--begin::Tbody-->
                                         <tbody class="fw-6 fw-bold text-gray-600">
-                                        @if(count($historyServices) > 0) {
+                                        {!! $obj2 = $historyServices; !!}
+                                        @if(count($historyServices) > 0)
                                             @foreach($historyServices as $history)
                                                 <tr>
                                                     <td>{!!  $history->created_at !!}</td>
                                                     <td>{!!  $history->transaction_code !!}</td>
                                                     <td>{!!  $history->url_services !!}</td>
-                                                    <td>{!!  $history->reaction !!}</td>
+                                                    <td>
+                                                        @foreach($history->reactionsgi as $info)
+                                                            <td>{!! $info->reactions !!}</td>
+                                                        @endforeach
+                                                    </td>
                                                     <td>{!!  $history->number !!}</td>
                                                     <td>{!!  $history->number_success !!}</td>
                                                     <td>{!!  $history->price !!}</td>
