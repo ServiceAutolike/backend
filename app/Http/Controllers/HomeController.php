@@ -49,8 +49,7 @@ class HomeController extends Controller
                             $result = array(
                                 'code' => 200,
                                 'status' => 'success',
-                                'time' => $time,
-                                'message' => $requestName['message']
+                                'id' => $post_id,
                             );
                         }
                         else {
@@ -103,6 +102,7 @@ class HomeController extends Controller
                             'code' => 400,
                             'status' => 'error',
                             'id' => "null",
+                            'message' => "URL hoặc ID này không tồn tại, vui lòng kiểm tra lại!"
                         );
                     }
 

@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="row">
-        <div class="col-12 col-xl-7">
+        <div class="col-12 col-xl-12">
             <form id="form-create" method="post" action="{{ route("faceUser.postLike") }}"  novalidate="novalidate">
                 @csrf
                 <div class="card mb-5 mb-xl-10">
@@ -41,6 +41,7 @@
                         <div id="create" class="tab-pane fade active show" role="tabpanel">
                             <div class="card-body">
                                 <input type="hidden" name="warranty" value="7" id="warranty"/>
+                                <input type="hidden" value="post" id="type_check"/>
                                 <div class="form-group">
                                     <label for="post_id">Nhập ID hoặc Link bài viết <span
                                             class="text-danger">*</span></label>
@@ -109,7 +110,7 @@
                                     <label for="number">Chọn cảm xúc <span class="text-danger">*</span></label>
                                     <div class="list-reaction mt-3">
                                         <div class="icon-buff like">
-                                            <input type="checkbox" value="like" name="reaction" class="" id="like"
+                                            <input type="checkbox" value="Like" name="reaction" class="" id="like"
                                                    checked>
                                             <div class="icon-reaction">
                                                 <label for="like">
@@ -119,7 +120,7 @@
                                             </div>
                                         </div>
                                         <div class="icon-buff love d-none">
-                                            <input type="checkbox" value="love" name="reaction" class="" id="love">
+                                            <input type="checkbox" value="Love" name="reaction" class="" id="love">
                                             <div class="icon-reaction">
                                                 <label for="love">
                                                     <img src="{{ url('Backend-Assets/media/icon/love.svg') }}"
@@ -129,7 +130,7 @@
                                         </div>
 
                                         <div class="icon-buff care d-none">
-                                            <input type="checkbox" value="care" name="reaction" class="" id="care">
+                                            <input type="checkbox" value="Care" name="reaction" class="" id="care">
                                             <div class="icon-reaction">
                                                 <label for="care">
                                                     <img src="{{ url('Backend-Assets/media/icon/care.svg') }}"
@@ -139,7 +140,7 @@
                                         </div>
 
                                         <div class="icon-buff haha d-none">
-                                            <input type="checkbox" value="haha" name="reaction" class="" id="haha">
+                                            <input type="checkbox" value="Haha" name="reaction" class="" id="haha">
                                             <div class="icon-reaction">
                                                 <label for="haha">
                                                     <img src="{{ url('Backend-Assets/media/icon/haha.svg') }}"
@@ -149,7 +150,7 @@
                                         </div>
 
                                         <div class="icon-buff wow d-none">
-                                            <input type="checkbox" value="wow" name="reaction" class="" id="wow">
+                                            <input type="checkbox" value="Wow" name="reaction" class="" id="wow">
                                             <div class="icon-reaction">
                                                 <label for="wow">
                                                     <img src="{{ url('Backend-Assets/media/icon/wow.svg') }}"
@@ -159,7 +160,7 @@
                                         </div>
 
                                         <div class="icon-buff sad d-none">
-                                            <input type="checkbox" value="sad" name="reaction" class="" id="sad">
+                                            <input type="checkbox" value="Sad" name="reaction" class="" id="sad">
                                             <div class="icon-reaction">
                                                 <label for="sad">
                                                     <img src="{{ url('Backend-Assets/media/icon/sad.svg') }}"
@@ -169,7 +170,7 @@
                                         </div>
 
                                         <div class="icon-buff angry d-none">
-                                            <input type="checkbox" value="angry" name="reaction" class="" id="angry">
+                                            <input type="checkbox" value="Angry" name="reaction" class="" id="angry">
                                             <div class="icon-reaction">
                                                 <label for="angry">
                                                     <img src="{{ url('Backend-Assets/media/icon/angry.svg') }}"
@@ -191,7 +192,7 @@
                                 <div class="form-group">
                                     <label for="sitePrice">Giá/1 tương tác (VNĐ) <span class="text-danger">*</span></label>
                                     <input type="number" class="form-control form-control-solid" id="sitePrice"
-                                           name="sitePrice" value="50" required="required" disabled>
+                                           name="sitePrice" value="50" disabled="disabled" required>
                                 </div>
 
                                 <div class="notice bg-light-warning rounded border-warning border border-dashed mt-3 p-5 text-center">
@@ -209,60 +210,57 @@
                         </div>
                         <!--begin::Tab history-->
                         <div id="history" class="tab-pane fade" role="tabpanel">
-                            ádasd
+                            <!--begin::Table wrapper-->
+                            <div class="table-responsive">
+                            <!--begin::Table-->
+                                <table class="table table-flush align-middle table-row-bordered table-row-solid gy-4 gs-9">
+                                    <!--begin::Thead-->
+                                    <thead class="border-gray-200 fs-5 fw-bold bg-lighten">
+                                    <tr>
+                                        <th class="min-w-50px">Thời Gian</th>
+                                        <th class="min-w-50px">Mã Giao Dịch</th>
+                                        <th class="min-w-100px">ID Facebook</th>
+                                        <th class="min-w-150px">Cảm Xúc</th>
+                                        <th class="min-w-50px">Số Lượng</th>
+                                        <th class="min-w-50px">Đã Chạy</th>
+                                        <th class="min-w-50px">Đơn Giá</th>
+                                        <th class="min-w-90px">Tổng Tiền</th>
+                                        <th class="min-w-100px">Trạng Thái</th>
+                                        <th class="min-w-100px">Công Cụ</th>
+
+                                    </tr>
+                                    </thead>
+                                    <!--end::Thead-->
+                                    <!--begin::Tbody-->
+                                    <tbody class="fw-6 fw-bold text-gray-600">
+                                    @foreach($historyServices as $historyServices)
+                                        <tr>
+                                            <td>{!!  $historyServices->created_at !!}</td>
+                                            <td>{!!  $historyServices->transaction_code !!}</td>
+                                            <td>{!!  $historyServices->url_services !!}</td>
+                                            <td>{!!  $historyServices->reactions !!}</td>
+                                            <td>{!!  $historyServices->number !!}</td>
+                                            <td>{!!  $historyServices->number_success !!}</td>
+                                            <td>{!!  $historyServices->price !!}</td>
+                                            <td>{!!  $historyServices->total_price !!}</td>
+                                            <td><span class="badge badge-warning rounded">Đang chạy: {!!  $historyServices->number_success !!}</span>
+                                            </td>
+                                            <td><button type="button" class="btn btn-sm btn-danger">Hủy Đơn</button> </td>
+                                        </tr>
+                                    @endforeach
+
+                                    </tbody>
+                                    <!--end::Tbody-->
+                                </table>
+                                <!--end::Table-->
+                            </div>
+                            <!--end::Table wrapper-->
                         </div>
 
                     </div>
                 </div>
             </form>
         </div>
-        <div class="col-12 col-xl-5">
-            <div class="card rounded-12 shadow-dark-80 border border-gray-200 bg-warning">
-                <div class="card-header">
-                    <div class="card-title">Lưu ý</div>
-                </div>
-                <div class="card-body p-0">
-                    <div class="p-3 p-xl-4">
-                        <div class="pt-2 px-md-3 px-xl-0 px-xxl-3">
-                            <div class="col ps-0 ps-md-1">
-                                <p>
-                                    - Ngiêm cấm Buff các ID Seeding có nội dung vi phạm pháp luật, chính trị, đồ trụy...
-                                    Nếu cố tình buff bạn sẽ bị trừ hết tiền và band khỏi hệ thống vĩnh viễn, và phải
-                                    chịu hoàn toàn trách nhiệm trước pháp
-                                    luật.
-                                </p>
-                                <p>
-                                    - Hệ thống sử dụng 99% tài khoản người VN, fb thật để tương tác like, comment,
-                                    share....
-                                </p>
-                                <p>
-                                    - Thời gian làm việc (tăng seeding) và bảo hành tính từ ngày bắt đầu cho đến ngày
-                                    kết thúc job, tối đa là 1 tuần
-                                </p>
-                                <p>
-                                    - Hết thời gian của job đã order nếu không đủ số lượng hệ thống sẽ tự động hoàn lại
-                                    số tiền seeding chưa tăng cho bạn trong vòng 1 đến 3 ngày
-                                </p>
-                                <p>
-                                    - Vui lòng lấy đúng id bài viết, công khai và check kỹ job tránh tạo nhầm, tính năng
-                                    đang trong giai đoạn thử nghiệm nên sẽ không hoàn tiền nếu bạn tạo nhầm
-                                </p>
-                                <p>
-                                    - Chỉ nhận id bài viết công khai không nhập id album, id comment, id trang cá nhân,
-                                    id page,...
-                                </p>
-                                <p>
-                                    - Nhập id lỗi hoặc trong thời gian chạy die id thì hệ thống không hoàn lại tiền.
-                                </p>
-                                <p>
-                                    - Mỗi id có thể Buff tối đa 10 lần trên hệ thống để tránh Spam, max 1k trong ngày
-                                    (hoặc hơn nếu order giá cao), trên 1k thời gian lên chậm hơn trong vòng 7 ngày
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
     </div>
 @endsection
