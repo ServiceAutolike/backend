@@ -1,8 +1,8 @@
 var sitePrice = $('#sitePrice').val();
 var minNumber = 20;
 var maxNumber = 200000;
-var svCheck = '';
 var isCheckID = false;
+var id_fb, name_fb, post_fb = '';
 toastr.options = {
     "closeButton": false,
     "debug": false,
@@ -123,12 +123,12 @@ jQuery(document).ready(function ($) {
                     "post_id": $('#post_id').val(),
                     "sv": $('input[type=radio][name=sv]:checked').val(),
                     "reaction": listReaction,
+                    "type_check": $('#type_check').val(),
                     "number_seeding": $('#number_seeding').val(),
                     "sitePrice": $('#sitePrice').val(),
                     "warranty": $('#warranty').val()
 
                 };
-                console.log(data);
                 Swal.fire({
                     title: 'Xác Nhận',
                     text: 'Bạn có chắc chắn muốn tạo đơn!',
@@ -189,20 +189,18 @@ $('#number_seeding, #price').on('input', function() {
 });
 $('input[type=radio][name=sv]').on('change', function() {
     var sv = $('input[type=radio][name=sv]:checked').val();
-    if(sv == "sv_reaction") {
-        $('.wow, .love, .sad, .haha, .angry, .care').removeClass("d-none");
-        $('#sitePrice').val("70");
-        svCheck = "sv_reaction";
+    console.log(sv)
+    if(sv == "sv_like") {
+        $('.wow, .love, .sad, .haha, .angry, .care').addClass("d-none");
     }
     else {
-        $('.wow, .love, .sad, .haha, .angry, .care').addClass("d-none");
-        $('#sitePrice').val("50");
-        svCheck = "sv_like";
+        $('.wow, .love, .sad, .haha, .angry, .care').removeClass("d-none");
     }
     changeTotal(true);
 });
 
 $('input[type=radio][name=sv]:not(:disabled):first').prop('checked', true).change();
+
 
 function changeReaction() {
     var type = $('input[type=radio][name=sv]:checked').val();
@@ -211,30 +209,21 @@ function changeReaction() {
     }
 }
 
-
 function changeTotal(changeType = false) {
     var sv = $('input[type=radio][name=sv]:checked').val();
     if(sv == "sv_reaction") {
         var type = "cảm xúc";
+        $('#sitePrice').val(70);
+
     }
     else {
         var type = "like";
+        $('#sitePrice').val(50);
     }
-    var price = parseInt($('#sitePrice').val());
+    var price = $('#sitePrice').val();
     var newPrice = price;
     newPrice = Math.ceil(newPrice);
-    if (changeType) {
-        if ($('#sitePrice').length) {
-            $('#sitePrice').attr('min', sitePrice);
-            $('#sitePrice').val(sitePrice);
-        }
-        var numberSeeding = $('#number_seeding').val()
-        if (numberSeeding < minNumber)
-            $('#number_seeding').val(minNumber);
-            $('#number_seeding').attr('min', 20);
-            $('#number_seeding').attr('max', 100000);
-    }
-
+    if (changeType) $('#sitePrice').val(price);
     var number_seeding = $('#number_seeding').val();
     var total = newPrice * number_seeding;
     $('#priceServices').text(newPrice);
@@ -247,9 +236,10 @@ function changeTotal(changeType = false) {
 /// check ID Facebook
 $("#post_id").on("change key", function () {
     $('#loadCheck').addClass('spinner spinner-success spinner-right');
+    var typecheck = $('#type_check').val();
     var bodyData = {
         "url": $('#post_id').val(),
-        "type": "post"
+        "type": typecheck
     }
     $.ajax({
         url: '/api/find-id',
@@ -262,15 +252,10 @@ $("#post_id").on("change key", function () {
             if (result.code == 200) {
                 isCheckID = true;
                 toastr.success("Lấy ID Facebook thành công!");
-                $('#result').show();
-                $('#name_fb').text(result.message);
-                $('#id_fb').text(result.time);
+                $('#post_id').val(result.id);
             } else {
                 isCheckID = false;
                 toastr.error(result.message);
-                $('#result').hide();
-                $('#classNoti').removeClass(".alert-success");
-                $('#classNoti').addClass(".alert-danger");
             }
 
         },
