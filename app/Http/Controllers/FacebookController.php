@@ -29,6 +29,7 @@ class FacebookController extends Controller
     public function history($type) {
         if($type == "like") {
             $historyServices = Services::where('type_services', 'like_post')->Orwhere('type_services', 'reaction_post')->where('user_id', Auth::user()->id)->orderBy('id', 'DESC')->paginate(2);
+
             return view('page.app.facebook.history', compact('historyServices', 'type'));
         }
         else {
@@ -92,7 +93,7 @@ class FacebookController extends Controller
                                 $services->speed = "high";
                                 $services->type_services = "like_post";
                                 $services->warranty = 7;
-                                $services->total_price = $request->sitePrice;
+                                $services->price = $request->sitePrice;
                                 $services->total_price = $total_price;
                                 $services->total_warranty = 0;
                                 $services->reactions = $request->reaction;
@@ -182,7 +183,7 @@ class FacebookController extends Controller
                                 $services->speed = "high";
                                 $services->type_services = "reaction_post";
                                 $services->warranty = 7;
-                                $services->total_price = $request->sitePrice;
+                                $services->price = $request->sitePrice;
                                 $services->total_price = $total_price;
                                 $services->total_warranty = 0;
                                 $services->checkpoint = 0;

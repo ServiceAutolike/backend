@@ -82,9 +82,13 @@
                                                     <td>{!!  $history->transaction_code !!}</td>
                                                     <td>{!!  $history->url_services !!}</td>
                                                     <td>
-                                                        @foreach($history->reactionsgi as $info)
-                                                            <td>{!! $info->reactions !!}</td>
+                                                        @php
+                                                            $reactions = json_decode($history->reactions)
+                                                        @endphp
+                                                        @foreach($reactions as $item)
+                                                            <img src="/Backend-Assets/media/icon/{{ $item }}.svg" alt="">
                                                         @endforeach
+
                                                     </td>
                                                     <td>{!!  $history->number !!}</td>
                                                     <td>{!!  $history->number_success !!}</td>
