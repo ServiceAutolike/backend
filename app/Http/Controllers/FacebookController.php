@@ -23,8 +23,18 @@ class FacebookController extends Controller
 
     public function buffLikeUser()
     {
-        $historyServices = Services::where('type_services', 'like_post')->Orwhere('type_services', 'reaction_post')->where('user_id', Auth::user()->id)->orderBy('id','DESC')->get();
-        return view('page.app.facebook.user.buff-like', compact('historyServices'));
+        return view('page.app.facebook.user.buff-like');
+    }
+
+    public function history($type) {
+        if($type == "like") {
+            $historyServices = Services::where('type_services', 'like_post')->Orwhere('type_services', 'reaction_post')->where('user_id', Auth::user()->id)->orderBy('id', 'DESC')->paginate(2);
+            return view('page.app.facebook.history', compact('historyServices', 'type'));
+        }
+        else {
+            return view('error.404');
+        }
+
     }
 
     public function buffLikeUserStore(Request $request)
@@ -105,7 +115,6 @@ class FacebookController extends Controller
                             }
                             DB::table('users')->where('id', Auth::user()->id)->update( array('point'=>$updateBalance) );
                             DB::commit();
-
 
                             return response()->json(['code' => 200, 'status' => 'success', 'messages' => 'Tạo đơn mới thành công!']);
                         } else {
