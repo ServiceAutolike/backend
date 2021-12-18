@@ -26,15 +26,34 @@ class FacebookController extends Controller
         return view('page.app.facebook.user.buff-like');
     }
 
-    public function history($type) {
-        if($type == "like") {
-            $historyServices = Services::where('type_services', 'like_post')->Orwhere('type_services', 'reaction_post')->where('user_id', Auth::user()->id)->orderBy('id', 'DESC')->paginate(2);
 
-            return view('page.app.facebook.history', compact('historyServices', 'type'));
+    public function transaction_history($type) {
+        if($type == "like") {
+            return view('page.app.facebook.history', compact( 'type'));
         }
         else {
             return view('error.404');
         }
+    }
+
+
+    public function postHistory($type, Request $request) {
+            if ($request->ajax()) {
+                $historyServices = Services::where('type_services', 'like_post')->Orwhere('type_services', 'reaction_post')->where('user_id', Auth::user()->id)->orderBy('id', 'DESC')->paginate(2);
+                $response = [
+                    'pagination' => [
+                        'total' => $historyServices->total(),
+                        'per_page' => $historyServices->perPage(),
+                        'current_page' => $historyServices->currentPage(),
+                        'last_page' => $historyServices->lastPage(),
+                        'from' => $historyServices->firstItem(),
+                        'to' => $historyServices->lastItem()
+                    ],
+                    'data' => $historyServices
+                ];
+
+                return response(['success' => true, 'type' => $type, 'historyServices' => $response]);
+            }
 
     }
 

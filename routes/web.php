@@ -35,7 +35,8 @@ Route::group(['middleware' => 'login'], function () {
     Route::group(['prefix' => 'facebook'], function (){
         Route::get('/buff-follow', 'FacebookController@buffFollowUser')->name('faceUser.flow');
         Route::get('/buff-like', 'FacebookController@buffLikeUser')->name('faceUser.like');
-        Route::get('/history/{type}', 'FacebookController@history')->name('faceUser.history');
+        Route::get('/history/{type}', 'FacebookController@transaction_history')->name('faceUser.history');
+        Route::post('/history/{type}', 'FacebookController@postHistory')->name('faceUser.phistory');
         Route::post('/buff-like', 'FacebookController@buffLikeUserStore')->name('faceUser.postLike');
         Route::get('/buff-comment', 'FacebookController@buffCommentUser')->name('faceUser.cmt');
         Route::get('/buff-share', 'FacebookController@buffShareUser')->name('faceUser.share');

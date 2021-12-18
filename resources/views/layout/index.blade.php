@@ -38,7 +38,7 @@
         <!--begin::Post-->
         <div class="post d-flex flex-column-fluid" id="kt_post">
             <!--begin::Container-->
-            <div id="kt_content_container" class="container-xxl">
+            <div id="app" class="container-xxl">
                  @yield('content')
             </div>
         </div>
@@ -48,7 +48,7 @@
     <!--end::Main-->
     <script>var hostUrl = "Backend-Assets/";</script>
     <!--begin::Javascript-->
-
+    <script src="{{ asset('js/app.js') }}"></script>
     <!--begin::Global Javascript Bundle(used by all pages)-->
     <script src="{{ asset('Backend-Assets/plugins/global/plugins.bundle.js') }}"></script>
     <script src="{{ asset('Backend-Assets/js/scripts.bundle.js') }}"></script>

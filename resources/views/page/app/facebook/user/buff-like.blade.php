@@ -100,7 +100,9 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
                                     <label for="number">Chọn cảm xúc <span class="text-danger">*</span></label>
                                     <div class="list-reaction mt-3">
                                         <div class="icon-buff like">
@@ -174,6 +176,21 @@
                                         </div>
                                     </div>
 
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="speed">Chọn tốc độ <span class="text-danger">*</span></label>
+                                            <!--begin::Select-->
+                                            <select id="speed" name="speed" data-control="select2" data-hide-search="true" class="form-select form-select-sm bg-body border-body fw-bolder mt-4">
+                                                <option value="slow" selected="selected">Chậm</option>
+                                                <option value="medium">Trung Bình</option>
+                                                <option value="normal">Ổn Định</option>
+                                                <option value="high">Nhanh</option>
+                                            </select>
+                                            <!--end::Select-->
+                                        </div>
+                                    </div>
                                 </div>
 
 
