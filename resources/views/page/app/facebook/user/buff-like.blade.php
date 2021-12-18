@@ -9,28 +9,22 @@
                 <div class="card mb-5 mb-xl-10">
                     <div class="card-header card-header-stretch pb-0">
                         <!--begin::Title-->
-                        <div class="card-title">
-                            <h3 class="m-0">Buff Like Bài Viết</h3>
-                        </div>
+                        <ul class="nav nav-stretch nav-line-tabs border-transparent" role="tablist">
+                            <!--begin::Tab item-->
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link fs-5 fw-bolder me-5 active">Tạo tiến trình</a>
+                            </li>
+                            <!--end::Tab item-->
+                            <!--begin::Tab item-->
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link fs-5 fw-bolder" href="{{ route("faceUser.history", 'like') }}">Lịch sử order</a>
+                            </li>
+                            <!--end::Tab item-->
+                        </ul>
                         <!--end::Title-->
                         <!--begin::Toolbar-->
                         <div class="card-toolbar m-0">
                             <!--begin::Tab nav-->
-                            <ul class="nav nav-stretch nav-line-tabs border-transparent" role="tablist">
-                                <!--begin::Tab item-->
-                                <li class="nav-item" role="presentation">
-                                    <a id="kt_billing_create_tab" class="nav-link fs-5 fw-bolder me-5 active"
-                                       data-bs-toggle="tab" role="tab" href="#create" aria-selected="true">Tạo Đơn
-                                        Mới</a>
-                                </li>
-                                <!--end::Tab item-->
-                                <!--begin::Tab item-->
-                                <li class="nav-item" role="presentation">
-                                    <a id="kt_billing_history_tab" class="nav-link fs-5 fw-bolder" data-bs-toggle="tab"
-                                       role="tab" href="#history" aria-selected="false">Lịch Sử</a>
-                                </li>
-                                <!--end::Tab item-->
-                            </ul>
                             <!--end::Tab nav-->
                         </div>
                         <!--end::Toolbar-->
@@ -106,7 +100,9 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
                                     <label for="number">Chọn cảm xúc <span class="text-danger">*</span></label>
                                     <div class="list-reaction mt-3">
                                         <div class="icon-buff like">
@@ -180,6 +176,21 @@
                                         </div>
                                     </div>
 
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="speed">Chọn tốc độ <span class="text-danger">*</span></label>
+                                            <!--begin::Select-->
+                                            <select id="speed" name="speed" data-control="select2" data-hide-search="true" class="form-select form-select-sm bg-body border-body fw-bolder mt-4">
+                                                <option value="slow" selected="selected">Chậm</option>
+                                                <option value="medium">Trung Bình</option>
+                                                <option value="normal">Ổn Định</option>
+                                                <option value="high">Nhanh</option>
+                                            </select>
+                                            <!--end::Select-->
+                                        </div>
+                                    </div>
                                 </div>
 
 
@@ -207,54 +218,6 @@
                                 <button type="submit" class="btn btn-primary btn-block mr-2 right"> Tạo Tiến Trình</button>
                             </div>
 
-                        </div>
-                        <!--begin::Tab history-->
-                        <div id="history" class="tab-pane fade" role="tabpanel">
-                            <!--begin::Table wrapper-->
-                            <div class="table-responsive">
-                            <!--begin::Table-->
-                                <table class="table table-flush align-middle table-row-bordered table-row-solid gy-4 gs-9">
-                                    <!--begin::Thead-->
-                                    <thead class="border-gray-200 fs-5 fw-bold bg-lighten">
-                                    <tr>
-                                        <th class="min-w-50px">Thời Gian</th>
-                                        <th class="min-w-50px">Mã Giao Dịch</th>
-                                        <th class="min-w-100px">ID Facebook</th>
-                                        <th class="min-w-150px">Cảm Xúc</th>
-                                        <th class="min-w-50px">Số Lượng</th>
-                                        <th class="min-w-50px">Đã Chạy</th>
-                                        <th class="min-w-50px">Đơn Giá</th>
-                                        <th class="min-w-90px">Tổng Tiền</th>
-                                        <th class="min-w-100px">Trạng Thái</th>
-                                        <th class="min-w-100px">Công Cụ</th>
-
-                                    </tr>
-                                    </thead>
-                                    <!--end::Thead-->
-                                    <!--begin::Tbody-->
-                                    <tbody class="fw-6 fw-bold text-gray-600">
-                                    @foreach($historyServices as $historyServices)
-                                        <tr>
-                                            <td>{!!  $historyServices->created_at !!}</td>
-                                            <td>{!!  $historyServices->transaction_code !!}</td>
-                                            <td>{!!  $historyServices->url_services !!}</td>
-                                            <td>{!!  $historyServices->reactions !!}</td>
-                                            <td>{!!  $historyServices->number !!}</td>
-                                            <td>{!!  $historyServices->number_success !!}</td>
-                                            <td>{!!  $historyServices->price !!}</td>
-                                            <td>{!!  $historyServices->total_price !!}</td>
-                                            <td><span class="badge badge-warning rounded">Đang chạy: {!!  $historyServices->number_success !!}</span>
-                                            </td>
-                                            <td><button type="button" class="btn btn-sm btn-danger">Hủy Đơn</button> </td>
-                                        </tr>
-                                    @endforeach
-
-                                    </tbody>
-                                    <!--end::Tbody-->
-                                </table>
-                                <!--end::Table-->
-                            </div>
-                            <!--end::Table wrapper-->
                         </div>
 
                     </div>

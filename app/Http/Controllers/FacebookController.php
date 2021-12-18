@@ -23,8 +23,38 @@ class FacebookController extends Controller
 
     public function buffLikeUser()
     {
-        $historyServices = Services::where('type_services', 'like_post')->Orwhere('type_services', 'reaction_post')->where('user_id', Auth::user()->id)->orderBy('id','DESC')->get();
-        return view('page.app.facebook.user.buff-like', compact('historyServices'));
+        return view('page.app.facebook.user.buff-like');
+    }
+
+
+    public function transaction_history($type) {
+        if($type == "like") {
+            return view('page.app.facebook.history', compact( 'type'));
+        }
+        else {
+            return view('error.404');
+        }
+    }
+
+
+    public function postHistory($type, Request $request) {
+            if ($request->ajax()) {
+                $historyServices = Services::where('type_services', 'like_post')->Orwhere('type_services', 'reaction_post')->where('user_id', Auth::user()->id)->orderBy('id', 'DESC')->paginate(2);
+                $response = [
+                    'pagination' => [
+                        'total' => $historyServices->total(),
+                        'per_page' => $historyServices->perPage(),
+                        'current_page' => $historyServices->currentPage(),
+                        'last_page' => $historyServices->lastPage(),
+                        'from' => $historyServices->firstItem(),
+                        'to' => $historyServices->lastItem()
+                    ],
+                    'data' => $historyServices
+                ];
+
+                return response(['success' => true, 'type' => $type, 'historyServices' => $response]);
+            }
+
     }
 
     public function buffLikeUserStore(Request $request)
@@ -82,7 +112,7 @@ class FacebookController extends Controller
                                 $services->speed = "high";
                                 $services->type_services = "like_post";
                                 $services->warranty = 7;
-                                $services->total_price = $request->sitePrice;
+                                $services->price = $request->sitePrice;
                                 $services->total_price = $total_price;
                                 $services->total_warranty = 0;
                                 $services->reactions = $request->reaction;
@@ -105,7 +135,6 @@ class FacebookController extends Controller
                             }
                             DB::table('users')->where('id', Auth::user()->id)->update( array('point'=>$updateBalance) );
                             DB::commit();
-
 
                             return response()->json(['code' => 200, 'status' => 'success', 'messages' => 'Tạo đơn mới thành công!']);
                         } else {
@@ -173,7 +202,7 @@ class FacebookController extends Controller
                                 $services->speed = "high";
                                 $services->type_services = "reaction_post";
                                 $services->warranty = 7;
-                                $services->total_price = $request->sitePrice;
+                                $services->price = $request->sitePrice;
                                 $services->total_price = $total_price;
                                 $services->total_warranty = 0;
                                 $services->checkpoint = 0;

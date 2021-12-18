@@ -329,6 +329,11 @@ label {
 .d-none {
     display: none !important;
 }
-
-
-
+.right {
+    float: right;
+}
+.nav-line-tabs .nav-item .nav-link.active, .nav-line-tabs .nav-item .nav-link:hover:not(.disabled), .nav-line-tabs .nav-item.show .nav-link {
+    font-weight: 700 !important;
+    border-bottom: 3px solid #009ef7;
+    color: #009ef7;
+}
