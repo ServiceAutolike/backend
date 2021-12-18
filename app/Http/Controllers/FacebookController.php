@@ -52,7 +52,7 @@ class FacebookController extends Controller
                     'data' => $historyServices
                 ];
 
-                return response(['success' => true, 'type' => $type, 'historyServices' => $response]);
+                return response(['success' => true, 'fetchDataTransactions' => $response]);
             }
 
     }
