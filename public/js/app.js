@@ -2125,10 +2125,10 @@ __webpack_require__.r(__webpack_exports__);
       console.log(this.$route.params.type);
 
       if (this.$route.params.type == "like") {
-        // axios.post('/updateTransaction/' + this.$route.params.type).then(res => {
-        //     obj.historyServices = res.data.fetchDataTransactions.data.data
-        //     console.log(obj.historyServices)
-        // })
+        axios.post('/updateTransaction/' + this.$route.params.type).then(function (res) {
+          obj.historyServices = res.data.fetchDataTransactions.data.data;
+          console.log(obj.historyServices);
+        });
         axios.post('/facebook/history/' + this.$route.params.type + '?page=' + obj.pagination.current_page).then(function (res) {
           obj.loading = false;
           obj.historyServices = res.data.fetchDataTransactions.data.data;
