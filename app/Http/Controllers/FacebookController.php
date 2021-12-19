@@ -244,28 +244,11 @@ class FacebookController extends Controller
 
     public function updateTransaction($type) {
         if($type == "like") {
-            $getAllTransaction = Services::where('type_services', 'like_post')->Orwhere('type_services', 'reaction_post')->where('user_id', Auth::user()->id)->where('status',1)->orderBy('id', 'DESC')->get('service_code');
-            $get =  json_decode($getAllTransaction, true);
-            $cc = 0;
-            $dataRequest = [
-                'service_code' => $get[$cc]['service_code'],
-            ];
-            for ($i = 0; $i<count($getAllTransaction); $i++) {
-                //run
-                $header = [
-                    'Content-Type' => 'application/json',
-                    'Token' => Config::get('api.key.token'),
-                    'agency-secret-key' => Config::get('api.key.agency')
-                ];
-//                Http::withHeaders($header)->post(Config::get('api.urlRequest.services'), $dataRequest);
-//                    for($i2 =0; $i2 <$i; $i++) {
-//                        $dataRequest = [
-//                            'service_code' => $get[$cc+1]['service_code'],
-//                        ];
-//                        $dataCreate = Http::withHeaders($header)->post(Config::get('api.urlRequest.services'), $dataRequest);
-//                        return $dataCreate;
-//                }
-            }
+//            $getAllTransaction = Services::where('type_services', 'like_post')->Orwhere('type_services', 'reaction_post')->where('user_id', Auth::user()->id)->where('status',1)->orderBy('id', 'DESC')->get();
+//
+//            $firts = response()->json($getAllTransaction[0]['id']);
+//            $nextID = (int) $firts - 1;
+//            return response()->json(['firt'=>$firts, 'nextID' =>  $nextID]);
         }
 
 //        $response = [

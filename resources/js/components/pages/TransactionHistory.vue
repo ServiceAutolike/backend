@@ -144,10 +144,10 @@ export default {
             obj.loading = true
             console.log(this.$route.params.type)
             if (this.$route.params.type == "like") {
-                // axios.post('/updateTransaction/' + this.$route.params.type).then(res => {
-                //     obj.historyServices = res.data.fetchDataTransactions.data.data
-                //     console.log(obj.historyServices)
-                // })
+                axios.post('/updateTransaction/' + this.$route.params.type).then(res => {
+                    obj.historyServices = res.data.fetchDataTransactions.data.data
+                    console.log(obj.historyServices)
+                })
                 axios.post('/facebook/history/' + this.$route.params.type + '?page=' + obj.pagination.current_page).then(res => {
                     obj.loading = false
                     obj.historyServices = res.data.fetchDataTransactions.data.data
