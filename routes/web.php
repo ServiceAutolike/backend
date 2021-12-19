@@ -32,6 +32,8 @@ Route::group(['middleware' => 'login'], function () {
         Route::get('/history', 'RechargeController@history')->name('recharge.history');
     });
 
+    Route::post('/updateTransaction/{type}', 'FacebookController@updateTransaction')->name('faceUser.updateTransaction');
+
     Route::group(['prefix' => 'facebook'], function (){
         Route::get('/buff-follow', 'FacebookController@buffFollowUser')->name('faceUser.flow');
         Route::get('/buff-like', 'FacebookController@buffLikeUser')->name('faceUser.like');

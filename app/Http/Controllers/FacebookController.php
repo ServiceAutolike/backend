@@ -27,13 +27,8 @@ class FacebookController extends Controller
     }
 
 
-    public function transaction_history($type) {
-        if($type == "like") {
-            return view('page.app.facebook.history', compact( 'type'));
-        }
-        else {
-            return view('error.404');
-        }
+    public function transaction_history() {
+        return view('page.app.facebook.history');
     }
 
 
@@ -52,7 +47,7 @@ class FacebookController extends Controller
                     'data' => $historyServices
                 ];
 
-                return response(['success' => true, 'type' => $type, 'historyServices' => $response]);
+                return response(['success' => true,'type' => $type, 'fetchDataTransactions' => $response]);
             }
 
     }
@@ -123,8 +118,7 @@ class FacebookController extends Controller
                                 $services->number_success = 0;
                                 $services->status = 1;
                                 $services->reactions = json_encode($request->reaction, true);
-                                $services->created_at = $now;
-                                $services->updated_at = $now;
+                                $services->created_at = Carbon::now()->toDateTimeString();
                                 $services->save();
 
                             } catch (\Exception $e) {
@@ -246,6 +240,38 @@ class FacebookController extends Controller
              return response()->json(['code'=>400, 'status' => 'error', 'messages'=>'Lỗi sever phải là sv_like hoặc sv_reaction!']);
         }
 
+    }
+
+    public function updateTransaction($type) {
+        if($type == "like") {
+            $getAllTransaction = Services::where('type_services', 'like_post')->Orwhere('type_services', 'reaction_post')->where('user_id', Auth::user()->id)->where('status',1)->orderBy('id', 'DESC')->get('service_code');
+            $get =  json_decode($getAllTransaction, true);
+            $cc = 0;
+            $dataRequest = [
+                'service_code' => $get[$cc]['service_code'],
+            ];
+            for ($i = 0; $i<count($getAllTransaction); $i++) {
+                //run
+                $header = [
+                    'Content-Type' => 'application/json',
+                    'Token' => Config::get('api.key.token'),
+                    'agency-secret-key' => Config::get('api.key.agency')
+                ];
+//                Http::withHeaders($header)->post(Config::get('api.urlRequest.services'), $dataRequest);
+//                    for($i2 =0; $i2 <$i; $i++) {
+//                        $dataRequest = [
+//                            'service_code' => $get[$cc+1]['service_code'],
+//                        ];
+//                        $dataCreate = Http::withHeaders($header)->post(Config::get('api.urlRequest.services'), $dataRequest);
+//                        return $dataCreate;
+//                }
+            }
+        }
+
+//        $response = [
+//            'data' => $getAllTransaction
+//        ];
+//        return response(['success' => true, 'getAllTransaction' => $response]);
     }
 
     public function buffCommentUser()
