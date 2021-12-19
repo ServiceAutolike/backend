@@ -32,6 +32,8 @@ Route::group(['middleware' => 'login'], function () {
         Route::get('/history', 'RechargeController@history')->name('recharge.history');
     });
 
+    Route::post('/updateTransaction/{type}', 'FacebookController@updateTransaction')->name('faceUser.updateTransaction');
+
     Route::group(['prefix' => 'facebook'], function (){
         Route::get('/buff-follow', 'FacebookController@buffFollowUser')->name('faceUser.flow');
         Route::get('/buff-like', 'FacebookController@buffLikeUser')->name('faceUser.like');
@@ -61,6 +63,34 @@ Route::group(['middleware' => 'login'], function () {
         });
         Route::get('/welcome', function (){
             return view('welcome');
+        });
+    });
+    Route::group(['prefix' => 'support'], function (){
+        Route::get('/user/{id}', 'SupportController@indexUser')->name('user.support.list');
+        Route::get('/create', 'SupportController@formCreate')->name('support.create.form');
+        Route::post('/create', 'SupportController@storeUser')->name('support.create');
+    });
+    Route::group(['prefix' => 'support_chat'], function (){
+        Route::get('/{id}', 'SupportChatController@formChat')->name('support.chat.form');
+        Route::post('/', 'SupportChatController@chat')->name('support.chat');
+    });
+});
+Route::group(['middleware' => 'login'], function () {
+    Route::group(['middleware' => 'role'], function () {
+        Route::group(['prefix' => 'admin'], function (){
+            Route::group(['prefix' => 'post'], function (){
+                Route::get('/', 'PostController@index')->name('post.index');
+                Route::post('/', 'PostController@store')->name('post.create');
+
+//                Route::get('/card', 'RechargeController@rechargeCard')->name('recharge.card');
+//                Route::get('/history', 'RechargeController@history')->name('recharge.history');
+            });
+
+
+//            Route::get('/', 'RechargeController@rechargeBank')->name('recharge.bank');
+//            Route::get('/', 'RechargeController@rechargeMomo')->name('recharge.momo');
+//            Route::get('/', 'RechargeController@rechargeCard')->name('recharge.card');
+//            Route::get('/history', 'RechargeController@history')->name('recharge.history');
         });
     });
 });

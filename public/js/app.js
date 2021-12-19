@@ -2118,14 +2118,23 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    updateTransaction: function updateTransaction() {},
     fetchData: function fetchData() {
       var obj = this;
       obj.loading = true;
-      axios.post('/facebook/history/like?page=' + obj.pagination.current_page).then(function (res) {
-        obj.loading = false;
-        obj.historyServices = res.data.fetchDataTransactions.data.data;
-        obj.pagination = res.data.fetchDataTransactions.pagination;
-      });
+      console.log(this.$route.params.type);
+
+      if (this.$route.params.type == "like") {
+        // axios.post('/updateTransaction/' + this.$route.params.type).then(res => {
+        //     obj.historyServices = res.data.fetchDataTransactions.data.data
+        //     console.log(obj.historyServices)
+        // })
+        axios.post('/facebook/history/' + this.$route.params.type + '?page=' + obj.pagination.current_page).then(function (res) {
+          obj.loading = false;
+          obj.historyServices = res.data.fetchDataTransactions.data.data;
+          obj.pagination = res.data.fetchDataTransactions.pagination;
+        });
+      } else {}
     }
   }
 });
@@ -21034,7 +21043,7 @@ var staticRenderFns = [
             "a",
             {
               staticClass: "nav-link fs-5 fw-bolder me-5",
-              attrs: { href: "" },
+              attrs: { href: "/facebook/buff-like" },
             },
             [_vm._v("Tạo Tiến\n                            Trình")]
           ),
@@ -36746,8 +36755,18 @@ __webpack_require__.r(__webpack_exports__);
 
 var routes = [// Account Page
 {
-  path: '/facebook/history/like',
+  path: '/facebook/history/:type',
   name: 'Transaction History',
+  params: {
+    type: "like"
+  },
+  component: _components_pages_TransactionHistory__WEBPACK_IMPORTED_MODULE_0__["default"]
+}, {
+  path: '/facebook/history/:type',
+  name: 'Transaction History Sub',
+  params: {
+    type: "sub"
+  },
   component: _components_pages_TransactionHistory__WEBPACK_IMPORTED_MODULE_0__["default"]
 }];
 
@@ -36771,8 +36790,8 @@ var routes = [// Account Page
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\backend\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\backend\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/backend/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/backend/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

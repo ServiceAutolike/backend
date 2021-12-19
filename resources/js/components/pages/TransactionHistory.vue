@@ -7,7 +7,7 @@
                     <ul class="nav nav-stretch nav-line-tabs border-transparent" >
                         <!--begin::Tab item-->
                         <li class="nav-item" role="presentation">
-                            <a href="" class="nav-link fs-5 fw-bolder me-5">Tạo Tiến
+                            <a href="/facebook/buff-like" class="nav-link fs-5 fw-bolder me-5">Tạo Tiến
                             Trình</a>
                         </li>
                         <!--end::Tab item-->
@@ -120,7 +120,9 @@ export default {
             pagination_payout: {
                 'current_page': 1
             },
+
         }
+
     },
     created () {
         this.fetchData()
@@ -134,14 +136,27 @@ export default {
         },
     },
     methods : {
+        updateTransaction() {
+
+        },
         fetchData() {
             let obj = this
             obj.loading = true
-            axios.post('/facebook/history/like?page=' + obj.pagination.current_page).then(res => {
-                obj.loading = false
-                obj.historyServices = res.data.fetchDataTransactions.data.data
-                obj.pagination = res.data.fetchDataTransactions.pagination;
-            })
+            console.log(this.$route.params.type)
+            if (this.$route.params.type == "like") {
+                // axios.post('/updateTransaction/' + this.$route.params.type).then(res => {
+                //     obj.historyServices = res.data.fetchDataTransactions.data.data
+                //     console.log(obj.historyServices)
+                // })
+                axios.post('/facebook/history/' + this.$route.params.type + '?page=' + obj.pagination.current_page).then(res => {
+                    obj.loading = false
+                    obj.historyServices = res.data.fetchDataTransactions.data.data
+                    obj.pagination = res.data.fetchDataTransactions.pagination;
+                })
+            }
+            else {
+
+            }
         },
     }
 }
