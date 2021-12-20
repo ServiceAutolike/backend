@@ -81,9 +81,9 @@ Route::group(['middleware' => 'login'], function () {
             Route::group(['prefix' => 'post'], function (){
                 Route::get('/', 'PostController@index')->name('post.index');
                 Route::post('/', 'PostController@store')->name('post.create');
-
-//                Route::get('/card', 'RechargeController@rechargeCard')->name('recharge.card');
-//                Route::get('/history', 'RechargeController@history')->name('recharge.history');
+            });
+            Route::group(['prefix' => 'support'], function (){
+                Route::get('/', 'SupportController@indexAdmin')->name('support.index');
             });
 
 

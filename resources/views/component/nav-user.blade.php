@@ -479,7 +479,7 @@
 
 
                     <div class="menu-item">
-                        <a class="menu-link" href="/support/user/{{auth()->user()->id}}">
+                        <a class="menu-link" href="/support/user/{{auth()->user()->code}}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
