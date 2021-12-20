@@ -2093,7 +2093,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2113,11 +2112,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     this.fetchData();
   },
-  computed: {
-    abc_t: function abc_t() {
-      return this.loading_t;
-    }
-  },
+  computed: {},
   watch: {
     $route: {
       immediate: true,
@@ -2127,13 +2122,9 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    updateTransaction: function updateTransaction() {
-      this.loading_t = true;
-    },
     fetchData: function fetchData() {
       var obj = this;
       obj.loading = true;
-      console.log(this.$route.params.type);
 
       if (this.$route.params.type == "like") {
         axios.post('/updateTransaction/' + this.$route.params.type).then(function (res) {
@@ -20908,11 +20899,6 @@ var render = function () {
                               ]
                             ),
                             _vm._v(" "),
-                            _vm._v(
-                              "\n                                        " +
-                                _vm._s(_vm.abc_t) +
-                                "\n                                        "
-                            ),
                             _c(
                               "tbody",
                               { staticClass: "fw-6 fw-bold text-gray-600" },
@@ -20989,7 +20975,7 @@ var render = function () {
                                             _vm._v(
                                               _vm._s(
                                                 _vm.services[
-                                                  historyData.transaction_code
+                                                  historyData.service_code
                                                 ]
                                               ) + " "
                                             ),
@@ -21000,7 +20986,15 @@ var render = function () {
                                           {
                                             staticClass: "badge badge-success",
                                           },
-                                          [_vm._v(_vm._s(historyData.status))]
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.services[
+                                                  historyData.number_success
+                                                ]
+                                              )
+                                            ),
+                                          ]
                                         ),
                                       ]),
                                       _vm._v(" "),
@@ -21011,9 +21005,6 @@ var render = function () {
                                             staticClass:
                                               "btn btn-sm btn-danger",
                                             attrs: { id: "" },
-                                            on: {
-                                              click: _vm.updateTransaction,
-                                            },
                                           },
                                           [_vm._v("Hủy Đơn")]
                                         ),
@@ -36827,8 +36818,8 @@ var routes = [// Account Page
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\backend\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\backend\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/backend/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/backend/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
