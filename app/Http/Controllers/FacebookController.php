@@ -243,8 +243,6 @@ class FacebookController extends Controller
     }
 
     public function updateTransaction($type) {
-        $i = 0;
-        $rq = [];
         $header = [
             'Content-Type' => 'application/json',
             'Token' => Config::get('api.key.token'),
@@ -255,11 +253,12 @@ class FacebookController extends Controller
             $getAllTransactions = Services::where('type_services', 'like_post')->Orwhere('type_services', 'reaction_post')->where('user_id', Auth::user()->id)->where('status',1)->orderBy('id', 'DESC')->get();
             foreach ($getAllTransactions as $getAllTransaction) {
                 $connectApi = responseApi($getAllTransaction->service_code);
-                $data[$getAllTransaction->transaction_code] = $connectApi->data->data[0]->status;
-                if ($getAllTransaction->status != $connectApi->data->data[0]->status) {
-                    $getAllTransaction->status = $connectApi->data->data[0]->status;
-                    $getAllTransaction->save();
-                }
+                $data[$getAllTransaction->service_code] = $connectApi->data->data[0]->status;
+                $data[$getAllTransaction->number_success] =  $connectApi->data->data[0]->number_success_int;
+
+                $getAllTransaction->status = $connectApi->data->data[0]->status;
+                $getAllTransaction->number_success = $connectApi->data->data[0]->number_success;
+                $getAllTransaction->save();
 
 
             }
