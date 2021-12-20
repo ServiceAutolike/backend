@@ -25,7 +25,6 @@ class SupportController extends Controller
             $items->service = config('common.select_support')[$items->service];
             $items->status = config('common.status_support')[$items->status];
             $items->count_chat = count(SupportChatModel::where("code_chat", $items->code_chat)->get());
-
         }
         return view('page.app.support.list',compact('data', 'select_service','count_status1', 'count_status2', 'count_status3'));
     }

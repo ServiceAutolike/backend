@@ -51,7 +51,7 @@
                                     </td>
                                     <td><span class="badge {{$item->class_service}}">{{$item->service}}</span> </td>
                                     <td><span class="badge {{$item->class_status}}">{{$item->status}}</span> </td>
-                                    <td>2 phút trước</td>
+                                    <td>{{convertTime($item->created_at)}}</td>
                                 </tr>
                             @endforeach
                             </tbody>

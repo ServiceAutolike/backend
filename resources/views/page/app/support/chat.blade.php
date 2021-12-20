@@ -111,7 +111,7 @@
                                 <div class="d-flex align-items-center mb-2">
                                     <!--begin::Details-->
                                     <div class="me-3">
-                                        <span class="text-muted fs-7 mb-1">5 mins</span>
+                                        <span class="text-muted fs-7 mb-1">{{convertTime($item->created_at)}}</span>
                                         <a href="#" class="fs-5 fw-bolder text-gray-900 text-hover-primary ms-1">
                                             {{$item->user->name}}
                                         </a>
@@ -142,7 +142,7 @@
                                         <!--begin::Details-->
                                         <div class="ms-3">
                                             <a href="#" class="fs-5 fw-bolder text-gray-900 text-hover-primary me-1">{{$item->user->name}}</a>
-                                            <span class="text-muted fs-7 mb-1">2 mins</span>
+                                            <span class="text-muted fs-7 mb-1">{{convertTime($item->created_at)}}</span>
                                         </div>
                                         <!--end::Details-->
                                     </div>
@@ -172,7 +172,7 @@
                     @csrf
                     <input type="hidden" name="id_user" value="{{auth()->user()->id}}">
                     <input type="hidden" name="code_chat" value="{{$data->code_chat}}">
-                    <textarea class="form-control form-control-flush mb-3" rows="1" name="message" placeholder="Type a message"></textarea>
+                    <textarea class="form-control form-control-flush mb-3" rows="1" name="message" placeholder="Gõ một tin nhắn"></textarea>
                     <!--end::Input-->
                     <!--begin:Toolbar-->
                     <div class="d-flex flex-stack">
@@ -187,7 +187,7 @@
                     </div>
                     <!--end::Actions-->
                     <!--begin::Send-->
-                    <button class="btn btn-primary" type="submit" >Send</button>
+                    <button class="btn btn-primary" type="submit" >Gửi</button>
                     <!--end::Send-->
                 </div>
                 </form>
