@@ -18,7 +18,7 @@
             </div>
         </div>
     </div>
-</template>>
+</template>
 <style>
 .timeline-item {
     background: #fff;

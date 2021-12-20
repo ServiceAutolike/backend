@@ -70,8 +70,9 @@
                                         </thead>
                                         <!--end::Thead-->
                                         <!--begin::Tbody-->
+                                        {{ abc_t }}
                                         <tbody class="fw-6 fw-bold text-gray-600">
-                                            <tr v-for="historyData in historyServices">
+                                            <tr v-for="historyData in historyServices" :key="historyData.transaction_code">
                                                 <td>{{ historyData.created_at }}</td>
                                                 <td><span class="badge badge-light">{{ historyData.transaction_code }}</span></td>
                                                 <td>{{ historyData.url_services }}</td>
@@ -79,8 +80,8 @@
                                                 <td>{{ historyData.number }}</td>
                                                 <td>{{ historyData.price }}</td>
                                                 <td>{{ historyData.total_price }}</td>
-                                                <td><span class="badge badge-light-warning">Đang chạy </span><span class="badge badge-success">{{ historyData.status }}</span></td>
-                                                <td><button id="" class="btn btn-sm btn-danger">Hủy Đơn</button></td>
+                                                <td><span class="badge badge-light-warning">{{ services[historyData.transaction_code] }} </span><span class="badge badge-success">{{ historyData.status }}</span></td>
+                                                <td><button id="" class="btn btn-sm btn-danger" @click="updateTransaction">Hủy Đơn</button></td>
                                             </tr>
                                         </tbody>
 
@@ -113,7 +114,9 @@ export default {
     data() {
         return {
             historyServices: Object,
+            services: [],
             loading: false,
+            loading_t: false,
             pagination: {
                 'current_page': 1
             },
@@ -125,7 +128,15 @@ export default {
 
     },
     created () {
+
+    },
+    mounted() {
         this.fetchData()
+    },
+    computed: {
+        abc_t() {
+            return this.loading_t
+        }
     },
     watch: {
         $route: {
@@ -137,17 +148,16 @@ export default {
     },
     methods : {
         updateTransaction() {
-
+            this.loading_t = true
         },
         fetchData() {
             let obj = this
             obj.loading = true
             console.log(this.$route.params.type)
             if (this.$route.params.type == "like") {
-                // axios.post('/updateTransaction/' + this.$route.params.type).then(res => {
-                //     obj.historyServices = res.data.fetchDataTransactions.data.data
-                //     console.log(obj.historyServices)
-                // })
+                axios.post('/updateTransaction/' + this.$route.params.type).then(res => {
+                    obj.services = res.data
+                })
                 axios.post('/facebook/history/' + this.$route.params.type + '?page=' + obj.pagination.current_page).then(res => {
                     obj.loading = false
                     obj.historyServices = res.data.fetchDataTransactions.data.data
@@ -157,7 +167,7 @@ export default {
             else {
 
             }
-        },
+        }
     }
 }
 </script>
