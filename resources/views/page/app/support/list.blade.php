@@ -187,7 +187,7 @@
                                                             </svg>
                                                         </span>
                                                         <span>
-                                                            2 giờ trước
+                                                            {{convertTime($item->created_at)}}
                                                         </span>
                                                     </span>
                                                     <!--end::Svg Icon-->
