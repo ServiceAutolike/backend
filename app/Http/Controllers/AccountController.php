@@ -93,6 +93,8 @@ class AccountController extends Controller
         $model->email = $request->email;
         $model->phone = $request->phone;
         $model->password = Hash::make($request->password);
+        $model->code = substr(md5(uniqid(mt_rand(), true)) , 0, 25);
+        $model->image = "uploads/default-avatar.png";
         $model->save();
         return redirect()->route('account.login');
     }

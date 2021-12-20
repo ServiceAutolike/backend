@@ -11,11 +11,20 @@
                 <div class="card-title">
                     <!--begin::User-->
                     <div class="d-flex justify-content-center flex-column me-3">
-                        <a href="#" class="fs-4 fw-bolder text-gray-900 text-hover-primary me-1 mb-2 lh-1">Brian Cox</a>
+                        <span class="fs-4 fw-bolder text-gray-900 text-hover-primary me-1 mb-5 lh-1 symbol symbol-35px symbol-circle">
+                            <img alt="Pic" src="{{asset("/storage/".$data->user->image)}}" />
+                            {{$data->subject}}
+                        </span>
                         <!--begin::Info-->
-                        <div class="mb-0 lh-1">
-                            <span class="badge badge-success badge-circle w-10px h-10px me-1"></span>
-                            <span class="fs-7 fw-bold text-muted">Active</span>
+                        <div class="mb-2 lh-1">
+                            <span class="badge badge-success badge-circle w-5px h-5px me-1"></span>
+                            <span class="fs-7 fw-bold text-gray-900">Loại hỗ trợ :</span>
+                            <span class="badge {{$data->class_service}} my-1">{{$data->service}}</span>
+                        </div>
+                        <div class="mb-2 lh-1">
+                            <span class="badge badge-success badge-circle w-5px h-5px me-1"></span>
+                            <span class="fs-7 fw-bold text-gray-900">Mô tả :</span>
+                            <span class="fs-7 fw-bold p-2 rounded bg-light-primary text-dark fw-bold mw-lg-400px text-end">{{$data->description}}</span>
                         </div>
                         <!--end::Info-->
                     </div>
@@ -103,12 +112,14 @@
                                     <!--begin::Details-->
                                     <div class="me-3">
                                         <span class="text-muted fs-7 mb-1">5 mins</span>
-                                        <a href="#" class="fs-5 fw-bolder text-gray-900 text-hover-primary ms-1">{{$item->user->name}}</a>
+                                        <a href="#" class="fs-5 fw-bolder text-gray-900 text-hover-primary ms-1">
+                                            {{$item->user->name}}
+                                        </a>
                                     </div>
                                     <!--end::Details-->
                                     <!--begin::Avatar-->
                                     <div class="symbol symbol-35px symbol-circle">
-                                        <img alt="Pic" src="https://picsum.photos/id/237/200/300" />
+                                        <img alt="Pic" src="{{asset("storage/".$item->user->image)}}" />
                                     </div>
                                     <!--end::Avatar-->
                                 </div>
@@ -125,7 +136,7 @@
                                     <div class="d-flex align-items-center mb-2">
                                         <!--begin::Avatar-->
                                         <div class="symbol symbol-35px symbol-circle">
-                                            <img alt="Pic" src="https://picsum.photos/id/237/200/300" />
+                                            <img alt="Pic" src="{{asset("storage/".$item->user->image)}}" />
                                         </div>
                                         <!--end::Avatar-->
                                         <!--begin::Details-->
@@ -166,14 +177,14 @@
                     <!--begin:Toolbar-->
                     <div class="d-flex flex-stack">
                     <!--begin::Actions-->
-{{--                    <div class="d-flex align-items-center me-2">--}}
-{{--                        <button class="btn btn-sm btn-icon btn-active-light-primary me-1" type="button" data-bs-toggle="tooltip" title="Coming soon">--}}
-{{--                            <i class="bi bi-paperclip fs-3"></i>--}}
-{{--                        </button>--}}
-{{--                        <button class="btn btn-sm btn-icon btn-active-light-primary me-1" type="button" data-bs-toggle="tooltip" title="Coming soon">--}}
-{{--                            <i class="bi bi-upload fs-3"></i>--}}
-{{--                        </button>--}}
-{{--                    </div>--}}
+                    <div class="d-flex align-items-center me-2">
+                        <button class="btn btn-sm btn-icon btn-active-light-primary me-1" type="button" data-bs-toggle="tooltip" title="Coming soon">
+                            <i class="bi bi-paperclip fs-3"></i>
+                        </button>
+                        <button class="btn btn-sm btn-icon btn-active-light-primary me-1" type="button" data-bs-toggle="tooltip" title="Coming soon">
+                            <i class="bi bi-upload fs-3"></i>
+                        </button>
+                    </div>
                     <!--end::Actions-->
                     <!--begin::Send-->
                     <button class="btn btn-primary" type="submit" >Send</button>
