@@ -2093,11 +2093,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       historyServices: Object,
+      services: [],
       loading: false,
+      loading_t: false,
       pagination: {
         'current_page': 1
       },
@@ -2106,8 +2109,14 @@ __webpack_require__.r(__webpack_exports__);
       }
     };
   },
-  created: function created() {
+  created: function created() {},
+  mounted: function mounted() {
     this.fetchData();
+  },
+  computed: {
+    abc_t: function abc_t() {
+      return this.loading_t;
+    }
   },
   watch: {
     $route: {
@@ -2118,7 +2127,9 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    updateTransaction: function updateTransaction() {},
+    updateTransaction: function updateTransaction() {
+      this.loading_t = true;
+    },
     fetchData: function fetchData() {
       var obj = this;
       obj.loading = true;
@@ -2126,8 +2137,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.$route.params.type == "like") {
         axios.post('/updateTransaction/' + this.$route.params.type).then(function (res) {
-          obj.historyServices = res.data.fetchDataTransactions.data.data;
-          console.log(obj.historyServices);
+          obj.services = res.data;
         });
         axios.post('/facebook/history/' + this.$route.params.type + '?page=' + obj.pagination.current_page).then(function (res) {
           obj.loading = false;
@@ -20898,91 +20908,118 @@ var render = function () {
                               ]
                             ),
                             _vm._v(" "),
+                            _vm._v(
+                              "\n                                        " +
+                                _vm._s(_vm.abc_t) +
+                                "\n                                        "
+                            ),
                             _c(
                               "tbody",
                               { staticClass: "fw-6 fw-bold text-gray-600" },
                               _vm._l(
                                 _vm.historyServices,
                                 function (historyData) {
-                                  return _c("tr", [
-                                    _c("td", [
-                                      _vm._v(_vm._s(historyData.created_at)),
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", [
+                                  return _c(
+                                    "tr",
+                                    { key: historyData.transaction_code },
+                                    [
+                                      _c("td", [
+                                        _vm._v(_vm._s(historyData.created_at)),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _c(
+                                          "span",
+                                          { staticClass: "badge badge-light" },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                historyData.transaction_code
+                                              )
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(
+                                          _vm._s(historyData.url_services)
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
                                       _c(
-                                        "span",
-                                        { staticClass: "badge badge-light" },
-                                        [
-                                          _vm._v(
-                                            _vm._s(historyData.transaction_code)
-                                          ),
-                                        ]
+                                        "td",
+                                        _vm._l(
+                                          JSON.parse(historyData.reactions),
+                                          function (reactions) {
+                                            return _c("img", {
+                                              staticClass: "me-2",
+                                              attrs: {
+                                                src:
+                                                  "/Backend-Assets/media/icon/" +
+                                                  reactions +
+                                                  ".svg",
+                                              },
+                                            })
+                                          }
+                                        ),
+                                        0
                                       ),
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _vm._v(_vm._s(historyData.url_services)),
-                                    ]),
-                                    _vm._v(" "),
-                                    _c(
-                                      "td",
-                                      _vm._l(
-                                        JSON.parse(historyData.reactions),
-                                        function (reactions) {
-                                          return _c("img", {
-                                            staticClass: "me-2",
-                                            attrs: {
-                                              src:
-                                                "/Backend-Assets/media/icon/" +
-                                                reactions +
-                                                ".svg",
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(_vm._s(historyData.number)),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(_vm._s(historyData.price)),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(_vm._s(historyData.total_price)),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass:
+                                              "badge badge-light-warning",
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.services[
+                                                  historyData.transaction_code
+                                                ]
+                                              ) + " "
+                                            ),
+                                          ]
+                                        ),
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass: "badge badge-success",
+                                          },
+                                          [_vm._v(_vm._s(historyData.status))]
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _c(
+                                          "button",
+                                          {
+                                            staticClass:
+                                              "btn btn-sm btn-danger",
+                                            attrs: { id: "" },
+                                            on: {
+                                              click: _vm.updateTransaction,
                                             },
-                                          })
-                                        }
-                                      ),
-                                      0
-                                    ),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _vm._v(_vm._s(historyData.number)),
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _vm._v(_vm._s(historyData.price)),
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _vm._v(_vm._s(historyData.total_price)),
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _c(
-                                        "span",
-                                        {
-                                          staticClass:
-                                            "badge badge-light-warning",
-                                        },
-                                        [_vm._v("Đang chạy ")]
-                                      ),
-                                      _c(
-                                        "span",
-                                        { staticClass: "badge badge-success" },
-                                        [_vm._v(_vm._s(historyData.status))]
-                                      ),
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _c(
-                                        "button",
-                                        {
-                                          staticClass: "btn btn-sm btn-danger",
-                                          attrs: { id: "" },
-                                        },
-                                        [_vm._v("Hủy Đơn")]
-                                      ),
-                                    ]),
-                                  ])
+                                          },
+                                          [_vm._v("Hủy Đơn")]
+                                        ),
+                                      ]),
+                                    ]
+                                  )
                                 }
                               ),
                               0

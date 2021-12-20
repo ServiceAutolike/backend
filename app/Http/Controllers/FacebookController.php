@@ -243,18 +243,28 @@ class FacebookController extends Controller
     }
 
     public function updateTransaction($type) {
+        $i = 0;
+        $rq = [];
+        $header = [
+            'Content-Type' => 'application/json',
+            'Token' => Config::get('api.key.token'),
+            'agency-secret-key' => Config::get('api.key.agency')
+        ];
         if($type == "like") {
-//            $getAllTransaction = Services::where('type_services', 'like_post')->Orwhere('type_services', 'reaction_post')->where('user_id', Auth::user()->id)->where('status',1)->orderBy('id', 'DESC')->get();
-//
-//            $firts = response()->json($getAllTransaction[0]['id']);
-//            $nextID = (int) $firts - 1;
-//            return response()->json(['firt'=>$firts, 'nextID' =>  $nextID]);
-        }
+            $data = [];
+            $getAllTransactions = Services::where('type_services', 'like_post')->Orwhere('type_services', 'reaction_post')->where('user_id', Auth::user()->id)->where('status',1)->orderBy('id', 'DESC')->get();
+            foreach ($getAllTransactions as $getAllTransaction) {
+                $connectApi = responseApi($getAllTransaction->service_code);
+                $data[$getAllTransaction->transaction_code] = $connectApi->data->data[0]->status;
+                if ($getAllTransaction->status != $connectApi->data->data[0]->status) {
+                    $getAllTransaction->status = $connectApi->data->data[0]->status;
+                    $getAllTransaction->save();
+                }
 
-//        $response = [
-//            'data' => $getAllTransaction
-//        ];
-//        return response(['success' => true, 'getAllTransaction' => $response]);
+
+            }
+            return response()->json($data);
+        }
     }
 
     public function buffCommentUser()
