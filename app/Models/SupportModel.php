@@ -8,6 +8,6 @@ class SupportModel extends Model
 {
     protected $table = "support";
     protected $fillable = [
-      'id_user', 'subject', 'service', 'id_port', 'description'
+      'id_user', 'subject', 'service', 'id_port', 'description','code_user'
     ];
 }

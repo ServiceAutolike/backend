@@ -11,6 +11,9 @@ class SupportChatController extends Controller
     public function formChat($id)
     {
         $data = DB::table('support')->where('code_chat', $id)->first();
+        $data->user = DB::table('users')->where('id', $data->id_user)->first();
+        $data->class_service = config('common.class_service')[$data->service];
+        $data->service = config('common.select_support')[$data->service];
         $dataChat = DB::table('support_chat')->where('code_chat', $id)->get();
         foreach ($dataChat as $items){
             $items->user = DB::table('users')->where('id', $items->id_user)->first();

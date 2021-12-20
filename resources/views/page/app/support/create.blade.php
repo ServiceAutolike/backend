@@ -1,5 +1,5 @@
 @extends('layout.index')
-@section('title', 'Lịch Sử Nạp Tiền')
+@section('title', 'Tạo hỗ trợ')
 @section('content')
     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
         <!--begin::Post-->
@@ -11,17 +11,12 @@
                     <div class="card-header">
                         <!--begin::Heading-->
                         <div class="card-title">
-                            <h3>Hỗ trợ của bạn</h3>
+                            <h3>Tạo mới một hỗ trợ</h3>
                         </div>
                         <!--end::Heading-->
 
                         <!--begin::Toolbar-->
                         <div class="card-toolbar">
-                            <button class="btn btn-primary text-center" id="kt_widget_5_load_more_btn">
-                                <span class="indicator-label">Refresh</span>
-                                <span class="indicator-progress">Đang tải... <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                            </button>
-                            <button data-bs-toggle="modal" data-bs-target="#kt_modal_new_ticket" class="btn btn-primary fw-bolder fs-8 fs-lg-base">Tao ho tro</button>
                         </div>
                         <!--end::Toolbar-->
                     </div>
@@ -43,22 +38,24 @@
                                             <form id="kt_modal_new_ticket_form" class="form" action="{{route('support.create')}}" method="post" enctype="multipart/form-data">
                                                 @csrf
                                                 <input type="hidden" name="id_user" value="{{auth()->user()->id}}">
+                                                <input type="hidden" name="code_user" value="{{auth()->user()->code}}">
                                                 <!--begin::Input group-->
                                                 <div class="d-flex flex-column mb-8 fv-row">
                                                     <!--begin::Label-->
                                                     <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                                        <span class="required">Subject</span>
+                                                        <span class="required">Tiêu đề</span>
                                                         <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify a subject for your issue"></i>
                                                     </label>
                                                     <!--end::Label-->
-                                                    <input type="text" class="form-control form-control-solid" placeholder="Enter your ticket subject" name="subject" />
+                                                    <input type="text" class="form-control form-control-solid" placeholder="Vui lòng nhập tiêu đề của bạn" name="subject" />
+                                                    <p class="text-danger p-2">Chú ý: <br>Tiêu đề ngắn gọn, nói vào nội dung chính ví dụ: Nạp tiền momo bị lỗi, chưa được cộng tiền momo, tăng like bị lỗi,.... Tránh những từ ngữ thô tục. Nếu vi phạm những điều này Admin có quyền khóa tài khoản của bạn!</p>
                                                 </div>
                                                 <!--end::Input group-->
                                                 <!--begin::Input group-->
                                                 <div class="row g-9 mb-8">
                                                     <!--begin::Col-->
                                                     <div class="col-md-6 fv-row">
-                                                        <label class="required fs-6 fw-bold mb-2">Product</label>
+                                                        <label class="required fs-6 fw-bold mb-2">Dịch vụ</label>
                                                         <select class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Chọn một dịch vụ" name="service">
                                                             <option value="">Chọn một dịch vụ...</option>
                                                             @foreach($select_service as $key => $value)
@@ -70,24 +67,25 @@
                                                     <!--begin::Col-->
                                                     <div class="col-md-6 fv-row">
                                                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                                            <span >id bai viet(neu co)</span>
+                                                            <span >ID bài viết(nếu có)</span>
                                                             <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify a subject for your issue"></i>
                                                         </label>
                                                         <!--end::Label-->
-                                                        <input type="text" class="form-control form-control-solid" placeholder="Enter your ticket subject" name="id_port" />
+                                                        <input type="text" class="form-control form-control-solid" placeholder="Nhập id bài viết" name="id_port" />
                                                     </div>
                                                     <!--end::Col-->
                                                 </div>
                                                 <!--end::Input group-->
                                                 <!--begin::Input group-->
                                                 <div class="d-flex flex-column mb-8 fv-row">
-                                                    <label class="fs-6 fw-bold mb-2">Description</label>
-                                                    <textarea class="form-control form-control-solid" rows="4" name="description" placeholder="Type your ticket description"></textarea>
+                                                    <label class="fs-6 fw-bold mb-2 required">Mô tả</label>
+                                                    <textarea class="form-control form-control-solid" rows="4" name="description" placeholder="Nhập mô tả chi tiết về vấn đề cần hỗ trợ"></textarea>
+                                                    <p class="text-danger p-2">Nếu hỗ trợ là một lỗi của hệ thống bạn vui lòng miêu tả lại chi tiết các bước xảy ra lỗi .<br> Những điều này giúp cho admin giải quyết vấn đề cho bạn nhanh hơn!</p>
                                                 </div>
                                                 <!--end::Input group-->
                                                 <!--begin::Input group-->
                                                 <div class="fv-row mb-8">
-                                                    <label class="fs-6 fw-bold mb-2">Attachments</label>
+                                                    <label class="fs-6 fw-bold mb-2">Thêm hình ảnh mô tả</label>
                                                     <!--begin::Dropzone-->
                                                     <div class="dropzone" id="kt_modal_create_ticket_attachments">
                                                         <!--begin::Message-->
@@ -104,8 +102,7 @@
                                                             <!--end::Icon-->
                                                             <!--begin::Info-->
                                                             <div class="ms-4">
-                                                                <h3 class="fs-5 fw-bolder text-gray-900 mb-1">Drop files here or click to upload.</h3>
-                                                                <span class="fw-bold fs-7 text-gray-400">Upload up to 10 files</span>
+                                                                <h3 class="fs-5 fw-bolder text-gray-900 mb-1">Chọn một bức ảnh mà bạn chụp lại khi gặp lỗi</h3>
                                                                 <input type="file" name="image">
                                                             </div>
                                                             <!--end::Info-->
@@ -117,9 +114,9 @@
 
                                                 <!--begin::Actions-->
                                                 <div class="text-center">
-                                                    <button type="reset" id="kt_modal_new_ticket_cancel" class="btn btn-light me-3">Cancel</button>
+                                                    <button type="reset" id="kt_modal_new_ticket_cancel" class="btn btn-light me-3">Xóa</button>
                                                     <button type="submit" id="kt_modal_new_ticket_submit" class="btn btn-primary">
-                                                        <span class="indicator-label">Submit</span>
+                                                        <span class="indicator-label">Gửi hỗ trợ</span>
                                                         <span class="indicator-progress">Please wait...
 															<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                                     </button>
@@ -132,38 +129,6 @@
 
                                     </div>
                                     <!--end::Tickets List-->
-                                    <!--begin::Pagination-->
-                                    <ul class="pagination">
-                                        <li class="page-item previous disabled">
-                                            <a href="#" class="page-link">
-                                                <i class="previous"></i>
-                                            </a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">1</a>
-                                        </li>
-                                        <li class="page-item active">
-                                            <a href="#" class="page-link">2</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">3</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">4</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">5</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">6</a>
-                                        </li>
-                                        <li class="page-item next">
-                                            <a href="#" class="page-link">
-                                                <i class="next"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <!--end::Pagination-->
                                 </div>
                                 <!--end::Tickets-->
                             </div>

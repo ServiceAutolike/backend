@@ -100,14 +100,13 @@
                         </span>
                         <!--end::Svg Icon-->
                     </span>
-                    <span class="menu-title">Bai viet</span>
+                    <span class="menu-title">Bài viết</span>
                 </a>
             </div>
             <!--- end Post -->
-
-            <!--- begin Tiket -->
-            <div data-kt-menu-trigger="click" class="menu-item menu-accordion mb-1">
-                <span class="menu-link">
+            <!--- begin Post -->
+            <div class="menu-item">
+                <a class="menu-link {{activeMenu('support.index')}}" href="{{route('support.index')}}">
                     <span class="menu-icon">
                         <!--begin::Svg Icon | path: icons/duotune/graphs/gra006.svg-->
                         <span class="svg-icon svg-icon-2">
@@ -118,31 +117,14 @@
                         </span>
                         <!--end::Svg Icon-->
                     </span>
-                    <span class="menu-title">Trung Tâm Hỗ Trợ <span class="menu-badge">
-                            <span class="badge badge-light-danger badge-circle fw-bolder fs-7">3</span>
-                        </span></span>
-                    <span class="menu-arrow"></span>
-                </span>
-                <div class="menu-sub menu-sub-accordion">
-                    <div class="menu-item">
-                        <a class="menu-link" href="../">
-                            <span class="menu-bullet">
-                                <span class="bullet bullet-dot"></span>
-                            </span>
-                            <span class="menu-title">Tạo Hỗ Trợ Mới</span>
-                        </a>
-                    </div>
+                    <span class="menu-title">Trung Tâm Hỗ Trợ</span>
+                </a>
+            </div>
+            <!--- end Post -->
 
+            <!--- begin Tiket -->
+            <div data-kt-menu-trigger="click" class="menu-item menu-accordion mb-1">
 
-                    <div class="menu-item">
-                        <a class="menu-link" href="../">
-                            <span class="menu-bullet">
-                                <span class="bullet bullet-dot"></span>
-                            </span>
-                            <span class="menu-title">Danh Sách Hỗ Trợ</span>
-                        </a>
-                    </div>
-                </div>
 
 
                 <!-- begin History -->
