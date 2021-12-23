@@ -37,6 +37,7 @@ class FacebookController extends Controller
                 $historyServices = Services::where('type_services', 'like_post')->Orwhere('type_services', 'reaction_post')->where('user_id', Auth::user()->id)->orderBy('id', 'DESC')->paginate(2);
                 $getTimeNow = Services::where('type_services', 'like_post')->Orwhere('type_services', 'reaction_post')->where('user_id', Auth::user()->id)->first('updated_at');
                 $timeUpdate = $getTimeNow->updated_at;
+
                 $response = [
                     'pagination' => [
                         'total' => $historyServices->total(),
@@ -48,7 +49,6 @@ class FacebookController extends Controller
                     ],
                     'data' => $historyServices
                 ];
-
                 return response(['updated_at' => $timeUpdate,'type' => $type, 'fetchDataTransactions' => $response]);
             }
 
