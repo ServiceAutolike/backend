@@ -17,7 +17,8 @@ class HomeController extends Controller
     public function dash()
     {
 
-        return view('page.app.dash.index');
+        $currentBalance = number_format(Auth::user()->point);
+        return view('page.app.dash.index', compact('currentBalance'));
     }
 
     public function findID()

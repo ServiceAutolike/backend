@@ -2093,12 +2093,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       historyServices: Object,
+      type: this.$route.params.type,
       services: [],
       loading: false,
+      spinActive: false,
       loading_t: false,
       pagination: {
         'current_page': 1
@@ -2108,7 +2128,9 @@ __webpack_require__.r(__webpack_exports__);
       }
     };
   },
-  created: function created() {},
+  created: function created() {
+    this.updateTransaction();
+  },
   mounted: function mounted() {
     this.fetchData();
   },
@@ -2117,11 +2139,77 @@ __webpack_require__.r(__webpack_exports__);
     $route: {
       immediate: true,
       handler: function handler(to, from) {
-        document.title = 'Lịch Sử Order';
+        if (this.$route.params.type == "like") {
+          document.title = 'Lịch Sử Buff Like';
+        } else if (this.$route.params.type == "sub") {
+          document.title = 'Lịch Sử Buff Sub/Follow';
+        } else {
+          document.title = 'Lịch Sử Order';
+        }
       }
     }
   },
   methods: {
+    timeAgo: function timeAgo(dateString) {
+      var date = new Date(dateString);
+      var DAY_IN_MS = 86400000; // 24 * 60 * 60 * 1000
+
+      var today = new Date();
+      var seconds = Math.round((today - date) / 1000);
+
+      if (seconds < 20) {
+        return 'Vừa xong';
+      } else if (seconds < 60) {
+        return '1 phút trước';
+      }
+
+      var minutes = Math.round(seconds / 60);
+
+      if (minutes < 60) {
+        return "".concat(minutes, " ph\xFAt tr\u01B0\u1EDBc");
+      }
+
+      var isToday = today.toDateString() === date.toDateString();
+
+      if (isToday) {
+        return 'Hôm nay';
+      }
+
+      var yesterday = new Date(today - DAY_IN_MS);
+      var isYesterday = yesterday.toDateString() === date.toDateString();
+
+      if (isYesterday) {
+        return 'Hôm qua';
+      }
+
+      var daysDiff = Math.round((today - date) / (1000 * 60 * 60 * 24));
+
+      if (daysDiff < 30) {
+        return "".concat(daysDiff, " ng\xE0y tr\u01B0\u1EDBc");
+      }
+
+      var monthsDiff = today.getMonth() - date.getMonth() + 12 * (today.getFullYear() - date.getFullYear());
+
+      if (monthsDiff < 12) {
+        return "".concat(monthsDiff, " th\xE1ng tr\u01B0\u1EDBc");
+      }
+
+      var yearsDiff = today.getYear() - date.getYear();
+      return "".concat(yearsDiff, " n\u0103m tr\u01B0\u1EDBc");
+    },
+    updateTransaction: function updateTransaction() {
+      var obj = this;
+      obj.loading = true;
+      obj.spinActive = true;
+
+      if (this.$route.params.type == "like") {
+        axios.post('/updateTransaction/' + this.$route.params.type).then(function (res) {
+          obj.services = res.data;
+          obj.loading = false;
+          obj.spinActive = false;
+        });
+      }
+    },
     fetchData: function fetchData() {
       var obj = this;
       obj.loading = true;
@@ -2135,7 +2223,9 @@ __webpack_require__.r(__webpack_exports__);
           obj.historyServices = res.data.fetchDataTransactions.data.data;
           obj.pagination = res.data.fetchDataTransactions.pagination;
         });
-      } else {}
+      } else {
+        console.log('Không tồn tại');
+      }
     }
   }
 });
@@ -20759,6 +20849,25 @@ var render = function () {
           _c("div", { staticClass: "card-toolbar m-0" }, [
             _c("div", { staticClass: "d-flex flex-wrap flex-stack" }, [
               _c("div", { staticClass: "d-flex my-2" }, [
+                _c("div", { staticClass: "mr-3" }, [
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2",
+                      on: { click: _vm.updateTransaction },
+                    },
+                    [
+                      _c("i", {
+                        staticClass: "fas fa-sync",
+                        class: { "fa-spin": _vm.spinActive },
+                      }),
+                    ]
+                  ),
+                ]),
+                _vm._v(" "),
                 _c(
                   "div",
                   {
@@ -20861,10 +20970,6 @@ var render = function () {
                               [
                                 _c("tr", [
                                   _c("th", { staticClass: "min-w-50px" }, [
-                                    _vm._v("Thời Gian"),
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("th", { staticClass: "min-w-50px" }, [
                                     _vm._v("Mã Giao Dịch"),
                                   ]),
                                   _vm._v(" "),
@@ -20892,6 +20997,10 @@ var render = function () {
                                     _vm._v("Trạng Thái"),
                                   ]),
                                   _vm._v(" "),
+                                  _c("th", { staticClass: "min-w-50px" }, [
+                                    _vm._v("Thời Gian"),
+                                  ]),
+                                  _vm._v(" "),
                                   _c("th", { staticClass: "min-w-100px" }, [
                                     _vm._v("Công Cụ"),
                                   ]),
@@ -20909,10 +21018,6 @@ var render = function () {
                                     "tr",
                                     { key: historyData.transaction_code },
                                     [
-                                      _c("td", [
-                                        _vm._v(_vm._s(historyData.created_at)),
-                                      ]),
-                                      _vm._v(" "),
                                       _c("td", [
                                         _c(
                                           "span",
@@ -20965,48 +21070,128 @@ var render = function () {
                                       ]),
                                       _vm._v(" "),
                                       _c("td", [
-                                        _c(
-                                          "span",
-                                          {
-                                            staticClass:
-                                              "badge badge-light-warning",
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.services[
-                                                  historyData.service_code
+                                        historyData.status == "Active"
+                                          ? _c("div", [
+                                              _c(
+                                                "span",
+                                                {
+                                                  staticClass:
+                                                    "badge badge-warning",
+                                                },
+                                                [
+                                                  _c("i", {
+                                                    staticClass:
+                                                      "fas fa-circle-notch fa-spin color-white",
+                                                  }),
+                                                  _vm._v(" Đang chạy..."),
                                                 ]
-                                              ) + " "
-                                            ),
-                                          ]
-                                        ),
-                                        _c(
-                                          "span",
-                                          {
-                                            staticClass: "badge badge-success",
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.services[
-                                                  historyData.number_success
+                                              ),
+                                              _c(
+                                                "span",
+                                                {
+                                                  staticClass:
+                                                    "badge badge-light-success",
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    _vm._s(
+                                                      historyData.number_success
+                                                    ) +
+                                                      "/" +
+                                                      _vm._s(historyData.number)
+                                                  ),
                                                 ]
-                                              )
-                                            ),
-                                          ]
-                                        ),
+                                              ),
+                                            ])
+                                          : _vm._e(),
+                                        _vm._v(" "),
+                                        historyData.status == "Success"
+                                          ? _c(
+                                              "span",
+                                              {
+                                                staticClass:
+                                                  "badge badge-success",
+                                              },
+                                              [_vm._v("Hoàn thành")]
+                                            )
+                                          : _vm._e(),
+                                        _vm._v(" "),
+                                        historyData.status == "Report"
+                                          ? _c(
+                                              "span",
+                                              {
+                                                staticClass:
+                                                  "badge badge-danger",
+                                              },
+                                              [_vm._v("Lỗi (Checkpoint)")]
+                                            )
+                                          : _vm._e(),
                                       ]),
                                       _vm._v(" "),
                                       _c("td", [
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm.timeAgo(historyData.created_at)
+                                          )
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", { staticClass: "textend" }, [
                                         _c(
-                                          "button",
+                                          "a",
                                           {
                                             staticClass:
-                                              "btn btn-sm btn-danger",
-                                            attrs: { id: "" },
+                                              "btn btn-icon btn-bg-light btn-active-color-primary btn-sm",
+                                            attrs: { href: "#" },
                                           },
-                                          [_vm._v("Hủy Đơn")]
+                                          [
+                                            _c(
+                                              "span",
+                                              {
+                                                staticClass:
+                                                  "svg-icon svg-icon-3",
+                                              },
+                                              [
+                                                _c(
+                                                  "svg",
+                                                  {
+                                                    attrs: {
+                                                      xmlns:
+                                                        "http://www.w3.org/2000/svg",
+                                                      width: "24",
+                                                      height: "24",
+                                                      viewBox: "0 0 24 24",
+                                                      fill: "none",
+                                                    },
+                                                  },
+                                                  [
+                                                    _c("path", {
+                                                      attrs: {
+                                                        d: "M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z",
+                                                        fill: "black",
+                                                      },
+                                                    }),
+                                                    _vm._v(" "),
+                                                    _c("path", {
+                                                      attrs: {
+                                                        opacity: "0.5",
+                                                        d: "M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z",
+                                                        fill: "black",
+                                                      },
+                                                    }),
+                                                    _vm._v(" "),
+                                                    _c("path", {
+                                                      attrs: {
+                                                        opacity: "0.5",
+                                                        d: "M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z",
+                                                        fill: "black",
+                                                      },
+                                                    }),
+                                                  ]
+                                                ),
+                                              ]
+                                            ),
+                                          ]
                                         ),
                                       ]),
                                     ]
@@ -21028,7 +21213,7 @@ var render = function () {
                       _vm.pagination.last_page > 1
                         ? _c(
                             "p",
-                            { staticClass: "card-footer bg-transparent m-0" },
+                            { staticClass: "bg-transparent m-0" },
                             [
                               _c("pagination", {
                                 attrs: {
@@ -21089,6 +21274,12 @@ var staticRenderFns = [
         ]),
       ]
     )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("small", [_c("i", [_vm._v("Thời gian cập nhật: {{}}")])])
   },
 ]
 render._withStripped = true

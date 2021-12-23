@@ -35,6 +35,8 @@ class FacebookController extends Controller
     public function postHistory($type, Request $request) {
             if ($request->ajax()) {
                 $historyServices = Services::where('type_services', 'like_post')->Orwhere('type_services', 'reaction_post')->where('user_id', Auth::user()->id)->orderBy('id', 'DESC')->paginate(2);
+                $getTimeNow = Services::where('type_services', 'like_post')->Orwhere('type_services', 'reaction_post')->where('user_id', Auth::user()->id)->first('updated_at');
+                $timeUpdate = $getTimeNow->updated_at;
                 $response = [
                     'pagination' => [
                         'total' => $historyServices->total(),
@@ -47,7 +49,7 @@ class FacebookController extends Controller
                     'data' => $historyServices
                 ];
 
-                return response(['success' => true,'type' => $type, 'fetchDataTransactions' => $response]);
+                return response(['updated_at' => $timeUpdate,'type' => $type, 'fetchDataTransactions' => $response]);
             }
 
     }
@@ -116,7 +118,7 @@ class FacebookController extends Controller
                                 $services->transaction_code = $transaction_code;
                                 $services->number = $request->number_seeding;
                                 $services->number_success = 0;
-                                $services->status = 1;
+                                $services->status = "Active";
                                 $services->reactions = json_encode($request->reaction, true);
                                 $services->created_at = Carbon::now()->toDateTimeString();
                                 $services->save();
@@ -204,7 +206,7 @@ class FacebookController extends Controller
                                 $services->transaction_code = $transaction_code;
                                 $services->number = $request->number_seeding;
                                 $services->number_success = 0;
-                                $services->status = 1;
+                                $services->status = "Active";
                                 $services->reactions = json_encode($request->reaction, true);
                                 $services->created_at = $now;
                                 $services->updated_at = $now;
@@ -243,24 +245,19 @@ class FacebookController extends Controller
     }
 
     public function updateTransaction($type) {
-        $header = [
-            'Content-Type' => 'application/json',
-            'Token' => Config::get('api.key.token'),
-            'agency-secret-key' => Config::get('api.key.agency')
-        ];
+        $now = Carbon::now();
         if($type == "like") {
             $data = [];
-            $getAllTransactions = Services::where('type_services', 'like_post')->Orwhere('type_services', 'reaction_post')->where('user_id', Auth::user()->id)->where('status',1)->orderBy('id', 'DESC')->get();
+            $getAllTransactions = Services::where('type_services', 'like_post')->Orwhere('type_services', 'reaction_post')->where('user_id', Auth::user()->id)->where('status','Active')->orderBy('id', 'DESC')->get();
+
             foreach ($getAllTransactions as $getAllTransaction) {
                 $connectApi = responseApi($getAllTransaction->service_code);
                 $data[$getAllTransaction->service_code] = $connectApi->data->data[0]->status;
-                $data[$getAllTransaction->number_success] =  $connectApi->data->data[0]->number_success_int;
-
+                $data['time_update'] = $now;
                 $getAllTransaction->status = $connectApi->data->data[0]->status;
+                $getAllTransaction->updated_at = $now;
                 $getAllTransaction->number_success = $connectApi->data->data[0]->number_success;
                 $getAllTransaction->save();
-
-
             }
             return response()->json($data);
         }

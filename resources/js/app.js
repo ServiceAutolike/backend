@@ -18,7 +18,6 @@ const router = new VueRouter({
 Vue.component('LoadingPage', require('./components/LoadingPage.vue').default);
 Vue.component('pagination', require('./components/PaginationComponent.vue').default);
 
-
 const app = new Vue({
     el: '#app',
     router,
