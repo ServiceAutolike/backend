@@ -21260,7 +21260,7 @@ var staticRenderFns = [
               staticClass: "nav-link fs-5 fw-bolder me-5",
               attrs: { href: "/facebook/buff-like" },
             },
-            [_vm._v("Tạo Tiến\n                            Trình")]
+            [_vm._v("Tạo Tiến\n                                Trình")]
           ),
         ]),
         _vm._v(" "),
