@@ -1974,6 +1974,395 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/FacebookBuffLike.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/FacebookBuffLike.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      loading: true,
+      loading_input: false,
+      hideIcon: true,
+      post_id: "",
+      activeClass: '',
+      errorClass: '',
+      svType: "Like",
+      speedServices: '',
+      sv: 'sv_like',
+      type_check: 'post',
+      reaction: ['Like'],
+      number_seeding: 20,
+      sitePrice: 50,
+      isCheckID: false,
+      totalPrice: 1000,
+      isLoading: false,
+      isDisabled: false
+    };
+  },
+  methods: {
+    isValidate: function isValidate() {
+      if (this.post_id == '') {
+        this.errorClass = 'is-invalid';
+        return false;
+      } else {
+        this.activeClass = 'is-valid';
+        return true;
+      }
+
+      return false;
+    },
+    redirectHistory: function redirectHistory() {
+      var obj = this;
+      obj.$router.push('/facebook/history/like');
+    },
+    changeType: function changeType() {
+      var obj = this;
+      console.log(obj.reaction);
+      console.log(obj.speedServices);
+      var sv = event.target.value;
+
+      if (sv == "sv_like") {
+        obj.hideIcon = true;
+        obj.svType = "Like";
+      } else {
+        obj.hideIcon = false;
+        obj.svType = "Cảm Xúc";
+      }
+
+      obj.changeTotal(sv);
+    },
+    changeTotal: function changeTotal(type) {
+      var obj = this;
+      var typesv = obj.sv;
+      obj.sv = typesv;
+
+      if (typesv == "sv_like") {
+        obj.sitePrice = 50;
+      } else if (typesv == "sv_reaction") {
+        obj.sitePrice = 70;
+      } else {
+        obj.sitePrice = obj.sitePrice;
+      }
+
+      obj.totalPrice = obj.number_seeding * obj.sitePrice;
+    },
+    findID: function findID(url) {
+      var _this = this;
+
+      var obj = this;
+      obj.loading_input = true;
+      var data = {
+        "url": url,
+        "type": 'post'
+      };
+      axios.post('/api/find-id', data).then(function (res) {
+        if (res.data.code != 400) {
+          _this.isCheckID = true;
+          toastr.success("Lấy ID Facebook thành công!");
+        } else {
+          _this.isCheckID = false;
+          toastr.error(res.data.message);
+        }
+
+        obj.loading_input = false;
+      })["catch"](function (e) {
+        obj.loading_input = false;
+        Swal.fire('Có lỗi xảy ra!', 'Lỗi!', 'error');
+      });
+    },
+    createOrder: function createOrder() {
+      this.isValidate();
+      var obj = this;
+      obj.isLoading = true;
+      obj.isDisabled = true;
+      var data = {
+        post_id: obj.post_id,
+        sv: obj.sv,
+        reaction: obj.reaction,
+        type_check: obj.type_check,
+        number_seeding: obj.number_seeding,
+        sitePrice: obj.sitePrice,
+        warranty: 7,
+        speed: obj.speedServices
+      };
+      axios.post('/facebook/buff-like', data).then(function (res) {
+        if (res.data.code != 400) {
+          Swal.fire("Thành công!", res.data.messages, res.data.status);
+        } else {
+          Swal.fire("Có lỗi xảy ra!", res.data.messages, res.data.status);
+        }
+
+        obj.isLoading = false;
+        obj.isDisabled = false;
+      })["catch"](function (e) {
+        obj.isLoading = false;
+        obj.isDisabled = false;
+        var response = JSON.parse(xhr.responseText);
+        Swal.fire('Có lỗi xảy ra!', response.messages, 'error');
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/TransactionHistory.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/TransactionHistory.vue?vue&type=script&lang=js& ***!
@@ -1983,6 +2372,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -2135,21 +2525,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.fetchData();
-  },
-  computed: {},
-  watch: {
-    $route: {
-      immediate: true,
-      handler: function handler(to, from) {
-        if (this.$route.params.type == "like") {
-          document.title = 'Lịch Sử Buff Like';
-        } else if (this.$route.params.type == "sub") {
-          document.title = 'Lịch Sử Buff Sub/Follow';
-        } else {
-          document.title = 'Lịch Sử Order';
-        }
-      }
-    }
   },
   methods: {
     timeAgo: function timeAgo(dateString) {
@@ -20827,6 +21202,1086 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/FacebookBuffLike.vue?vue&type=template&id=f9a04df4&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/FacebookBuffLike.vue?vue&type=template&id=f9a04df4& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "col-12 col-xl-12" }, [
+      _c("div", { staticClass: "card mb-5 mb-xl-10" }, [
+        _c("div", { staticClass: "card-header card-header-stretch pb-0" }, [
+          _c(
+            "ul",
+            {
+              staticClass: "nav nav-stretch nav-line-tabs border-transparent",
+              attrs: { role: "tablist" },
+            },
+            [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "li",
+                { staticClass: "nav-item", attrs: { role: "presentation" } },
+                [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "nav-link fs-5 fw-bolder",
+                      attrs: { href: "" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.redirectHistory()
+                        },
+                      },
+                    },
+                    [_vm._v("Lịch sử order")]
+                  ),
+                ]
+              ),
+            ]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-toolbar m-0" }),
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "tab-content",
+            attrs: { id: "kt_billing_payment_tab_content" },
+          },
+          [
+            _c(
+              "div",
+              {
+                staticClass: "tab-pane fade active show",
+                attrs: { id: "create", role: "tabpanel" },
+              },
+              [
+                _c("div", { staticClass: "card-body" }, [
+                  _c("form", { attrs: { method: "POST" } }, [
+                    _c("input", {
+                      attrs: {
+                        type: "hidden",
+                        name: "warranty",
+                        value: "7",
+                        id: "warranty",
+                      },
+                    }),
+                    _vm._v(" "),
+                    _c("input", {
+                      attrs: {
+                        type: "hidden",
+                        value: "post",
+                        id: "type_check",
+                      },
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _vm._m(1),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          class: {
+                            "spinner spinner-success spinner-right":
+                              _vm.loading_input,
+                          },
+                        },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.post_id,
+                                expression: "post_id",
+                              },
+                            ],
+                            staticClass: "form-control",
+                            class: [_vm.activeClass, _vm.errorClass],
+                            attrs: {
+                              type: "text",
+                              id: "post_id",
+                              placeholder: "Nhập URL hoặc ID bài viết",
+                              required: "",
+                            },
+                            domProps: { value: _vm.post_id },
+                            on: {
+                              change: function ($event) {
+                                return _vm.findID(_vm.post_id)
+                              },
+                              input: function ($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.post_id = $event.target.value
+                              },
+                            },
+                          }),
+                        ]
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _vm._m(3),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "row g-9",
+                          attrs: {
+                            "data-kt-buttons": "true",
+                            "data-kt-buttons-target": "[data-kt-button]",
+                          },
+                        },
+                        [
+                          _c(
+                            "div",
+                            { staticClass: "col-md-6 col-lg-12 col-xxl-6" },
+                            [
+                              _c(
+                                "label",
+                                {
+                                  staticClass:
+                                    "btn btn-outline btn-outline-dashed btn-outline-default d-flex text-start p-6 active",
+                                  attrs: {
+                                    id: "sv_like_check",
+                                    "data-kt-button": "true",
+                                  },
+                                },
+                                [
+                                  _c(
+                                    "span",
+                                    {
+                                      staticClass:
+                                        "form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1",
+                                    },
+                                    [
+                                      _c("input", {
+                                        staticClass: "form-check-input",
+                                        attrs: {
+                                          type: "radio",
+                                          name: "sv",
+                                          value: "sv_like",
+                                          checked: "",
+                                        },
+                                        on: {
+                                          change: function ($event) {
+                                            return _vm.changeType($event)
+                                          },
+                                        },
+                                      }),
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _vm._m(4),
+                                ]
+                              ),
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "col-md-6 col-lg-12 col-xxl-6" },
+                            [
+                              _c(
+                                "label",
+                                {
+                                  staticClass:
+                                    "btn btn-outline btn-outline-dashed btn-outline-default d-flex text-start p-6",
+                                  attrs: {
+                                    id: "sv_reaction_check",
+                                    "data-kt-button": "true",
+                                  },
+                                },
+                                [
+                                  _c(
+                                    "span",
+                                    {
+                                      staticClass:
+                                        "form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1",
+                                    },
+                                    [
+                                      _c("input", {
+                                        staticClass: "form-check-input",
+                                        attrs: {
+                                          type: "radio",
+                                          name: "sv",
+                                          value: "sv_reaction",
+                                        },
+                                        on: {
+                                          change: function ($event) {
+                                            return _vm.changeType($event)
+                                          },
+                                        },
+                                      }),
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _vm._m(5),
+                                ]
+                              ),
+                            ]
+                          ),
+                        ]
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-6" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _vm._m(6),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "list-reaction mt-3" }, [
+                            _c("div", { staticClass: "icon-buff like" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.reaction,
+                                    expression: "reaction",
+                                  },
+                                ],
+                                attrs: {
+                                  type: "checkbox",
+                                  value: "Like",
+                                  id: "like",
+                                  checked: "",
+                                },
+                                domProps: {
+                                  checked: Array.isArray(_vm.reaction)
+                                    ? _vm._i(_vm.reaction, "Like") > -1
+                                    : _vm.reaction,
+                                },
+                                on: {
+                                  change: function ($event) {
+                                    var $$a = _vm.reaction,
+                                      $$el = $event.target,
+                                      $$c = $$el.checked ? true : false
+                                    if (Array.isArray($$a)) {
+                                      var $$v = "Like",
+                                        $$i = _vm._i($$a, $$v)
+                                      if ($$el.checked) {
+                                        $$i < 0 &&
+                                          (_vm.reaction = $$a.concat([$$v]))
+                                      } else {
+                                        $$i > -1 &&
+                                          (_vm.reaction = $$a
+                                            .slice(0, $$i)
+                                            .concat($$a.slice($$i + 1)))
+                                      }
+                                    } else {
+                                      _vm.reaction = $$c
+                                    }
+                                  },
+                                },
+                              }),
+                              _vm._v(" "),
+                              _vm._m(7),
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "icon-buff love",
+                                class: { "d-none": _vm.hideIcon },
+                              },
+                              [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.reaction,
+                                      expression: "reaction",
+                                    },
+                                  ],
+                                  attrs: {
+                                    type: "checkbox",
+                                    value: "Love",
+                                    id: "love",
+                                  },
+                                  domProps: {
+                                    checked: Array.isArray(_vm.reaction)
+                                      ? _vm._i(_vm.reaction, "Love") > -1
+                                      : _vm.reaction,
+                                  },
+                                  on: {
+                                    change: function ($event) {
+                                      var $$a = _vm.reaction,
+                                        $$el = $event.target,
+                                        $$c = $$el.checked ? true : false
+                                      if (Array.isArray($$a)) {
+                                        var $$v = "Love",
+                                          $$i = _vm._i($$a, $$v)
+                                        if ($$el.checked) {
+                                          $$i < 0 &&
+                                            (_vm.reaction = $$a.concat([$$v]))
+                                        } else {
+                                          $$i > -1 &&
+                                            (_vm.reaction = $$a
+                                              .slice(0, $$i)
+                                              .concat($$a.slice($$i + 1)))
+                                        }
+                                      } else {
+                                        _vm.reaction = $$c
+                                      }
+                                    },
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _vm._m(8),
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "icon-buff care",
+                                class: { "d-none": _vm.hideIcon },
+                              },
+                              [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.reaction,
+                                      expression: "reaction",
+                                    },
+                                  ],
+                                  attrs: {
+                                    type: "checkbox",
+                                    value: "Care",
+                                    id: "care",
+                                  },
+                                  domProps: {
+                                    checked: Array.isArray(_vm.reaction)
+                                      ? _vm._i(_vm.reaction, "Care") > -1
+                                      : _vm.reaction,
+                                  },
+                                  on: {
+                                    change: function ($event) {
+                                      var $$a = _vm.reaction,
+                                        $$el = $event.target,
+                                        $$c = $$el.checked ? true : false
+                                      if (Array.isArray($$a)) {
+                                        var $$v = "Care",
+                                          $$i = _vm._i($$a, $$v)
+                                        if ($$el.checked) {
+                                          $$i < 0 &&
+                                            (_vm.reaction = $$a.concat([$$v]))
+                                        } else {
+                                          $$i > -1 &&
+                                            (_vm.reaction = $$a
+                                              .slice(0, $$i)
+                                              .concat($$a.slice($$i + 1)))
+                                        }
+                                      } else {
+                                        _vm.reaction = $$c
+                                      }
+                                    },
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _vm._m(9),
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "icon-buff haha",
+                                class: { "d-none": _vm.hideIcon },
+                              },
+                              [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.reaction,
+                                      expression: "reaction",
+                                    },
+                                  ],
+                                  attrs: {
+                                    type: "checkbox",
+                                    value: "Haha",
+                                    id: "haha",
+                                  },
+                                  domProps: {
+                                    checked: Array.isArray(_vm.reaction)
+                                      ? _vm._i(_vm.reaction, "Haha") > -1
+                                      : _vm.reaction,
+                                  },
+                                  on: {
+                                    change: function ($event) {
+                                      var $$a = _vm.reaction,
+                                        $$el = $event.target,
+                                        $$c = $$el.checked ? true : false
+                                      if (Array.isArray($$a)) {
+                                        var $$v = "Haha",
+                                          $$i = _vm._i($$a, $$v)
+                                        if ($$el.checked) {
+                                          $$i < 0 &&
+                                            (_vm.reaction = $$a.concat([$$v]))
+                                        } else {
+                                          $$i > -1 &&
+                                            (_vm.reaction = $$a
+                                              .slice(0, $$i)
+                                              .concat($$a.slice($$i + 1)))
+                                        }
+                                      } else {
+                                        _vm.reaction = $$c
+                                      }
+                                    },
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _vm._m(10),
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "icon-buff wow",
+                                class: { "d-none": _vm.hideIcon },
+                              },
+                              [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.reaction,
+                                      expression: "reaction",
+                                    },
+                                  ],
+                                  attrs: {
+                                    type: "checkbox",
+                                    value: "Wow",
+                                    id: "wow",
+                                  },
+                                  domProps: {
+                                    checked: Array.isArray(_vm.reaction)
+                                      ? _vm._i(_vm.reaction, "Wow") > -1
+                                      : _vm.reaction,
+                                  },
+                                  on: {
+                                    change: function ($event) {
+                                      var $$a = _vm.reaction,
+                                        $$el = $event.target,
+                                        $$c = $$el.checked ? true : false
+                                      if (Array.isArray($$a)) {
+                                        var $$v = "Wow",
+                                          $$i = _vm._i($$a, $$v)
+                                        if ($$el.checked) {
+                                          $$i < 0 &&
+                                            (_vm.reaction = $$a.concat([$$v]))
+                                        } else {
+                                          $$i > -1 &&
+                                            (_vm.reaction = $$a
+                                              .slice(0, $$i)
+                                              .concat($$a.slice($$i + 1)))
+                                        }
+                                      } else {
+                                        _vm.reaction = $$c
+                                      }
+                                    },
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _vm._m(11),
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "icon-buff sad",
+                                class: { "d-none": _vm.hideIcon },
+                              },
+                              [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.reaction,
+                                      expression: "reaction",
+                                    },
+                                  ],
+                                  attrs: {
+                                    type: "checkbox",
+                                    value: "Sad",
+                                    id: "sad",
+                                  },
+                                  domProps: {
+                                    checked: Array.isArray(_vm.reaction)
+                                      ? _vm._i(_vm.reaction, "Sad") > -1
+                                      : _vm.reaction,
+                                  },
+                                  on: {
+                                    change: function ($event) {
+                                      var $$a = _vm.reaction,
+                                        $$el = $event.target,
+                                        $$c = $$el.checked ? true : false
+                                      if (Array.isArray($$a)) {
+                                        var $$v = "Sad",
+                                          $$i = _vm._i($$a, $$v)
+                                        if ($$el.checked) {
+                                          $$i < 0 &&
+                                            (_vm.reaction = $$a.concat([$$v]))
+                                        } else {
+                                          $$i > -1 &&
+                                            (_vm.reaction = $$a
+                                              .slice(0, $$i)
+                                              .concat($$a.slice($$i + 1)))
+                                        }
+                                      } else {
+                                        _vm.reaction = $$c
+                                      }
+                                    },
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _vm._m(12),
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "icon-buff angry",
+                                class: { "d-none": _vm.hideIcon },
+                              },
+                              [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.reaction,
+                                      expression: "reaction",
+                                    },
+                                  ],
+                                  attrs: {
+                                    type: "checkbox",
+                                    value: "Angry",
+                                    id: "angry",
+                                  },
+                                  domProps: {
+                                    checked: Array.isArray(_vm.reaction)
+                                      ? _vm._i(_vm.reaction, "Angry") > -1
+                                      : _vm.reaction,
+                                  },
+                                  on: {
+                                    change: function ($event) {
+                                      var $$a = _vm.reaction,
+                                        $$el = $event.target,
+                                        $$c = $$el.checked ? true : false
+                                      if (Array.isArray($$a)) {
+                                        var $$v = "Angry",
+                                          $$i = _vm._i($$a, $$v)
+                                        if ($$el.checked) {
+                                          $$i < 0 &&
+                                            (_vm.reaction = $$a.concat([$$v]))
+                                        } else {
+                                          $$i > -1 &&
+                                            (_vm.reaction = $$a
+                                              .slice(0, $$i)
+                                              .concat($$a.slice($$i + 1)))
+                                        }
+                                      } else {
+                                        _vm.reaction = $$c
+                                      }
+                                    },
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _vm._m(13),
+                              ]
+                            ),
+                          ]),
+                        ]),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-6" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _vm._m(14),
+                          _vm._v(" "),
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.speedServices,
+                                  expression: "speedServices",
+                                },
+                              ],
+                              staticClass:
+                                "form-select form-select-sm bg-body border-body fw-bolder mt-4",
+                              attrs: { "data-hide-search": "true" },
+                              on: {
+                                change: function ($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function (o) {
+                                      return o.selected
+                                    })
+                                    .map(function (o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.speedServices = $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                },
+                              },
+                            },
+                            [
+                              _c(
+                                "option",
+                                { attrs: { disabled: "", value: "" } },
+                                [_vm._v("Chọn tốc độ...")]
+                              ),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "slow" } }, [
+                                _vm._v("Chậm"),
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "medium" } }, [
+                                _vm._v("Trung Bình"),
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "normal" } }, [
+                                _vm._v("Ổn Định"),
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "high" } }, [
+                                _vm._v("Nhanh"),
+                              ]),
+                            ]
+                          ),
+                        ]),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _vm._m(15),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.number_seeding,
+                            expression: "number_seeding",
+                          },
+                        ],
+                        staticClass: "form-control form-control-solid",
+                        attrs: {
+                          type: "number",
+                          id: "number_seeding",
+                          name: "number",
+                          min: "20",
+                          value: "20",
+                        },
+                        domProps: { value: _vm.number_seeding },
+                        on: {
+                          keyup: function ($event) {
+                            return _vm.changeTotal()
+                          },
+                          input: function ($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.number_seeding = $event.target.value
+                          },
+                        },
+                      }),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _vm._m(16),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.sitePrice,
+                            expression: "sitePrice",
+                          },
+                        ],
+                        staticClass: "form-control form-control-solid",
+                        attrs: {
+                          type: "number",
+                          id: "sitePrice",
+                          name: "sitePrice",
+                          value: "50",
+                          disabled: "",
+                        },
+                        domProps: { value: _vm.sitePrice },
+                        on: {
+                          input: function ($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.sitePrice = $event.target.value
+                          },
+                        },
+                      }),
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "notice bg-light-warning rounded border-warning border border-dashed mt-3 p-5 text-center",
+                      },
+                      [
+                        _c("div", { staticClass: "fw-bold" }, [
+                          _c(
+                            "h2",
+                            {
+                              staticClass:
+                                "fw-bolder font-weight-semibold pb-2",
+                            },
+                            [
+                              _vm._v("Tổng tiền: "),
+                              _c("strong", { staticClass: "text-danger" }, [
+                                _vm._v(
+                                  _vm._s(
+                                    Number(_vm.totalPrice).toLocaleString()
+                                  ) + " VNĐ"
+                                ),
+                              ]),
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("div", [
+                            _vm._v("Bạn sẽ mua "),
+                            _c("strong", { staticClass: "text-danger" }, [
+                              _vm._v(
+                                _vm._s(
+                                  Number(_vm.number_seeding).toLocaleString()
+                                ) +
+                                  " " +
+                                  _vm._s(_vm.svType)
+                              ),
+                            ]),
+                            _vm._v(" với giá "),
+                            _c("strong", { staticClass: "text-danger" }, [
+                              _vm._v(_vm._s(_vm.sitePrice)),
+                              _c("sup", [_vm._v("đ")]),
+                              _vm._v("/1"),
+                            ]),
+                            _vm._v(" "),
+                            _c("strong", { staticClass: "text-danger" }, [
+                              _vm._v(_vm._s(_vm.svType)),
+                            ]),
+                          ]),
+                        ]),
+                      ]
+                    ),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-footer right" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary  btn-lg btn-block mr-2",
+                      attrs: { type: "submit", disabled: _vm.isDisabled },
+                      on: { click: _vm.createOrder },
+                    },
+                    [
+                      _vm.isLoading
+                        ? _c("i", { staticClass: "fas fa-spinner fa-spin" })
+                        : _vm._e(),
+                      _vm._v(" Tạo Tiến Trình\n                        "),
+                    ]
+                  ),
+                ]),
+              ]
+            ),
+          ]
+        ),
+      ]),
+    ]),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "li",
+      { staticClass: "nav-item", attrs: { role: "presentation" } },
+      [
+        _c("a", { staticClass: "nav-link fs-5 fw-bolder me-5 active" }, [
+          _vm._v("Tạo tiến trình"),
+        ]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "post_id" } }, [
+      _vm._v("Nhập ID hoặc Link bài viết "),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticStyle: { display: "none" }, attrs: { id: "result" } },
+      [
+        _c(
+          "div",
+          {
+            staticClass:
+              "d-flex align-items-center rounded p-5 mb-7 alert alert-success",
+            attrs: { id: "classNoti" },
+          },
+          [
+            _c("div", { staticClass: "svg-icon svg-icon-success me-5" }, [
+              _c("img", { attrs: { src: "", id: "avatar_fb" } }),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "flex-grow-1 me-2" }, [
+              _c("span", {
+                staticClass: "fw-bolder text-gray-800 text-hover-primary fs-6",
+                attrs: { id: "name_fb" },
+              }),
+              _vm._v(" "),
+              _c("span", {
+                staticClass: "text-muted fw-bold d-block",
+                attrs: { id: "id_fb" },
+              }),
+            ]),
+          ]
+        ),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", [
+      _vm._v("Chọn SEVER "),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "ms-5" }, [
+      _c("span", { staticClass: "fs-4 fw-bolder mb-1 d-block" }, [
+        _vm._v("Sever Like"),
+      ]),
+      _vm._v(" "),
+      _c("span", { staticClass: "fw-bold fs-7 text-gray-600" }, [
+        _vm._v("Ở SEVER này chỉ cho phép duy nhất cảm xúc là LIKE (giá rẻ)"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "ms-5" }, [
+      _c("span", { staticClass: "fs-4 fw-bolder mb-1 d-block" }, [
+        _vm._v("Sever Cảm Xúc"),
+      ]),
+      _vm._v(" "),
+      _c("span", { staticClass: "fw-bold fs-7 text-gray-600" }, [
+        _vm._v("Bạn có thể chọn các loại cảm xúc được thực hiện cho bài viết"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", [
+      _vm._v("Chọn cảm xúc "),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "icon-reaction" }, [
+      _c("label", { attrs: { for: "like" } }, [
+        _c("img", {
+          attrs: {
+            src: "/Backend-Assets/media/icon/like.svg",
+            alt: "Like icon",
+            width: "40",
+          },
+        }),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "icon-reaction" }, [
+      _c("label", { attrs: { for: "love" } }, [
+        _c("img", {
+          attrs: {
+            src: "/Backend-Assets/media/icon/love.svg",
+            alt: "love icon",
+            width: "40",
+          },
+        }),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "icon-reaction" }, [
+      _c("label", { attrs: { for: "care" } }, [
+        _c("img", {
+          attrs: {
+            src: "/Backend-Assets/media/icon/care.svg",
+            alt: "care icon",
+            width: "40",
+          },
+        }),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "icon-reaction" }, [
+      _c("label", { attrs: { for: "haha" } }, [
+        _c("img", {
+          attrs: {
+            src: "/Backend-Assets/media/icon/haha.svg",
+            alt: "haha icon",
+            width: "40",
+          },
+        }),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "icon-reaction" }, [
+      _c("label", { attrs: { for: "wow" } }, [
+        _c("img", {
+          attrs: {
+            src: "/Backend-Assets/media/icon/wow.svg",
+            alt: "wow icon",
+            width: "40",
+          },
+        }),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "icon-reaction" }, [
+      _c("label", { attrs: { for: "sad" } }, [
+        _c("img", {
+          attrs: {
+            src: "/Backend-Assets/media/icon/sad.svg",
+            alt: "sad icon",
+            width: "40",
+          },
+        }),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "icon-reaction" }, [
+      _c("label", { attrs: { for: "angry" } }, [
+        _c("img", {
+          attrs: {
+            src: "/Backend-Assets/media/icon/angry.svg",
+            alt: "angry icon",
+            width: "40",
+          },
+        }),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", [
+      _vm._v("Chọn tốc độ "),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "number_seeding" } }, [
+      _vm._v("Số lượng cần tăng "),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "sitePrice" } }, [
+      _vm._v("Giá/1 tương tác (VNĐ) "),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")]),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/TransactionHistory.vue?vue&type=template&id=e4ee5228&":
 /*!***************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/TransactionHistory.vue?vue&type=template&id=e4ee5228& ***!
@@ -20852,13 +22307,16 @@ var render = function () {
             _c("div", { staticClass: "d-flex flex-wrap flex-stack" }, [
               _c("div", { staticClass: "d-flex my-2" }, [
                 _c("div", { staticClass: "mr-3" }, [
-                  _vm._m(1),
-                  _vm._v(" "),
                   _c(
                     "button",
                     {
                       staticClass:
                         "btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2",
+                      attrs: {
+                        "data-bs-toggle": "tooltip",
+                        title: "",
+                        "data-bs-original-title": "Cập nhật dữ liệu lịch sử",
+                      },
                       on: { click: _vm.updateTransaction },
                     },
                     [
@@ -21026,17 +22484,29 @@ var render = function () {
                                           { staticClass: "badge badge-light" },
                                           [
                                             _vm._v(
-                                              _vm._s(
-                                                historyData.transaction_code
-                                              )
+                                              _vm._s(historyData.service_code)
                                             ),
                                           ]
                                         ),
                                       ]),
                                       _vm._v(" "),
                                       _c("td", [
-                                        _vm._v(
-                                          _vm._s(historyData.url_services)
+                                        _c(
+                                          "a",
+                                          {
+                                            attrs: {
+                                              href:
+                                                "https://facebook.com/" +
+                                                historyData.url_services +
+                                                "",
+                                              target: "_blank",
+                                            },
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(historyData.url_services)
+                                            ),
+                                          ]
                                         ),
                                       ]),
                                       _vm._v(" "),
@@ -21125,7 +22595,22 @@ var render = function () {
                                                 staticClass:
                                                   "badge badge-danger",
                                               },
-                                              [_vm._v("Lỗi (Checkpoint)")]
+                                              [
+                                                _vm._v(
+                                                  "ID Facebook không tồn tại"
+                                                ),
+                                              ]
+                                            )
+                                          : _vm._e(),
+                                        _vm._v(" "),
+                                        historyData.status == "Pause"
+                                          ? _c(
+                                              "span",
+                                              {
+                                                staticClass:
+                                                  "badge badge-danger",
+                                              },
+                                              [_vm._v("Đã Dừng")]
                                             )
                                           : _vm._e(),
                                       ]),
@@ -21276,12 +22761,6 @@ var staticRenderFns = [
         ]),
       ]
     )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("small", [_c("i", [_vm._v("Thời gian cập nhật: {{}}")])])
   },
 ]
 render._withStripped = true
@@ -36892,6 +38371,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/pages/FacebookBuffLike.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/components/pages/FacebookBuffLike.vue ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _FacebookBuffLike_vue_vue_type_template_id_f9a04df4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FacebookBuffLike.vue?vue&type=template&id=f9a04df4& */ "./resources/js/components/pages/FacebookBuffLike.vue?vue&type=template&id=f9a04df4&");
+/* harmony import */ var _FacebookBuffLike_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FacebookBuffLike.vue?vue&type=script&lang=js& */ "./resources/js/components/pages/FacebookBuffLike.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _FacebookBuffLike_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _FacebookBuffLike_vue_vue_type_template_id_f9a04df4___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _FacebookBuffLike_vue_vue_type_template_id_f9a04df4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/pages/FacebookBuffLike.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/FacebookBuffLike.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/pages/FacebookBuffLike.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FacebookBuffLike_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./FacebookBuffLike.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/FacebookBuffLike.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FacebookBuffLike_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/FacebookBuffLike.vue?vue&type=template&id=f9a04df4&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/pages/FacebookBuffLike.vue?vue&type=template&id=f9a04df4& ***!
+  \*******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FacebookBuffLike_vue_vue_type_template_id_f9a04df4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./FacebookBuffLike.vue?vue&type=template&id=f9a04df4& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/FacebookBuffLike.vue?vue&type=template&id=f9a04df4&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FacebookBuffLike_vue_vue_type_template_id_f9a04df4___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FacebookBuffLike_vue_vue_type_template_id_f9a04df4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/pages/TransactionHistory.vue":
 /*!**************************************************************!*\
   !*** ./resources/js/components/pages/TransactionHistory.vue ***!
@@ -36972,7 +38520,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "routes", function() { return routes; });
 /* harmony import */ var _components_pages_TransactionHistory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/pages/TransactionHistory */ "./resources/js/components/pages/TransactionHistory.vue");
+/* harmony import */ var _components_pages_FacebookBuffLike__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/pages/FacebookBuffLike */ "./resources/js/components/pages/FacebookBuffLike.vue");
 // Account Page Views
+
 
 var routes = [// Account Page
 {
@@ -36989,6 +38539,10 @@ var routes = [// Account Page
     type: "sub"
   },
   component: _components_pages_TransactionHistory__WEBPACK_IMPORTED_MODULE_0__["default"]
+}, {
+  path: '/facebook/buff-like',
+  name: 'FacebookBuffLike',
+  component: _components_pages_FacebookBuffLike__WEBPACK_IMPORTED_MODULE_1__["default"]
 }];
 
 /***/ }),
@@ -37011,8 +38565,8 @@ var routes = [// Account Page
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/backend/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/backend/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\backend\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\backend\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -26,7 +26,7 @@
                             <!--begin::Controls-->
                             <div class="d-flex my-2">
                                 <!--begin::Search-->
-                                <div class="mr-3"><small><i>Thời gian cập nhật: {{}}</i></small> <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2" v-on:click="updateTransaction"><i class="fas fa-sync" v-bind:class="{ 'fa-spin': spinActive }"></i></button></div>
+                                <div class="mr-3"><button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2" v-on:click="updateTransaction" data-bs-toggle="tooltip" title="" data-bs-original-title="Cập nhật dữ liệu lịch sử"><i class="fas fa-sync" v-bind:class="{ 'fa-spin': spinActive }"></i></button></div>
                                 <div class="d-flex align-items-center position-relative me-4">
                                     <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
                                     <span class="svg-icon svg-icon-3 position-absolute ms-3">
@@ -76,8 +76,8 @@
                                         <!--begin::Tbody-->
                                         <tbody class="fw-6 fw-bold text-gray-600">
                                         <tr v-for="historyData in historyServices" :key="historyData.transaction_code">
-                                            <td><span class="badge badge-light">{{ historyData.transaction_code }}</span></td>
-                                            <td>{{ historyData.url_services }}</td>
+                                            <td><span class="badge badge-light">{{ historyData.service_code }}</span></td>
+                                            <td><a :href="'https://facebook.com/'+historyData.url_services+''" target="_blank">{{ historyData.url_services }}</a></td>
                                             <td><img v-for="reactions in JSON.parse(historyData.reactions)" :src="'/Backend-Assets/media/icon/'+reactions+'.svg'" class="me-2"></td>
                                             <td>{{ historyData.number }}</td>
                                             <td>{{ historyData.price }}</td>
@@ -85,7 +85,8 @@
                                             <td>
                                                 <div v-if="historyData.status == 'Active'"><span class="badge badge-warning"><i class="fas fa-circle-notch fa-spin color-white"></i> Đang chạy...</span><span class="badge badge-light-success">{{ historyData.number_success }}/{{ historyData.number }}</span></div>
                                                 <span v-if="historyData.status == 'Success'" class="badge badge-success">Hoàn thành</span>
-                                                <span v-if="historyData.status == 'Report'" class="badge badge-danger">Lỗi (Checkpoint)</span>
+                                                <span v-if="historyData.status == 'Report'" class="badge badge-danger">ID Facebook không tồn tại</span>
+                                                <span v-if="historyData.status == 'Pause'" class="badge badge-danger">Đã Dừng</span>
                                             </td>
                                             <td>{{ timeAgo(historyData.created_at) }}</td>
                                             <td class="textend">
@@ -154,24 +155,7 @@ export default {
     mounted() {
         this.fetchData()
     },
-    computed: {
-    },
-    watch: {
-        $route: {
-            immediate: true,
-            handler(to, from) {
-                if(this.$route.params.type == "like") {
-                    document.title = 'Lịch Sử Buff Like';
-                }
-                else if(this.$route.params.type == "sub") {
-                    document.title = 'Lịch Sử Buff Sub/Follow';
-                }
-                else {
-                    document.title = 'Lịch Sử Order';
-                }
-            }
-        },
-    },
+
     methods : {
         timeAgo(dateString) {
             const date = new Date(dateString);
