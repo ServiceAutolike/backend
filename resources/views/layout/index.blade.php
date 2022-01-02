@@ -25,6 +25,7 @@
     <script src="{{ asset('Backend-Assets/plugins/global/plugins.bundle.js') }}"></script>
 
 
+
 <!--end::Global Stylesheets Bundle-->
 </head>
 <!--end::Head-->
@@ -53,6 +54,9 @@
     <script src="{{ asset('Backend-Assets/plugins/global/plugins.bundle.js') }}"></script>
     <script src="{{ asset('Backend-Assets/js/scripts.bundle.js') }}"></script>
     <!--end::Global Javascript Bundle-->
+    <script src="{{ asset('Backend-Assets/plugins/custom/ckeditor/ckeditor-classic.bundle.js') }}"></script>
+    <script src="{{ asset('Backend-Assets/js/custom/documentation/editors/ckeditor/classic.js') }}"></script>
+
     <!--end::Page Vendors Javascript-->
     <!--begin::Page Custom Javascript(used by this page)-->
     <script src="{{ asset('Backend-Assets/js/custom/widgets.js') }}"></script>
@@ -61,6 +65,7 @@
     <script src="{{ asset('Backend-Assets/js/services.js') }}"></script>
     <script src="{{ asset('Backend-Assets/js/custom/documentation/documentation.js') }}"></script>
     <script src="{{ asset('Backend-Assets/js/custom/documentation/forms/dropzonejs.js') }}"></script>
+    @yield('script')
     <!--end::Javascript-->
 </body>
 <!--end::Body-->

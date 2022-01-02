@@ -5,229 +5,9 @@
         <!--begin::Col-->
         <div class="col-xl-7">
             <!--begin::Feeds Widget 2-->
-            <div class="card mb-5 mb-xl-8">
-                <!--begin::Body-->
-                <div class="card-body pb-0">
-                    <!--begin::Header-->
-                    <div class="d-flex align-items-center mb-5">
-                        <!--begin::User-->
-                        <div class="d-flex align-items-center flex-grow-1">
-                            <!--begin::Avatar-->
-                            <div class="symbol symbol-45px me-5">
-                                <img src="{{ url('Backend-Assets/media/avatars/150-6.jpg') }}" alt="" />
-                            </div>
-                            <!--end::Avatar-->
-                            <!--begin::Info-->
-                            <div class="d-flex flex-column">
-                                <a href="#" class="text-gray-900 text-hover-primary fs-6 fw-bolder">Quản Trị Viên</a>
-                                <span class="text-gray-400 fw-bold">4 ngày trước</span>
-                            </div>
-                            <!--end::Info-->
-                        </div>
-                        <!--end::User-->
-                    </div>
-                    <!--end::Header-->
-                    <!--begin::Post-->
-                    <div class="mb-5">
-                        <!--begin::Text-->
-                        <p class="text-gray-800 fw-normal mb-5">Ra mắt thử nghiệm các gói INSTAGRAM SV3 tùy chọn tốc độ với giá siêu rẻ nhất thị trường với phương châm ở đâu rẻ có chúng tôi rẻ hơn
-                            <br>- Instagram Sv3 Like bài viết: 9đ
-                            <br>- Instagram Sv3 Follow: 14đ
-                            <br>Khách hàng có thể tùy chọn tốc độ phù hợp với nhu cầu của mình . Các gói fb sẽ tương tự sẽ ra mắt sớm sau khi test ổn định</p>
-                        <!--end::Text-->
-                        <!--begin::Toolbar-->
-                        <div class="d-flex align-items-center mb-5">
-                            <a href="#" class="btn btn-sm btn-light btn-color-muted btn-active-light-danger px-4 py-2">
-                                <!--begin::Svg Icon | path: icons/duotune/general/gen030.svg-->
-                                <span class="svg-icon svg-icon-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <path
-                                        d="M18.3721 4.65439C17.6415 4.23815 16.8052 4 15.9142 4C14.3444 4 12.9339 4.73924 12.003 5.89633C11.0657 4.73913 9.66 4 8.08626 4C7.19611 4 6.35789 4.23746 5.62804 4.65439C4.06148 5.54462 3 7.26056 3 9.24232C3 9.81001 3.08941 10.3491 3.25153 10.8593C4.12155 14.9013 9.69287 20 12.0034 20C14.2502 20 19.875 14.9013 20.7488 10.8593C20.9109 10.3491 21 9.81001 21 9.24232C21.0007 7.26056 19.9383 5.54462 18.3721 4.65439Z"
-                                        fill="black"
-                                    ></path>
-                                </svg>
-                            </span>
-                                <!--end::Svg Icon-->
-                            </a>
-                        </div>
-                        <!--end::Toolbar-->
-                    </div>
-                    <!--end::Post-->
-                </div>
-                <!--end::Body-->
-            </div>
-            <!--end::Feeds Widget 2-->
+            {{ csrf_field() }}
+            <div id="post_data"></div>
 
-
-            <!--begin::Feeds Widget 2-->
-            <div class="card mb-5 mb-xl-8">
-                <!--begin::Body-->
-                <div class="card-body pb-0">
-                    <!--begin::Header-->
-                    <div class="d-flex align-items-center mb-5">
-                        <!--begin::User-->
-                        <div class="d-flex align-items-center flex-grow-1">
-                            <!--begin::Avatar-->
-                            <div class="symbol symbol-45px me-5">
-                                <img src="{{ url('Backend-Assets/media/avatars/150-6.jpg') }}" alt="" />
-                            </div>
-                            <!--end::Avatar-->
-                            <!--begin::Info-->
-                            <div class="d-flex flex-column">
-                                <a href="#" class="text-gray-900 text-hover-primary fs-6 fw-bolder">Quản Trị Viên</a>
-                                <span class="text-gray-400 fw-bold">4 ngày trước</span>
-                            </div>
-                            <!--end::Info-->
-                        </div>
-                        <!--end::User-->
-                    </div>
-                    <!--end::Header-->
-                    <!--begin::Post-->
-                    <div class="mb-5">
-                        <!--begin::Text-->
-                        <p class="text-gray-800 fw-normal mb-5">Ra mắt thử nghiệm các gói INSTAGRAM SV3 tùy chọn tốc độ với giá siêu rẻ nhất thị trường với phương châm ở đâu rẻ có chúng tôi rẻ hơn
-                            <br>- Instagram Sv3 Like bài viết: 9đ
-                            <br>- Instagram Sv3 Follow: 14đ
-                            <br>Khách hàng có thể tùy chọn tốc độ phù hợp với nhu cầu của mình . Các gói fb sẽ tương tự sẽ ra mắt sớm sau khi test ổn định</p>
-                        <!--end::Text-->
-                        <!--begin::Toolbar-->
-                        <div class="d-flex align-items-center mb-5">
-                            <a href="#" class="btn btn-sm btn-light btn-color-muted btn-active-light-danger px-4 py-2">
-                                <!--begin::Svg Icon | path: icons/duotune/general/gen030.svg-->
-                                <span class="svg-icon svg-icon-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <path
-                                        d="M18.3721 4.65439C17.6415 4.23815 16.8052 4 15.9142 4C14.3444 4 12.9339 4.73924 12.003 5.89633C11.0657 4.73913 9.66 4 8.08626 4C7.19611 4 6.35789 4.23746 5.62804 4.65439C4.06148 5.54462 3 7.26056 3 9.24232C3 9.81001 3.08941 10.3491 3.25153 10.8593C4.12155 14.9013 9.69287 20 12.0034 20C14.2502 20 19.875 14.9013 20.7488 10.8593C20.9109 10.3491 21 9.81001 21 9.24232C21.0007 7.26056 19.9383 5.54462 18.3721 4.65439Z"
-                                        fill="black"
-                                    ></path>
-                                </svg>
-                            </span>
-                                <!--end::Svg Icon-->
-                            </a>
-                        </div>
-                        <!--end::Toolbar-->
-                    </div>
-                    <!--end::Post-->
-                </div>
-                <!--end::Body-->
-            </div>
-            <!--end::Feeds Widget 2-->
-
-
-            <!--begin::Feeds Widget 2-->
-            <div class="card mb-5 mb-xl-8">
-                <!--begin::Body-->
-                <div class="card-body pb-0">
-                    <!--begin::Header-->
-                    <div class="d-flex align-items-center mb-5">
-                        <!--begin::User-->
-                        <div class="d-flex align-items-center flex-grow-1">
-                            <!--begin::Avatar-->
-                            <div class="symbol symbol-45px me-5">
-                                <img src="{{ url('Backend-Assets/media/avatars/150-6.jpg') }}" alt="" />
-                            </div>
-                            <!--end::Avatar-->
-                            <!--begin::Info-->
-                            <div class="d-flex flex-column">
-                                <a href="#" class="text-gray-900 text-hover-primary fs-6 fw-bolder">Quản Trị Viên</a>
-                                <span class="text-gray-400 fw-bold">4 ngày trước</span>
-                            </div>
-                            <!--end::Info-->
-                        </div>
-                        <!--end::User-->
-                    </div>
-                    <!--end::Header-->
-                    <!--begin::Post-->
-                    <div class="mb-5">
-                        <!--begin::Text-->
-                        <p class="text-gray-800 fw-normal mb-5">Ra mắt thử nghiệm các gói INSTAGRAM SV3 tùy chọn tốc độ với giá siêu rẻ nhất thị trường với phương châm ở đâu rẻ có chúng tôi rẻ hơn
-                            <br>- Instagram Sv3 Like bài viết: 9đ
-                            <br>- Instagram Sv3 Follow: 14đ
-                            <br>Khách hàng có thể tùy chọn tốc độ phù hợp với nhu cầu của mình . Các gói fb sẽ tương tự sẽ ra mắt sớm sau khi test ổn định</p>
-                        <!--end::Text-->
-                        <!--begin::Toolbar-->
-                        <div class="d-flex align-items-center mb-5">
-                            <a href="#" class="btn btn-sm btn-light btn-color-muted btn-active-light-danger px-4 py-2">
-                                <!--begin::Svg Icon | path: icons/duotune/general/gen030.svg-->
-                                <span class="svg-icon svg-icon-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <path
-                                        d="M18.3721 4.65439C17.6415 4.23815 16.8052 4 15.9142 4C14.3444 4 12.9339 4.73924 12.003 5.89633C11.0657 4.73913 9.66 4 8.08626 4C7.19611 4 6.35789 4.23746 5.62804 4.65439C4.06148 5.54462 3 7.26056 3 9.24232C3 9.81001 3.08941 10.3491 3.25153 10.8593C4.12155 14.9013 9.69287 20 12.0034 20C14.2502 20 19.875 14.9013 20.7488 10.8593C20.9109 10.3491 21 9.81001 21 9.24232C21.0007 7.26056 19.9383 5.54462 18.3721 4.65439Z"
-                                        fill="black"
-                                    ></path>
-                                </svg>
-                            </span>
-                                <!--end::Svg Icon-->
-                            </a>
-                        </div>
-                        <!--end::Toolbar-->
-                    </div>
-                    <!--end::Post-->
-                </div>
-                <!--end::Body-->
-            </div>
-            <!--end::Feeds Widget 2-->
-
-
-            <!--begin::Feeds Widget 2-->
-            <div class="card mb-5 mb-xl-8">
-                <!--begin::Body-->
-                <div class="card-body pb-0">
-                    <!--begin::Header-->
-                    <div class="d-flex align-items-center mb-5">
-                        <!--begin::User-->
-                        <div class="d-flex align-items-center flex-grow-1">
-                            <!--begin::Avatar-->
-                            <div class="symbol symbol-45px me-5">
-                                <img src="{{ url('Backend-Assets/media/avatars/150-6.jpg') }}" alt="" />
-                            </div>
-                            <!--end::Avatar-->
-                            <!--begin::Info-->
-                            <div class="d-flex flex-column">
-                                <a href="#" class="text-gray-900 text-hover-primary fs-6 fw-bolder">Quản Trị Viên</a>
-                                <span class="text-gray-400 fw-bold">4 ngày trước</span>
-                            </div>
-                            <!--end::Info-->
-                        </div>
-                        <!--end::User-->
-                    </div>
-                    <!--end::Header-->
-                    <!--begin::Post-->
-                    <div class="mb-5">
-                        <!--begin::Text-->
-                        <p class="text-gray-800 fw-normal mb-5">Ra mắt thử nghiệm các gói INSTAGRAM SV3 tùy chọn tốc độ với giá siêu rẻ nhất thị trường với phương châm ở đâu rẻ có chúng tôi rẻ hơn
-                            <br>- Instagram Sv3 Like bài viết: 9đ
-                            <br>- Instagram Sv3 Follow: 14đ
-                            <br>Khách hàng có thể tùy chọn tốc độ phù hợp với nhu cầu của mình . Các gói fb sẽ tương tự sẽ ra mắt sớm sau khi test ổn định</p>
-                        <!--end::Text-->
-                        <!--begin::Toolbar-->
-                        <div class="d-flex align-items-center mb-5">
-                            <a href="#" class="btn btn-sm btn-light btn-color-muted btn-active-light-danger px-4 py-2">
-                                <!--begin::Svg Icon | path: icons/duotune/general/gen030.svg-->
-                                <span class="svg-icon svg-icon-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <path
-                                        d="M18.3721 4.65439C17.6415 4.23815 16.8052 4 15.9142 4C14.3444 4 12.9339 4.73924 12.003 5.89633C11.0657 4.73913 9.66 4 8.08626 4C7.19611 4 6.35789 4.23746 5.62804 4.65439C4.06148 5.54462 3 7.26056 3 9.24232C3 9.81001 3.08941 10.3491 3.25153 10.8593C4.12155 14.9013 9.69287 20 12.0034 20C14.2502 20 19.875 14.9013 20.7488 10.8593C20.9109 10.3491 21 9.81001 21 9.24232C21.0007 7.26056 19.9383 5.54462 18.3721 4.65439Z"
-                                        fill="black"
-                                    ></path>
-                                </svg>
-                            </span>
-                                <!--end::Svg Icon-->
-                            </a>
-                        </div>
-                        <!--end::Toolbar-->
-                    </div>
-                    <!--end::Post-->
-                </div>
-                <!--end::Body-->
-            </div>
-            <!--end::Feeds Widget 2-->
-
-            <!--begin::Feeds widget 4, 5 load more-->
-            <button class="btn btn-primary w-100 text-center" id="kt_widget_5_load_more_btn">
-                <span class="indicator-label">Xem Thêm</span>
-                <span class="indicator-progress">Đang tải... <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-            </button>
             <!--end::Feeds widget 4, 5 load more-->
         </div>
         <!--end::Col-->
@@ -246,15 +26,15 @@
                                 <button type="button" class="btn btn-sm btn-icon btn-color-white btn-active-white btn-active-color-success border-0 me-n3" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
                                     <!--begin::Svg Icon | path: icons/duotune/general/gen024.svg-->
                                     <span class="svg-icon svg-icon-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
-                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <rect x="5" y="5" width="5" height="5" rx="1" fill="#000000"></rect>
-                                    <rect x="14" y="5" width="5" height="5" rx="1" fill="#000000" opacity="0.3"></rect>
-                                    <rect x="5" y="14" width="5" height="5" rx="1" fill="#000000" opacity="0.3"></rect>
-                                    <rect x="14" y="14" width="5" height="5" rx="1" fill="#000000" opacity="0.3"></rect>
-                                </g>
-                            </svg>
-                        </span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <rect x="5" y="5" width="5" height="5" rx="1" fill="#000000"></rect>
+                                                <rect x="14" y="5" width="5" height="5" rx="1" fill="#000000" opacity="0.3"></rect>
+                                                <rect x="5" y="14" width="5" height="5" rx="1" fill="#000000" opacity="0.3"></rect>
+                                                <rect x="14" y="14" width="5" height="5" rx="1" fill="#000000" opacity="0.3"></rect>
+                                            </g>
+                                        </svg>
+                                    </span>
                                     <!--end::Svg Icon-->
                                 </button>
                                 <!--begin::Menu 3-->
@@ -547,4 +327,36 @@
         <!--end::Col-->
     </div>
 
+    <script>
+        $(document).ready(function(){
+
+            var _token = $('input[name="_token"]').val();
+
+            load_data('', _token);
+
+            function load_data(id="", _token)
+            {
+                $.ajax({
+                    url:"{{ route('home.load_data') }}",
+                    method:"POST",
+                    data:{id:id, _token:_token},
+                    success:function(data)
+                    {
+                        $('#load_more_button').remove();
+                        $('#post_data').append(data);
+                    }
+                })
+            }
+
+            $(document).on('click', '#load_more_button', function(){
+                var id = $(this).data('id');
+                $('#load_more_button').html('<b>Đang tải thêm  <i class="fas fa-spinner fa-spin"></i></b>');
+                load_data(id, _token);
+            });
+
+        });
+    </script>
+
+
 @endsection
+
