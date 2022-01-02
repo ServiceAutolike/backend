@@ -20,6 +20,7 @@ class HomeController extends Controller
     {
         $currentBalance = number_format(Auth::user()->point);
         return view('page.app.dash.index', compact('currentBalance'));
+
     }
     function load_data(Request $request)
     {

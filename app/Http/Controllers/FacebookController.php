@@ -33,24 +33,24 @@ class FacebookController extends Controller
 
 
     public function postHistory($type, Request $request) {
-            if ($request->ajax()) {
-                $historyServices = Services::where('type_services', 'like_post')->Orwhere('type_services', 'reaction_post')->where('user_id', Auth::user()->id)->orderBy('id', 'DESC')->paginate(2);
-                $getTimeNow = Services::where('type_services', 'like_post')->Orwhere('type_services', 'reaction_post')->where('user_id', Auth::user()->id)->first('updated_at');
-                $timeUpdate = $getTimeNow->updated_at;
-                $response = [
-                    'pagination' => [
-                        'total' => $historyServices->total(),
-                        'per_page' => $historyServices->perPage(),
-                        'current_page' => $historyServices->currentPage(),
-                        'last_page' => $historyServices->lastPage(),
-                        'from' => $historyServices->firstItem(),
-                        'to' => $historyServices->lastItem()
-                    ],
-                    'data' => $historyServices
-                ];
+        if ($request->ajax()) {
+            $historyServices = Services::where('type_services', 'like_post')->Orwhere('type_services', 'reaction_post')->where('user_id', Auth::user()->id)->orderBy('id', 'DESC')->paginate(2);
+            $getTimeNow = Services::where('type_services', 'like_post')->Orwhere('type_services', 'reaction_post')->where('user_id', Auth::user()->id)->first('updated_at');
+            $timeUpdate = $getTimeNow->updated_at;
 
-                return response(['updated_at' => $timeUpdate,'type' => $type, 'fetchDataTransactions' => $response]);
-            }
+            $response = [
+                'pagination' => [
+                    'total' => $historyServices->total(),
+                    'per_page' => $historyServices->perPage(),
+                    'current_page' => $historyServices->currentPage(),
+                    'last_page' => $historyServices->lastPage(),
+                    'from' => $historyServices->firstItem(),
+                    'to' => $historyServices->lastItem()
+                ],
+                'data' => $historyServices
+            ];
+            return response(['updated_at' => $timeUpdate,'type' => $type, 'fetchDataTransactions' => $response]);
+        }
 
     }
 
@@ -239,7 +239,7 @@ class FacebookController extends Controller
         }
         else {
             /// lỗi sever
-             return response()->json(['code'=>400, 'status' => 'error', 'messages'=>'Lỗi sever phải là sv_like hoặc sv_reaction!']);
+            return response()->json(['code'=>400, 'status' => 'error', 'messages'=>'Lỗi sever phải là sv_like hoặc sv_reaction!']);
         }
 
     }
@@ -284,3 +284,10 @@ class FacebookController extends Controller
     }
 
 }
+
+
+
+
+
+
+
