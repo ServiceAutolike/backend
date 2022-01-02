@@ -42,7 +42,7 @@
                                     <!--begin::Thead-->
                                     <thead class="border-gray-200 fs-5 fw-bold bg-lighten">
                                     <tr>
-                                        <th class="min-w-250px">Bài viết</th>
+                                        <th class="min-w-150px">Bài viết</th>
                                         <th class="min-w-250px">Nội dung</th>
                                         <th class="min-w-150px">Action</th>
                                     </tr>
@@ -53,19 +53,14 @@
                                     @foreach($data as $item)
                                         <tr>
                                             <td>
-                                                <img src="{{asset('/storage/'.$item->image)}}" width="150" alt="">
+                                                <img src="{{asset('/storage/'.$item->image)}}" class="rounded" width="100" alt="">
+                                            </td>
+                                            <td class="p-2">
+                                                {!! $item->content !!}
                                             </td>
                                             <td>
-                                                <span class="bold">
-                                                    Ra mắt thử nghiệm các gói INSTAGRAM SV3 tùy chọn tốc độ với giá siêu rẻ nhất thị trường với phương châm ở đâu rẻ có chúng tôi rẻ hơn
-                                                    - Instagram Sv3 Like bài viết: 9đ
-                                                    - Instagram Sv3 Follow: 14đ
-                                                        Khách hàng có thể tùy chọn tốc độ phù hợp với nhu cầu của mình . Các gói fb sẽ tương tự sẽ ra mắt sớm sau khi test ổn định
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <a href="" class="btn btn-danger">Xóa</a>
-                                                <a href="" class="btn btn-success">Sửa</a>
+                                                <a href="/admin/post/delete/{{$item->id}}" class="btn btn-danger btn-sm">Xóa</a>
+                                                <a href="/admin/post/update/{{$item->id}}" class="btn btn-primary btn-sm">Sửa</a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -82,7 +77,7 @@
                                 <div class="card-body">
                                     <div class="d-flex flex-column mb-8 fv-row">
                                         <label class="fs-6 fw-bold mb-2">Nội dung bài viết</label>
-                                        <textarea class="form-control form-control-solid" rows="4" name="content" placeholder="Vui lòng nhập nội dung cho bài viết"></textarea>
+                                        <textarea class="form-control form-control-solid"  id="content_editor" rows="4" name="content" placeholder="Vui lòng nhập nội dung cho bài viết"></textarea>
                                     </div>
                                     <!--end::Input group-->
                                     <!--begin::Input group-->
@@ -124,4 +119,15 @@
         </div>
     </div>
 @endsection
-
+@section('script')
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#content_editor'))
+            .then(editor => {
+                console.log(editor);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+@endsection
