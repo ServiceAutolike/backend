@@ -40,7 +40,7 @@
                                     <input type="text" id="kt_filter_search" class="form-control form-control-sm w-150px ps-9" placeholder="Nhập ID bài viết" />
                                 </div>
                                 <!--end::Search-->
-                                <a href="../../demo8/dist/apps/file-manager/files.html" class="btn btn-primary btn-sm">Tìm Kiếm</a>
+                                <a href="/" class="btn btn-primary btn-sm">Tìm Kiếm</a>
                             </div>
                             <!--end::Controls-->
                         </div>
@@ -75,6 +75,11 @@
                                         <!--end::Thead-->
                                         <!--begin::Tbody-->
                                         <tbody class="fw-6 fw-bold text-gray-600">
+                                        <tr v-if="historyServices.length == '0'">
+                                            <td scope="row" class="text-center" colspan="9">Không có dữ liệu</td>
+                                        </tr>
+
+
                                         <tr v-for="historyData in historyServices" :key="historyData.transaction_code">
                                             <td><span class="badge badge-light">{{ historyData.service_code }}</span></td>
                                             <td><a :href="'https://facebook.com/'+historyData.url_services+''" target="_blank">{{ historyData.url_services }}</a></td>
@@ -214,7 +219,7 @@ export default {
         fetchData() {
             let obj = this
             obj.loading = true
-            if (this.$route.params.type == "like") {
+            if (this.$route.params.type == "like" || this.$route.params.type == "sub") {
                 axios.post('/updateTransaction/' + this.$route.params.type).then(res => {
                     obj.services = res.data
                 })
@@ -225,6 +230,7 @@ export default {
                 })
             }
             else {
+                obj.loading = false
                 console.log('Không tồn tại');
             }
         }

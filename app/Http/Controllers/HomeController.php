@@ -177,22 +177,41 @@ class HomeController extends Controller
                         ];
                     }
                 }
-            } else {
+            }
+
+            else {
                 if (is_numeric($url)) {
-                    $requestName = json_decode(file_get_contents('https://graph.facebook.com/' . $url . '/?fields=name&access_token=' . $tokenFB . ''), true);
-                    if (isset($requestName['name'])) {
-                        $result = [
-                            'code' => 200,
-                            'status' => 'success',
-                            'id' => $requestName['id'],
-                            'name' => $requestName['name'],
-                        ];
-                    } else {
+                    $requestName = json_decode(file_get_contents('https://graph.facebook.com/' . $url . '?access_token=' . $tokenFB . ''), true);
+                    if (isset($requestName['error'])) {
                         $result = [
                             'code' => 400,
                             'status' => 'error',
                         ];
                     }
+                    else if (isset($requestName['name'])) {
+                        $result = [
+                            'code' => 200,
+                            'status' => 'success',
+                            'id' => $requestName['id'],
+                            'name' => $requestName['name']
+                        ];
+                    }
+
+                    else if (isset($requestName['from']['name'])) {
+                        $result = [
+                            'code' => 200,
+                            'status' => 'success',
+                            'id' => $requestName['from']['id'],
+                            'name' => $requestName['from']['name']
+                        ];
+                    }
+                    else {
+                        $result = [
+                            'code' => 400,
+                            'status' => 'error',
+                        ];
+                    }
+
                 } elseif (strpos($url, 'profile.php?id=') !== false) {
                     $correctURLPattern = '/^https?:\/\/(?:www|m)\.facebook.com\/(?:profile\.php\?id=)?([a-zA-Z0-9\.]+)$/';
                     if (!preg_match($correctURLPattern, $url, $matchesProfileID)) {
