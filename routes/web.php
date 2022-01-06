@@ -25,6 +25,7 @@ Route::group(['prefix' => 'account'], function (){
 });
 Route::group(['middleware' => 'login'], function () {
     Route::get('/', 'HomeController@dash')->name('home.dash');
+    Route::post('/load_data', 'HomeController@load_data')->name('home.load_data');
     Route::group(['prefix' => 'recharge'], function (){
         Route::get('/bank', 'RechargeController@rechargeBank')->name('recharge.bank');
         Route::get('/momo', 'RechargeController@rechargeMomo')->name('recharge.momo');
@@ -66,9 +67,9 @@ Route::group(['middleware' => 'login'], function () {
         });
     });
     Route::group(['prefix' => 'support'], function (){
-        Route::get('/user/{id}', 'SupportController@indexUser')->name('user.support.list');
-        Route::get('/create', 'SupportController@formCreate')->name('support.create.form');
+        Route::get('/user', 'SupportController@indexUser')->name('user.support.list');
         Route::post('/create', 'SupportController@storeUser')->name('support.create');
+        Route::post('/set-status', 'SupportController@setStatus')->name('support.set');
     });
     Route::group(['prefix' => 'support_chat'], function (){
         Route::get('/{id}', 'SupportChatController@formChat')->name('support.chat.form');
@@ -81,16 +82,18 @@ Route::group(['middleware' => 'login'], function () {
             Route::group(['prefix' => 'post'], function (){
                 Route::get('/', 'PostController@index')->name('post.index');
                 Route::post('/', 'PostController@store')->name('post.create');
+                Route::get('/update/{id}', 'PostController@formUpdate')->name('post.update.form');
+                Route::post('/update', 'PostController@update')->name('post.update');
+                Route::get('delete/{id}', 'PostController@delete');
             });
             Route::group(['prefix' => 'support'], function (){
                 Route::get('/', 'SupportController@indexAdmin')->name('support.index');
+                Route::post('/update', 'SupportController@updateAdmin')->name('support.update');
             });
-
-
-//            Route::get('/', 'RechargeController@rechargeBank')->name('recharge.bank');
-//            Route::get('/', 'RechargeController@rechargeMomo')->name('recharge.momo');
-//            Route::get('/', 'RechargeController@rechargeCard')->name('recharge.card');
-//            Route::get('/history', 'RechargeController@history')->name('recharge.history');
+            Route::group(['prefix' => 'service'], function (){
+                Route::get('/', 'ServiceController@indexAdmin')->name('service.admin.index');
+                Route::post('/', 'ServiceController@updateAdmin')->name('service.admin.update');
+            });
         });
     });
 });

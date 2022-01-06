@@ -33,65 +33,12 @@
                 <!--end::Title-->
                 <!--begin::Card toolbar-->
                 <div class="card-toolbar">
-                    <!--begin::Menu-->
-                    <div class="me-n3">
-                        <button class="btn btn-sm btn-icon btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                            <i class="bi bi-three-dots fs-2"></i>
-                        </button>
-                        <!--begin::Menu 3-->
-                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-bold w-200px py-3" data-kt-menu="true">
-                            <!--begin::Heading-->
-                            <div class="menu-item px-3">
-                                <div class="menu-content text-muted pb-2 px-3 fs-7 text-uppercase">Contacts</div>
-                            </div>
-                            <!--end::Heading-->
-                            <!--begin::Menu item-->
-                            <div class="menu-item px-3">
-                                <a href="#" class="menu-link px-3" data-bs-toggle="modal" data-bs-target="#kt_modal_users_search">Add Contact</a>
-                            </div>
-                            <!--end::Menu item-->
-                            <!--begin::Menu item-->
-                            <div class="menu-item px-3">
-                                <a href="#" class="menu-link flex-stack px-3" data-bs-toggle="modal" data-bs-target="#kt_modal_invite_friends">Invite Contacts
-                                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify a contact email to send an invitation"></i></a>
-                            </div>
-                            <!--end::Menu item-->
-                            <!--begin::Menu item-->
-                            <div class="menu-item px-3" data-kt-menu-trigger="hover" data-kt-menu-placement="right-start">
-                                <a href="#" class="menu-link px-3">
-                                    <span class="menu-title">Groups</span>
-                                    <span class="menu-arrow"></span>
-                                </a>
-                                <!--begin::Menu sub-->
-                                <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <a href="#" class="menu-link px-3" data-bs-toggle="tooltip" title="Coming soon">Create Group</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <a href="#" class="menu-link px-3" data-bs-toggle="tooltip" title="Coming soon">Invite Members</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <a href="#" class="menu-link px-3" data-bs-toggle="tooltip" title="Coming soon">Settings</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                </div>
-                                <!--end::Menu sub-->
-                            </div>
-                            <!--end::Menu item-->
-                            <!--begin::Menu item-->
-                            <div class="menu-item px-3 my-1">
-                                <a href="#" class="menu-link px-3" data-bs-toggle="tooltip" title="Coming soon">Settings</a>
-                            </div>
-                            <!--end::Menu item-->
-                        </div>
-                        <!--end::Menu 3-->
-                    </div>
-                    <!--end::Menu-->
+                    <form action="{{route('support.set')}}" method="post">
+                        @csrf
+                        <input type="hidden" name="id" value="{{$data->id}}">
+                        <input type="hidden" name="status" value="{{$data->status == 2 ? 1 : 2}}">
+                        <button type="submit" class="btn {{$data->status == 2 ? "btn-success" : "btn-danger"}} btn-sm">{{$data->status == 2 ? "Mở lại hỗ trợ" : "Đóng hỗ trợ"}}</button>
+                    </form>
                 </div>
                 <!--end::Card toolbar-->
             </div>
@@ -166,6 +113,7 @@
             </div>
             <!--end::Card body-->
             <!--begin::Card footer-->
+            @if($data->status !== 2)
             <div class="card-footer pt-4" >
                 <!--begin::Input-->
                 <form action="{{route('support.chat')}}" method="post">
@@ -175,24 +123,25 @@
                     <textarea class="form-control form-control-flush mb-3" rows="1" name="message" placeholder="Gõ một tin nhắn"></textarea>
                     <!--end::Input-->
                     <!--begin:Toolbar-->
-                    <div class="d-flex flex-stack">
+                        <div class="d-flex flex-stack">
                     <!--begin::Actions-->
-                    <div class="d-flex align-items-center me-2">
-                        <button class="btn btn-sm btn-icon btn-active-light-primary me-1" type="button" data-bs-toggle="tooltip" title="Coming soon">
-                            <i class="bi bi-paperclip fs-3"></i>
-                        </button>
-                        <button class="btn btn-sm btn-icon btn-active-light-primary me-1" type="button" data-bs-toggle="tooltip" title="Coming soon">
-                            <i class="bi bi-upload fs-3"></i>
-                        </button>
+                        <div class="d-flex align-items-center me-2">
+                            <button class="btn btn-sm btn-icon btn-active-light-primary me-1" type="button" data-bs-toggle="tooltip" title="Coming soon">
+                                <i class="bi bi-paperclip fs-3"></i>
+                            </button>
+                            <button class="btn btn-sm btn-icon btn-active-light-primary me-1" type="button" data-bs-toggle="tooltip" title="Coming soon">
+                                <i class="bi bi-upload fs-3"></i>
+                            </button>
+                        </div>
+                        <!--end::Actions-->
+                        <!--begin::Send-->
+                        <button class="btn btn-primary" type="submit" >Gửi</button>
+                        <!--end::Send-->
                     </div>
-                    <!--end::Actions-->
-                    <!--begin::Send-->
-                    <button class="btn btn-primary" type="submit" >Gửi</button>
-                    <!--end::Send-->
-                </div>
                 </form>
                 <!--end::Toolbar-->
             </div>
+        @endif
             <!--end::Card footer-->
         </div>
         <!--end::Messenger-->
