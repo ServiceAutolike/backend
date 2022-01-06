@@ -34,8 +34,8 @@
                                 <th class="min-w-250px">Mã hỗ trợ</th>
                                 <th class="min-w-100px">Tiêu đề</th>
                                 <th class="min-w-150px">Loại hỗ trợ</th>
-                                <th class="min-w-150px">Trạng thái</th>
                                 <th class="min-w-150px">Thời gian</th>
+                                <th class="min-w-150px">Trạng thái</th>
                             </tr>
                             </thead>
                             <!--end::Thead-->
@@ -49,9 +49,29 @@
                                     <td>
                                         <span class="bold text-success">{{$item->subject}}</span>
                                     </td>
-                                    <td><span class="badge {{$item->class_service}}">{{$item->service}}</span> </td>
-                                    <td><span class="badge {{$item->class_status}}">{{$item->status}}</span> </td>
+                                    <td>
+                                        <span class="badge {{$item->class_service}}">{{$item->service}}</span>
+                                    </td>
                                     <td>{{convertTime($item->created_at)}}</td>
+                                    <td>
+                                        <form action="{{route('support.update')}}" method="post">
+                                            @csrf
+                                            <input type="hidden" value="{{$item->id}}" name="id">
+                                            <select class="form-select form-select-sm form-select-solid w-100px w-xxl-125px"
+                                                    data-control="select2"
+                                                    data-placeholder="Latest"
+                                                    data-hide-search="true"
+                                                    name="status"
+                                                    onchange='if(this.value != 0) { this.form.submit(); }'
+                                            >
+                                                @foreach($status_service as $key => $status)
+                                                    <option value="{{ $key }}" {{$item->status == $key ? 'selected' : '' }}>
+                                                        {{ $status }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </form>
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>
