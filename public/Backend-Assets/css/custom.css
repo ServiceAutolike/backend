@@ -375,3 +375,7 @@ label {
     border-right: 20px solid transparent;
     border-left: 20px solid transparent;
 }
+
+.align-items-center {
+    align-items: center;
+}
