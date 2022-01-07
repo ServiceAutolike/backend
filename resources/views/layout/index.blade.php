@@ -64,7 +64,6 @@
     <!--end::Page Custom Javascript-->
     <script src="{{ asset('Backend-Assets/js/services.js') }}"></script>
     <script src="{{ asset('Backend-Assets/js/custom/documentation/documentation.js') }}"></script>
-    <script src="{{ asset('Backend-Assets/js/custom/documentation/forms/dropzonejs.js') }}"></script>
     @yield('script')
     <!--end::Javascript-->
 </body>
