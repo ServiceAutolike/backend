@@ -20,7 +20,6 @@ class HomeController extends Controller
     {
         $currentBalance = number_format(Auth::user()->point);
         return view('page.app.dash.index', compact('currentBalance'));
-
     }
     function load_data(Request $request)
     {
@@ -53,7 +52,7 @@ class HomeController extends Controller
                             <div class="d-flex align-items-center flex-grow-1">
                                 <!--begin::Avatar-->
                                 <div class="symbol symbol-45px me-5">
-                                    <img src="'. asset('storage/uploads/user/img_avatar.png') .' " alt="" />
+                                    <img src="'. asset('storage/uploads/img_avatar.png') .' " alt="" />
                                 </div>
                                 <!--end::Avatar-->
                                 <!--begin::Info-->
