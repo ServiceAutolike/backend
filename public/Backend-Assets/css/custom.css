@@ -22,6 +22,9 @@
 .form-group {
     margin-bottom: 1.75rem;
 }
+.btn-block {
+    width: 100% !important;
+}
 label {
     display: inline-block;
     margin-bottom: 0.5rem;
@@ -340,4 +343,39 @@ label {
 
 .color-white {
     color: white;
+}
+.alert.alert-custom {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+.bg-green-3 {
+    background-color: #c9f7f5!important;
+}
+.alert {
+    position: relative;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+}
+
+.alert.alert-custom:before {
+    content: "";
+    position: absolute;
+    top: -20px;
+    left: 50px;
+    border-bottom: 20px solid #c9f7f5;
+    border-right: 20px solid transparent;
+    border-left: 20px solid transparent;
+}
+
+.align-items-center {
+    align-items: center;
 }

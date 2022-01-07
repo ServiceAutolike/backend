@@ -27,7 +27,7 @@
             ],
         'fb' =>
             [
-                'token' => 'EAAGNO4a7r2wBAGVCweJnUCCyfGZCDAOZB7BfzcrCZCK6S4QglNjyNJaKVNe9HlB7aln6Ct2zsO2ltXDTqd7iIXZAobDuC4X18NEt8rK6sZCZBDpD4XqoMM8IHXQ0ihJ1ChyALWuZBGJglwnRV2SQYWnZCtpPxqwruvfg1ZA552eXwHBgzggwoI32khqSGIXVJAlAZD',
+                'token' => 'EAAGNO4a7r2wBAIFLqvDa61EBlxpBGcAtBWU5ZBv1lS7hnY0dqBnFbVSxWDJCCllEGOcWPEQZBoaC2AcWDdasBSgDkws48sZAadUfN4E5xD54koIjsuwge2BPP2xGOlEoOm1wewKZBgGzXfi3S1rn5ym1HUX7GcfK2ySugS7Sy76v7USbjdrC',
             ],
     ];
 
