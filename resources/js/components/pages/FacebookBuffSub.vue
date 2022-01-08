@@ -129,10 +129,9 @@
                             </form>
                         </div>
                         <div class="card-footer">
-<!--                            <button type="submit" class="btn btn-primary  btn-lg btn-block mr-2" :disabled="isDisabled" @click="createOrder"><i-->
-<!--                                v-if="isLoading" class="fas fa-circle-notch fa-spin"></i> Tạo Tiến Trình-->
-<!--                            </button>-->
-                            <el-button type="primary" :isloading="true" @click="createOrder">Tạo Tiến Trình</el-button>
+                            <button type="submit" class="btn btn-primary  btn-lg btn-block mr-2" :disabled="isDisabled" @click="createOrder"><i
+                                v-if="isLoading" class="fas fa-circle-notch fa-spin"></i> Tạo Tiến Trình
+                            </button>
 
                         </div>
 

@@ -5,8 +5,8 @@
         <!--begin::Col-->
         <div class="col-xl-7">
             <!--begin::Feeds Widget 2-->
-            <div id="post_data" v-infinite-scroll="load" infinite-scroll-disabled="disabled">
-                <div class="card mb-5 mb-xl-8" v-for="getpostData in postData" >
+            <div id="post">
+                <div class="card mb-5 mb-xl-8" v-for="getpostData in dataPost" :key="getpostData.id">
                     <!--begin::Body-->
                     <LoadingPage v-if="loading"></LoadingPage>
                     <div v-else class="card-body pb-0">
@@ -48,8 +48,10 @@
                     </div>
                     <!--end::Body-->
                 </div>
-                <p v-if="loadpost">Loading...</p>
-                <p v-if="noMore">No more</p>
+                <div class="loadmore" v-if="hide">
+                    <infinite-loading @distance="1" @infinite="handleLoadMore"></infinite-loading>
+                </div>
+
             </div>
 
             <!--end::Feeds widget 4, 5 load more-->
@@ -378,52 +380,46 @@
 export default {
     data() {
         return {
-            post_data: "",
-            postData: Object,
             hasImage: false,
             content: '',
             loading: false,
-            loadpost: false,
-            index: 0,
-            limit: 2,
-            noMore: false,
+            dataToShow: {},
+            dataPost: [],
+            page: 1,
+            hide: true
         }
     },
     created() {
-        this.loadPostData()
         this.loadNotification()
     },
-
-    computed: {
-        disabled () {
-            return this.loadpost || this.noMore
-        }
-    },
-
     methods: {
-        loadPostData() {
-            let obj = this
-            obj.loadpost = false
-            obj.loading = true
-            axios.post('/loadPost', {'id': '1'}).then(res => {
-                this.postData = res.data
-                obj.loading = false
-                if(res.data.image != "") {
-                    obj.hasImage = true
-                }
-                else {
-                    obj.hasImage = false
-                }
-            }).catch(e => {
+        handleLoadMore($state) {
+            axios.post('/loadPost', {'page': this.page})
+                .then(res => {
+                    return res.data;
+                })
+                .then(res => {
+                    $.each(res.data, (key, value) => {
+                        this.dataPost.push(value);
+                    });
+                    if(res.data.length > 0) {
+                        $state.loaded();
+                    }
+                    else {
+                        this.hide = false
+                    }
+                }).catch(e => {
                 console.log("Load")
             })
+            this.page = this.page + 1;
         },
+
         loadNotification() {
             axios.post('/loadNotification', {'status': 'seen'}).then(res => {
-                $.each(res.data, function( key, value ) {
-                    Swal.fire('Thông Báo','Bạn vừa nạp thành công '+value.amount_end+" VNĐ qua Vietcombank",'success')
+                $.each(res.data, function (key, value) {
+                    Swal.fire('Thông Báo', 'Bạn vừa nạp thành công ' + value.amount_end + " VNĐ qua Vietcombank", 'success')
                     axios.post('/updateNofitication', {'id': value.id}).then(res => {
-                       console.log(res)
+                        console.log(res)
 
                     }).catch(e => {
                         console.log("err")
@@ -435,31 +431,8 @@ export default {
             }).catch(e => {
                 console.log("err")
             })
-
-        }
+        },
     }
-    }
-
-
-
-// $(document).ready(function(){
-//
-//     var _token = $('input[name="_token"]').val();
-//
-//     load_data('', _token);
-//
-//     function load_data(id="", _token)
-//     {
-//         $.ajax({
-//             url:"/load_data",
-//             method:"POST",
-//             data:{id:id, _token:_token},
-//             success:function(data)
-//             {
-//                 $('#load_more_button').remove();
-//                 $('#post_data').append(data);
-//             }
-//         })
-//     }
+}
 
 </script>
