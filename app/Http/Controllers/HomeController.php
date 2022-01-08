@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\PostModel;
+use App\Recharge;
+use App\Services;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
@@ -21,6 +23,37 @@ class HomeController extends Controller
         $currentBalance = number_format(Auth::user()->point);
         return view('page.app.dash.index', compact('currentBalance'));
 
+    }
+    public function loadMe(Request $request) {
+
+    }
+    public function loadNotification(Request $request)
+    {
+        $getNewTopup = Recharge::where('id_user', Auth::user()->id)->where('status', 'New')->orderBy('id', 'DESC')->get();
+        return \response()->json($getNewTopup);
+    }
+
+    public function updateNotification(Request $request) {
+        DB::beginTransaction();
+        try {
+            $recharge = Recharge::find($request->id);
+            $recharge->status = "Updated";
+            $recharge->save();
+        }
+        catch (\Exception $e) {
+            \Log::info($e);
+            DB::rollBack();
+        }
+        DB::commit();
+        echo "OK";
+
+    }
+    function loadPostData(Request $request) {
+        $data = DB::table('posts')
+            ->orderBy('id', 'DESC')
+            ->limit(2)
+            ->get();
+        return \response()->json($data);
     }
     function load_data(Request $request)
     {

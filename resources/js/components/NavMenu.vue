@@ -1,15 +1,16 @@
-<div class="aside-menu flex-column-fluid">
-    <!--begin::Aside Menu-->
-    <div class="hover-scroll-overlay-y px-2 my-5 my-lg-5" id="kt_aside_menu_wrapper" data-kt-scroll="true" data-kt-scroll-height="auto" data-kt-scroll-dependencies="{default: '#kt_aside_toolbar, #kt_aside_footer', lg: '#kt_header, #kt_aside_toolbar, #kt_aside_footer'}" data-kt-scroll-wrappers="#kt_aside_menu" data-kt-scroll-offset="5px">
-        <!--begin::Menu-->
-        <div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500" id="#kt_aside_menu" data-kt-menu="true">
-            <div class="menu-item">
-                <div class="menu-content pb-2">
-                    <span class="menu-section text-muted text-uppercase fs-8 ls-1">Home</span>
+<<template>
+    <div class="aside-menu flex-column-fluid">
+        <!--begin::Aside Menu-->
+        <div class="hover-scroll-overlay-y px-2 my-5 my-lg-5" id="kt_aside_menu_wrapper" data-kt-scroll="true" data-kt-scroll-height="auto" data-kt-scroll-dependencies="{default: '#kt_aside_toolbar, #kt_aside_footer', lg: '#kt_header, #kt_aside_toolbar, #kt_aside_footer'}" data-kt-scroll-wrappers="#kt_aside_menu" data-kt-scroll-offset="5px">
+            <!--begin::Menu-->
+            <div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500" id="#kt_aside_menu" data-kt-menu="true">
+                <div class="menu-item">
+                    <div class="menu-content pb-2">
+                        <span class="menu-section text-muted text-uppercase fs-8 ls-1">Dashboard</span>
+                    </div>
                 </div>
-            </div>
-            <div class="menu-item">
-                <router-link to="/home" class="menu-link">
+                <div class="menu-item">
+                    <a class="menu-link" href="/">
                     <span class="menu-icon">
                         <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
                         <span class="svg-icon svg-icon-2">
@@ -22,11 +23,11 @@
                         </span>
                         <!--end::Svg Icon-->
                     </span>
-                    <span class="menu-title">Trang Chủ</span>
-                </router-link>
-            </div>
+                        <span class="menu-title">Trang Chủ</span>
+                    </a>
+                </div>
 
-            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                 <span class="menu-link">
                     <span class="menu-icon">
                         <span class="svg-icon svg-icon-primary svg-icon-2x">
@@ -44,48 +45,48 @@
                     <span class="menu-title">Nạp Tiền</span>
                     <span class="menu-arrow"></span>
                 </span>
-                <div class="menu-sub menu-sub-accordion menu-active-bg">
-                    <div class="menu-item">
-                        <router-link to="/recharge/bank" class="menu-link">
+                    <div class="menu-sub menu-sub-accordion menu-active-bg">
+                        <div class="menu-item">
+                            <a class="menu-link" href="">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Ngân Hàng</span>
-                        </router-link>
-                    </div>
-                    <div class="menu-item">
-                        <router-link to="/recharge/momo" class="menu-link">
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Ví Momo</span>
-                        </router-link>
-                    </div>
+                            </a>
+                        </div>
 
-                    <div class="menu-item">
-                        <router-link to="/recharge/card" class="menu-link">
+                        <div class="menu-item">
+                            <a class="menu-link" href="">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Thẻ Điện Thoại</span>
-                        </router-link>
-                    </div>
+                            </a>
+                        </div>
 
-                    <div class="menu-item">
-                        <router-link to="/recharge/history" class="menu-link">
+                        <div class="menu-item">
+                            <a class="menu-link" href="">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Lịch Sử Nạp Tiền</span>
-                        </router-link>
+                            </a>
+                        </div>
+
+
                     </div>
-
-
                 </div>
-            </div>
 
-            <!-- begin Facebook -->
-            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                <!-- begin Facebook -->
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                 <span class="menu-link">
                     <span class="menu-icon">
                         <!--begin::Svg Icon | path: icons/duotune/communication/com011.svg-->
@@ -100,89 +101,89 @@
                     <span class="menu-title">Dịch Vụ Facebook</span>
                     <span class="menu-arrow"></span>
                 </span>
-                <div class="menu-sub menu-sub-accordion">
-                    <div class="menu-item">
-                        <router-link to="/facebook/buff-like" class="menu-link">
+                    <div class="menu-sub menu-sub-accordion">
+                        <div class="menu-item">
+                            <a class="menu-link" href="">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Tăng Like Bài Viết</span>
-                        </router-link>
-                    </div>
+                                <span class="menu-title">Tăng Like Bài Viết</span>
+                            </a>
+                        </div>
 
 
-                    <div class="menu-item">
-                            <router-link to="/facebook/buff-follow" class="menu-link">
+                        <div class="menu-item">
+                            <a class="menu-link" href="">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Tăng Sub/Follow</span>
-                            </router-link>
-                    </div>
-                    <div class="menu-item">
-                        <router-link to="/facebook/buff-comment" class="menu-link">
+                                <span class="menu-title">Tăng Sub/Follow</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Tăng Comment</span>
-                        </router-link>
-                    </div>
+                                <span class="menu-title">Tăng Comment</span>
+                            </a>
+                        </div>
 
-                    <div class="menu-item">
-                        <router-link to="/facebook/buff-share" class="menu-link">
+                        <div class="menu-item">
+                            <a class="menu-link" href="">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Tăng Share Bài Viết</span>
-                        </router-link>
-                    </div>
+                                <span class="menu-title">Tăng Share Bài Viết</span>
+                            </a>
+                        </div>
 
 
-                    <div class="menu-item">
-                        <a class="menu-link" href="../">
+                        <div class="menu-item">
+                            <a class="menu-link" href="../">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Tăng Mắt Livestream</span>
-                        </a>
-                    </div>
+                                <span class="menu-title">Tăng Mắt Livestream</span>
+                            </a>
+                        </div>
 
-                    <div class="menu-item">
-                        <a class="menu-link" href="../">
+                        <div class="menu-item">
+                            <a class="menu-link" href="../">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Tăng Member Group</span>
-                        </a>
-                    </div>
+                                <span class="menu-title">Tăng Member Group</span>
+                            </a>
+                        </div>
 
 
-                    <div class="menu-item">
-                        <a class="menu-link" href="../">
+                        <div class="menu-item">
+                            <a class="menu-link" href="../">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Đánh Giá Fanpage</span>
-                        </a>
-                    </div>
+                                <span class="menu-title">Đánh Giá Fanpage</span>
+                            </a>
+                        </div>
 
 
-                    <div class="menu-item">
-                        <a class="menu-link" href="../">
+                        <div class="menu-item">
+                            <a class="menu-link" href="../">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Tăng View Video</span>
-                        </a>
-                    </div>
+                                <span class="menu-title">Tăng View Video</span>
+                            </a>
+                        </div>
 
+                    </div>
                 </div>
-            </div>
-            <!-- //end Facebook -->
+                <!-- //end Facebook -->
 
 
-            <!-- begin VIP Facebook -->
-            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                <!-- begin VIP Facebook -->
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                 <span class="menu-link">
                     <span class="menu-icon">
                         <!--begin::Svg Icon | path: icons/duotune/communication/com013.svg-->
@@ -197,30 +198,30 @@
                     <span class="menu-title">VIP Facebook</span>
                     <span class="menu-arrow"></span>
                 </span>
-                <div class="menu-sub menu-sub-accordion menu-active-bg">
-                    <div class="menu-item">
-                        <a class="menu-link" href="../">
+                    <div class="menu-sub menu-sub-accordion menu-active-bg">
+                        <div class="menu-item">
+                            <a class="menu-link" href="../">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">VIP Like</span>
-                        </a>
-                    </div>
-                    <div class="menu-item">
-                        <a class="menu-link" href="../">
+                                <span class="menu-title">VIP Like</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="../">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Vip Mắt Livestream</span>
-                        </a>
+                                <span class="menu-title">Vip Mắt Livestream</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- //end VIP Facebook -->
+                <!-- //end VIP Facebook -->
 
-            <!-- begin Instagram -->
-            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                <!-- begin Instagram -->
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                 <span class="menu-link">
                     <span class="menu-icon">
                         <!--begin::Svg Icon | path: icons/duotune/technology/teh004.svg-->
@@ -235,48 +236,48 @@
                     <span class="menu-title">Dịch Vụ Instagram</span>
                     <span class="menu-arrow"></span>
                 </span>
-                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                    <div class="menu-sub menu-sub-accordion menu-active-bg">
 
-                    <div class="menu-item">
-                        <a class="menu-link" href="../">
+                        <div class="menu-item">
+                            <a class="menu-link" href="../">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Tăng Like</span>
-                        </a>
-                    </div>
-                    <div class="menu-item">
-                        <a class="menu-link" href="../">
+                                <span class="menu-title">Tăng Like</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="../">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Tăng Follow</span>
-                        </a>
-                    </div>
-                    <div class="menu-item">
-                        <a class="menu-link" href="../">
+                                <span class="menu-title">Tăng Follow</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="../">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Tăng Comment</span>
-                        </a>
-                    </div>
-                    <div class="menu-item">
-                        <a class="menu-link" href="../">
+                                <span class="menu-title">Tăng Comment</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="../">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Tăng View Ảnh</span>
-                        </a>
-                    </div>
+                                <span class="menu-title">Tăng View Ảnh</span>
+                            </a>
+                        </div>
 
+                    </div>
                 </div>
-            </div>
 
-            <!-- //end Instagram -->
+                <!-- //end Instagram -->
 
-            <!-- begin Tiktok -->
-            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                <!-- begin Tiktok -->
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                 <span class="menu-link">
                     <span class="menu-icon">
                         <!--begin::Svg Icon | path: icons/duotune/art/art009.svg-->
@@ -291,58 +292,58 @@
                     <span class="menu-title">Dịch Vụ Tiktok</span>
                     <span class="menu-arrow"></span>
                 </span>
-                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                    <div class="menu-sub menu-sub-accordion menu-active-bg">
 
-                    <div class="menu-item">
-                        <a class="menu-link" href="../">
+                        <div class="menu-item">
+                            <a class="menu-link" href="../">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Tăng Tim</span>
-                        </a>
-                    </div>
-                    <div class="menu-item">
-                        <a class="menu-link" href="../">
+                                <span class="menu-title">Tăng Tim</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="../">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Tăng Follow</span>
-                        </a>
-                    </div>
-                    <div class="menu-item">
-                        <a class="menu-link" href="../">
+                                <span class="menu-title">Tăng Follow</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="../">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Tăng Comment</span>
-                        </a>
-                    </div>
-                    <div class="menu-item">
-                        <a class="menu-link" href="../">
+                                <span class="menu-title">Tăng Comment</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="../">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Tăng Share</span>
-                        </a>
-                    </div>
+                                <span class="menu-title">Tăng Share</span>
+                            </a>
+                        </div>
 
-                    <div class="menu-item">
-                        <a class="menu-link" href="../">
+                        <div class="menu-item">
+                            <a class="menu-link" href="../">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Tăng Mắt Livestream</span>
-                        </a>
+                                <span class="menu-title">Tăng Mắt Livestream</span>
+                            </a>
+                        </div>
+
                     </div>
 
                 </div>
 
-            </div>
+                <!-- //end Tiktok -->
 
-            <!-- //end Tiktok -->
-
-            <!--- begin Youtube -->
-            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                <!--- begin Youtube -->
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                 <span class="menu-link">
                     <span class="menu-icon">
                         <!--begin::Svg Icon | path: icons/duotune/communication/com011.svg-->
@@ -357,45 +358,45 @@
                     <span class="menu-title">Dịch Vụ Youtube</span>
                     <span class="menu-arrow"></span>
                 </span>
-                <div class="menu-sub menu-sub-accordion menu-active-bg">
-                    <div class="menu-item">
-                        <a class="menu-link" href="../">
+                    <div class="menu-sub menu-sub-accordion menu-active-bg">
+                        <div class="menu-item">
+                            <a class="menu-link" href="../">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Tăng View</span>
-                        </a>
-                    </div>
-                    <div class="menu-item">
-                        <a class="menu-link" href="../">
+                                <span class="menu-title">Tăng View</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="../">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Tăng Like</span>
-                        </a>
-                    </div>
-                    <div class="menu-item">
-                        <a class="menu-link" href="../">
+                                <span class="menu-title">Tăng Like</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="../">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Tăng Sub/Follow</span>
-                        </a>
-                    </div>
-                    <div class="menu-item">
-                        <a class="menu-link" href="../">
+                                <span class="menu-title">Tăng Sub/Follow</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="../">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Tăng View 4000h</span>
-                        </a>
+                                <span class="menu-title">Tăng View 4000h</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!--- //end Youtube -->
+                <!--- //end Youtube -->
 
-            <!-- begin Shopee -->
-            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                <!-- begin Shopee -->
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                 <span class="menu-link">
                     <span class="menu-icon">
                         <!--begin::Svg Icon | path: icons/duotune/communication/com012.svg-->
@@ -411,48 +412,48 @@
                     <span class="menu-title">Dịch Vụ Shopee</span>
                     <span class="menu-arrow"></span>
                 </span>
-                <div class="menu-sub menu-sub-accordion menu-active-bg">
-                    <div class="menu-item">
-                        <a class="menu-link" href="../">
+                    <div class="menu-sub menu-sub-accordion menu-active-bg">
+                        <div class="menu-item">
+                            <a class="menu-link" href="../">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Tăng View</span>
-                        </a>
-                    </div>
-                    <div class="menu-item">
-                        <a class="menu-link" href="../">
+                                <span class="menu-title">Tăng View</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="../">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Tăng Like</span>
-                        </a>
-                    </div>
-                    <div class="menu-item">
-                        <a class="menu-link" href="../">
+                                <span class="menu-title">Tăng Like</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="../">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Tăng Sub/Follow</span>
-                        </a>
-                    </div>
-                    <div class="menu-item">
-                        <a class="menu-link" href="../">
+                                <span class="menu-title">Tăng Sub/Follow</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="../">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Tăng View 4000h</span>
-                        </a>
+                                <span class="menu-title">Tăng View 4000h</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- //end Shopee -->
+                <!-- //end Shopee -->
 
 
-            <!--- begin Tiket -->
-            <div data-kt-menu-trigger="click" class="menu-item menu-accordion mb-1">
-                <div class="menu-item">
-                    <a class="menu-link {{activeMenu('user.support.list')}}" href="{{route('user.support.list')}}">
+                <!--- begin Tiket -->
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion mb-1">
+                    <div class="menu-item">
+                        <a class="menu-link" href="">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
                            <span class="svg-icon svg-icon-2">
@@ -463,18 +464,18 @@
                             </span>
                             <!--end::Svg Icon-->
                         </span>
-                        <span class="menu-title">Trung Tâm Hỗ Trợ
+                            <span class="menu-title">Trung Tâm Hỗ Trợ
                         <span class="menu-badge">
                             <span class="badge badge-light-danger badge-circle fw-bolder fs-7">3</span>
                         </span>
                     </span>
-                    </a>
-                </div>
+                        </a>
+                    </div>
 
 
-                <!-- begin History -->
-                <div class="menu-item">
-                    <a class="menu-link" href="/">
+                    <!-- begin History -->
+                    <div class="menu-item">
+                        <a class="menu-link" href="/">
                         <span class="menu-icon">
                             <span class="svg-icon svg-icon-primary svg-icon-2x">
                                 <!--begin::Svg Icon -->
@@ -489,14 +490,14 @@
                             </span>
 
                         </span>
-                        <span class="menu-title">Lịch Sử Đơn Hàng</span>
-                    </a>
-                </div>
-                <!-- //end History -->
+                            <span class="menu-title">Lịch Sử Đơn Hàng</span>
+                        </a>
+                    </div>
+                    <!-- //end History -->
 
-                <!-- begin Price Table  -->
-                <div class="menu-item">
-                    <a class="menu-link" href="/">
+                    <!-- begin Price Table  -->
+                    <div class="menu-item">
+                        <a class="menu-link" href="/">
                         <span class="menu-icon">
                             <span class="svg-icon svg-icon-primary svg-icon-2x">
                                 <!--begin::Svg Icon--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -508,15 +509,17 @@
                                 <!--end::Svg Icon-->
                             </span>
                         </span>
-                        <span class="menu-title">Bảng Giá Dịch Vụ</span>
-                    </a>
+                            <span class="menu-title">Bảng Giá Dịch Vụ</span>
+                        </a>
+                    </div>
+                    <!--- //end Price table -->
                 </div>
-                <!--- //end Price table -->
-            </div>
 
+            </div>
+            <!--end::Menu-->
         </div>
-        <!--end::Menu-->
+        <!--end::Aside Menu-->
     </div>
-    <!--end::Aside Menu-->
-</div>
+
+</template>
 >

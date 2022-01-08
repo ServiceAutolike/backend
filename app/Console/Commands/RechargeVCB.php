@@ -11,6 +11,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+
 class RechargeVCB extends Command
 {
     /**
@@ -121,6 +122,20 @@ class RechargeVCB extends Command
             }
 
         }
+
+
+//        foreach($matches as $item) {
+//            $demo = explode('nap ', $item)[1];
+//            $abc = strtok($demo, '.');
+//            print_r($abc);
+//        }
+
+
+
+
+
+
+//        }
 
     }
 }
