@@ -40,6 +40,8 @@ Route::group(['middleware' => 'login'], function () {
         Route::get('/buff-follow', 'FacebookController@buffFollowUser')->name('faceUser.flow');
         Route::post('/buff-follow', 'FacebookController@postBuffFollowUser')->name('faceUser.postFlow');
         Route::get('/buff-like', 'FacebookController@buffLikeUser')->name('faceUser.like');
+        Route::get('/history/{type}', 'FacebookController@transaction_history')->name('faceUser.history');
+        Route::post('/history/{type}', 'FacebookController@postHistory')->name('faceUser.history');
         Route::post('/buff-like', 'FacebookController@buffLikeUserStore')->name('faceUser.postLike');
         Route::get('/buff-comment', 'FacebookController@buffCommentUser')->name('faceUser.cmt');
         Route::post('/buff-comment', 'FacebookController@postbuffComment')->name('faceUser.postComment');
@@ -48,7 +50,6 @@ Route::group(['middleware' => 'login'], function () {
         Route::post('/history/{type}', 'FacebookController@postHistory')->name('faceUser.phistory');
 
         Route::get('/buff-share', 'FacebookController@buffShareUser')->name('faceUser.share');
-
     });
     Route::group(['prefix' => 'facebook-fan-group'], function (){
         Route::get('/buff-like-page', 'FacebookController@buffLikePage')->name('face.pagelike');
