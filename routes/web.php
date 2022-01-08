@@ -25,7 +25,11 @@ Route::group(['prefix' => 'account'], function (){
 });
 Route::group(['middleware' => 'login'], function () {
     Route::get('/', 'HomeController@dash')->name('home.dash');
-    Route::post('/load_data', 'HomeController@load_data')->name('home.load_data');
+    Route::post('/loadNotification', 'HomeController@loadNotification')->name('home.test');
+    Route::post('/updateNofitication', 'HomeController@updateNotification')->name('home.updated');
+    Route::post('/me', 'HomeController@loadMe')->name('home.test');
+
+    Route::post('/loadPost', 'HomeController@loadPostData')->name('home.load_data');
     Route::group(['prefix' => 'recharge'], function (){
         Route::get('/bank', 'RechargeController@rechargeBank')->name('recharge.bank');
         Route::get('/momo', 'RechargeController@rechargeMomo')->name('recharge.momo');
