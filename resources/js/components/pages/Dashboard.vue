@@ -4,14 +4,12 @@
 
         <!--begin::Col-->
         <div class="col-xl-7">
-            <div v-if="loading" class="text-center">
-                <LoadingAll></LoadingAll>
-            </div>
             <!--begin::Feeds Widget 2-->
-            <div v-else id="post_data">
+            <div id="post_data" v-infinite-scroll="load" infinite-scroll-disabled="disabled">
                 <div class="card mb-5 mb-xl-8" v-for="getpostData in postData" >
                     <!--begin::Body-->
-                    <div class="card-body pb-0">
+                    <LoadingPage v-if="loading"></LoadingPage>
+                    <div v-else class="card-body pb-0">
                         <!--begin::Header-->
                         <div class="d-flex align-items-center mb-5">
                             <!--begin::User-->
@@ -40,7 +38,7 @@
 <!--                            <div v-else>-->
 <!--                                Không có ảnh-->
 <!--                            </div>-->
-                            <p class="text-gray-800 fw-normal mb-5">
+                            <p v-html="getpostData.content" class="text-gray-800 fw-normal mb-5">
                                 {{ getpostData.content }}
                             </p>
                             <!--end::Text-->
@@ -50,6 +48,8 @@
                     </div>
                     <!--end::Body-->
                 </div>
+                <p v-if="loadpost">Loading...</p>
+                <p v-if="noMore">No more</p>
             </div>
 
             <!--end::Feeds widget 4, 5 load more-->
@@ -59,7 +59,8 @@
         <div class="col-xl-5">
             <div class="card mb-5 mb-xl-8">
                 <!--begin::Body-->
-                <div class="card-body p-0">
+                <LoadingPage v-if="loading"></LoadingPage>
+                <div v-else class="card-body p-0">
                     <!--begin::Header-->
                     <div class="px-9 pt-7 card-rounded h-275px w-100 bg-success">
                         <!--begin::Heading-->
@@ -330,7 +331,8 @@
                 <div class="card-header">
                     <div class="card-title">Thông Báo</div>
                 </div>
-                <div class="card-body overflow-scroll">
+                <LoadingPage v-if="loading"></LoadingPage>
+                <div v-else class="card-body overflow-scroll">
                     <div class="postNoti">
                         <div class="fw-bolder text-primary">03 May 2020</div>
                         <p class="text-gray-800 fw-normal mb-5">Bạn vừa nạp 50,000 VNĐ qua cổng thanh toán Vietcombank</p>
@@ -379,7 +381,12 @@ export default {
             post_data: "",
             postData: Object,
             hasImage: false,
-            loading: true,
+            content: '',
+            loading: false,
+            loadpost: false,
+            index: 0,
+            limit: 2,
+            noMore: false,
         }
     },
     created() {
@@ -387,14 +394,17 @@ export default {
         this.loadNotification()
     },
 
+    computed: {
+        disabled () {
+            return this.loadpost || this.noMore
+        }
+    },
+
     methods: {
-        // loadMore() {
-        //     var id = $(this).data('id');
-        //     $('#load_more_button').html('<b>Đang tải thêm  <i class="fas fa-spinner fa-spin"></i></b>');
-        //     this.loadData(id);
-        // },
         loadPostData() {
             let obj = this
+            obj.loadpost = false
+            obj.loading = true
             axios.post('/loadPost', {'id': '1'}).then(res => {
                 this.postData = res.data
                 obj.loading = false
@@ -407,12 +417,6 @@ export default {
             }).catch(e => {
                 console.log("Load")
             })
-
-            // var id = $(this).data('id');
-            // $('#load_more_button').html('<b>Đang tải thêm  <i class="fas fa-spinner fa-spin"></i></b>');
-            // this.loadData(id);
-
-
         },
         loadNotification() {
             axios.post('/loadNotification', {'status': 'seen'}).then(res => {

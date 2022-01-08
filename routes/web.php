@@ -17,14 +17,11 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'account'], function (){
     Route::get('/login', 'AccountController@formLogin')->name('account.login');
     Route::post('/login', 'AccountController@login');
-    Route::group(['middleware' => 'login'], function () {
-        Route::get('/logout', 'AccountController@logout')->name('account.logout');
-    });
     Route::get('/register', 'AccountController@formRegister')->name('account.register');
     Route::post('/register', 'AccountController@register');
 });
 Route::group(['middleware' => 'login'], function () {
-    Route::get('/', 'HomeController@dash')->name('home.dash');
+    Route::get('/home', 'HomeController@dash')->name('home.dash');
     Route::post('/loadNotification', 'HomeController@loadNotification')->name('home.test');
     Route::post('/updateNofitication', 'HomeController@updateNotification')->name('home.updated');
     Route::post('/me', 'HomeController@loadMe')->name('home.test');
@@ -69,7 +66,7 @@ Route::group(['middleware' => 'login'], function () {
     });
     Route::group(['middleware' => 'role'], function () {
         Route::group(['prefix' => 'user'], function (){
-            Route::get('/', 'UserController@index')->name('user.index');
+            Route::get('/home', 'UserController@index')->name('user.index');
         });
         Route::get('/welcome', function (){
             return view('welcome');
@@ -106,3 +103,4 @@ Route::group(['middleware' => 'login'], function () {
         });
     });
 });
+Route::get('/logout', 'AccountController@logout')->name('account.logout');

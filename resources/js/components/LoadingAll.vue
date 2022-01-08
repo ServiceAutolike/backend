@@ -1,47 +1,29 @@
 <template>
-    <span class="spinner"></span>
+    <div id="loading-bar-spinner" class="spinner-all"><div class="spinner-icon"></div></div>
 </template>
 
 <style>
-.spinner {
-    /* Spinner size and color */
-    width: 1.5rem;
-    height: 1.5rem;
-    border-top-color: #444;
-    border-left-color: #444;
+#loading-bar-spinner.spinner-all {
+    left: 45%;
+    margin-left: -20px;
+    top: 15%;
+    margin-top: -20px;
+    position: absolute;
+    z-index: 19 !important;
+    animation: loading-bar-spinner 400ms linear infinite;
+}
 
-    /* Additional spinner styles */
-    animation: spinner 400ms linear infinite;
-    border-bottom-color: transparent;
-    border-right-color: transparent;
-    border-style: solid;
-    border-width: 2px;
+#loading-bar-spinner.spinner-all .spinner-icon {
+    width: 40px;
+    height: 40px;
+    border:  solid 4px transparent;
+    border-top-color:  #009ef7 !important;
+    border-left-color: #009ef7 !important;
     border-radius: 50%;
-    box-sizing: border-box;
-    display: inline-block;
-    vertical-align: middle;
 }
 
-/* Animation styles */
-@keyframes spinner {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-
-/* Optional — create your own variations! */
-.spinner-large {
-    width: 5rem;
-    height: 5rem;
-    border-width: 6px;
-}
-
-.spinner-slow {
-    animation: spinner 1s linear infinite;
-}
-
-.spinner-blue {
-    border-top-color: #09d;
-    border-left-color: #09d;
+@keyframes loading-bar-spinner {
+    0%   { transform: rotate(0deg);   transform: rotate(0deg); }
+    100% { transform: rotate(360deg); transform: rotate(360deg); }
 }
 </style>
