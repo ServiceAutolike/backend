@@ -80,45 +80,45 @@ class RechargeVCB extends Command
                 $transaction_code = $getHistory['transactions'][$i]['PCTime'];
                 $amount = $getHistory['transactions'][$i]['Amount'];
                 $formatAmount = intval(preg_replace("/[^-0-9\.]/","",$amount));
-                 $getIDUser = User::where('name', $username)->value('id');
-                 if($getIDUser) {
-                     $check = Recharge::where('transaction_code', $transaction_code)->where('id_user',$getIDUser)->get();
+                $getIDUser = User::where('name', $username)->value('id');
+                if($getIDUser) {
+                    $check = Recharge::where('transaction_code', $transaction_code)->where('id_user',$getIDUser)->get();
 
-                     if($check->count() < 1) {
-                         $getBalance = User::where('id',$getIDUser)->value('point');
-                         $add = $getBalance + $formatAmount;
-                         DB::beginTransaction();
-                         try {
-                             $user = User::find($getIDUser);
-                             $user->point = $add;
-                             $user->save();
+                    if($check->count() < 1) {
+                        $getBalance = User::where('id',$getIDUser)->value('point');
+                        $add = $getBalance + $formatAmount;
+                        DB::beginTransaction();
+                        try {
+                            $user = User::find($getIDUser);
+                            $user->point = $add;
+                            $user->save();
 
-                             $recharge = new Recharge();
-                             $recharge->id_user = $getIDUser;
-                             $recharge->type = 'vcb';
-                             $recharge->amount = $formatAmount;
-                             $recharge->fee = 0;
-                             $recharge->amount_end = $formatAmount;
-                             $recharge->discount = 0;
-                             $recharge->memo = "Vietcombank Recharge";
-                             $recharge->status = "New";
-                             $recharge->transaction_code = $transaction_code;
-                             $recharge->save();
-                         }
-                         catch (\Exception $e) {
-                             \Log::info($e);
-                             DB::rollBack();
-                             dd($e);
-                         }
-                         DB::commit();
-                     }
-                     else {
-                         echo "Có data rồi không thêm nữa\n";
-                     }
-                 }
-                 else {
-                   echo "Không Tìm thấy ID\n";
-                 }
+                            $recharge = new Recharge();
+                            $recharge->id_user = $getIDUser;
+                            $recharge->type = 'vcb';
+                            $recharge->amount = $formatAmount;
+                            $recharge->fee = 0;
+                            $recharge->amount_end = $formatAmount;
+                            $recharge->discount = 0;
+                            $recharge->memo = "Vietcombank Recharge";
+                            $recharge->status = "New";
+                            $recharge->transaction_code = $transaction_code;
+                            $recharge->save();
+                        }
+                        catch (\Exception $e) {
+                            \Log::info($e);
+                            DB::rollBack();
+                            dd($e);
+                        }
+                        DB::commit();
+                    }
+                    else {
+                        echo "Có data rồi không thêm nữa\n";
+                    }
+                }
+                else {
+                    echo "Không Tìm thấy ID\n";
+                }
             }
 
         }

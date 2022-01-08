@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PostModel;
+use App\Post;
 use App\Recharge;
 use App\Services;
 use GuzzleHttp\Client;
@@ -48,88 +49,8 @@ class HomeController extends Controller
 
     }
     function loadPostData(Request $request) {
-        $data = DB::table('posts')
-            ->orderBy('id', 'DESC')
-            ->limit(2)
-            ->get();
+        $data = Post::orderBy('id')->paginate(1);
         return \response()->json($data);
-    }
-    function load_data(Request $request)
-    {
-        if ($request->ajax()) {
-            if ($request->id > 0) {
-                $data = DB::table('posts')
-                    ->where('id', '<', $request->id)
-                    ->orderBy('id', 'DESC')
-                    ->limit(2)
-                    ->get();
-            } else {
-                $data = DB::table('posts')
-                    ->orderBy('id', 'DESC')
-                    ->limit(2)
-                    ->get();
-            }
-            $output = '';
-            $last_id = '';
-
-            if (!$data->isEmpty()) {
-                foreach ($data as $row) {
-                    $output .=
-                        '
-                    <div class="card mb-5 mb-xl-8">
-                    <!--begin::Body-->
-                    <div class="card-body pb-0">
-                        <!--begin::Header-->
-                        <div class="d-flex align-items-center mb-5">
-                            <!--begin::User-->
-                            <div class="d-flex align-items-center flex-grow-1">
-                                <!--begin::Avatar-->
-                                <div class="symbol symbol-45px me-5">
-                                    <img src="'. asset('storage/uploads/img_avatar.png') .' " alt="" />
-                                </div>
-                                <!--end::Avatar-->
-                                <!--begin::Info-->
-                                <div class="d-flex flex-column">
-                                    <a class="text-gray-900 text-hover-primary fs-6 fw-bolder">Quản Trị Viên</a>
-                                    <span class="text-gray-400 fw-bold">'.convertTime($row->created_at).'</span>
-                                </div>
-                                <!--end::Info-->
-                            </div>
-                            <!--end::User-->
-                        </div>
-                        <!--end::Header-->
-                        <!--begin::Post-->
-                        <div class="mb-5">
-                            <!--begin::Text-->
-                            <img src="'.asset('storage/'.$row->image).'" alt="" style="width:100%" class="rounded mb-4">
-                            <p class="text-gray-800 fw-normal mb-5">
-                                '. $row->content .'
-                            </p>
-                            <!--end::Text-->
-
-                        </div>
-                        <!--end::Post-->
-                    </div>
-                    <!--end::Body-->
-                </div>
-                    ';
-                    $last_id = $row->id;
-                }
-                $output .=
-                    '
-                   <div id="load_more">
-                    <button type="button" name="load_more_button" class="btn btn-primary w-100 text-center" data-id="' .
-                    $last_id .
-                    '" id="load_more_button">Xem thêm</button>
-                   </div>
-                   ';
-            } else {
-                $output .= '
-
-                   ';
-            }
-            echo $output;
-        }
     }
     public function findID()
     {

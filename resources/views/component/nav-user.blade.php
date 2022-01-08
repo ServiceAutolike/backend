@@ -5,11 +5,11 @@
         <div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500" id="#kt_aside_menu" data-kt-menu="true">
             <div class="menu-item">
                 <div class="menu-content pb-2">
-                    <span class="menu-section text-muted text-uppercase fs-8 ls-1">Dashboard</span>
+                    <span class="menu-section text-muted text-uppercase fs-8 ls-1">Home</span>
                 </div>
             </div>
             <div class="menu-item">
-                <a class="menu-link {{activeMenu('home.dash')}}" href="/">
+                <router-link to="/home" class="menu-link">
                     <span class="menu-icon">
                         <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
                         <span class="svg-icon svg-icon-2">
@@ -23,7 +23,7 @@
                         <!--end::Svg Icon-->
                     </span>
                     <span class="menu-title">Trang Chủ</span>
-                </a>
+                </router-link>
             </div>
 
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
@@ -46,38 +46,38 @@
                 </span>
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route("recharge.bank") }}">
+                        <router-link to="/recharge/bank" class="menu-link">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Ngân Hàng</span>
-                        </a>
+                        </router-link>
                     </div>
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route("recharge.momo") }}">
+                        <router-link to="/recharge/momo" class="menu-link">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Ví Momo</span>
-                        </a>
+                        </router-link>
                     </div>
 
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route("recharge.card") }}">
+                        <router-link to="/recharge/card" class="menu-link">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Thẻ Điện Thoại</span>
-                        </a>
+                        </router-link>
                     </div>
 
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route("recharge.history") }}">
+                        <router-link to="/recharge/history" class="menu-link">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Lịch Sử Nạp Tiền</span>
-                        </a>
+                        </router-link>
                     </div>
 
 
@@ -102,39 +102,39 @@
                 </span>
                 <div class="menu-sub menu-sub-accordion">
                     <div class="menu-item">
-                        <a class="menu-link {{activeMenu('faceUser.like')}}" href="{{ route('faceUser.like') }}">
+                        <router-link to="/facebook/buff-like" class="menu-link">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Tăng Like Bài Viết</span>
-                        </a>
+                        </router-link>
                     </div>
 
 
                     <div class="menu-item">
-                        <a class="menu-link {{activeMenu('faceUser.flow')}}" href="{{ route('faceUser.flow') }}">
+                            <router-link to="/facebook/buff-follow" class="menu-link">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Tăng Sub/Follow</span>
-                        </a>
+                            </router-link>
                     </div>
                     <div class="menu-item">
-                        <a class="menu-link {{activeMenu('faceUser.cmt')}}" href="{{ route('faceUser.cmt') }}">
+                        <router-link to="/facebook/buff-comment" class="menu-link">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Tăng Comment</span>
-                        </a>
+                        </router-link>
                     </div>
 
                     <div class="menu-item">
-                        <a class="menu-link {{activeMenu('faceUser.share')}}" href="{{ route('faceUser.share') }}">
+                        <router-link to="/facebook/buff-share" class="menu-link">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Tăng Share Bài Viết</span>
-                        </a>
+                        </router-link>
                     </div>
 
 
@@ -519,3 +519,4 @@
     </div>
     <!--end::Aside Menu-->
 </div>
+>
