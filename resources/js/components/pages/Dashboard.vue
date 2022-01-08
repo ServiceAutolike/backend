@@ -4,14 +4,12 @@
 
         <!--begin::Col-->
         <div class="col-xl-7">
-            <div v-if="loading" class="text-center">
-                <LoadingAll></LoadingAll>
-            </div>
             <!--begin::Feeds Widget 2-->
-            <div v-else id="post_data">
-                <div class="card mb-5 mb-xl-8" v-for="getpostData in postData" >
+            <div id="post">
+                <div class="card mb-5 mb-xl-8" v-for="getpostData in dataPost" :key="getpostData.id">
                     <!--begin::Body-->
-                    <div class="card-body pb-0">
+                    <LoadingPage v-if="loading"></LoadingPage>
+                    <div v-else class="card-body pb-0">
                         <!--begin::Header-->
                         <div class="d-flex align-items-center mb-5">
                             <!--begin::User-->
@@ -40,7 +38,7 @@
 <!--                            <div v-else>-->
 <!--                                Không có ảnh-->
 <!--                            </div>-->
-                            <p class="text-gray-800 fw-normal mb-5">
+                            <p v-html="getpostData.content" class="text-gray-800 fw-normal mb-5">
                                 {{ getpostData.content }}
                             </p>
                             <!--end::Text-->
@@ -50,6 +48,10 @@
                     </div>
                     <!--end::Body-->
                 </div>
+                <div class="loadmore" v-if="hide">
+                    <infinite-loading @distance="1" @infinite="handleLoadMore"></infinite-loading>
+                </div>
+
             </div>
 
             <!--end::Feeds widget 4, 5 load more-->
@@ -59,7 +61,8 @@
         <div class="col-xl-5">
             <div class="card mb-5 mb-xl-8">
                 <!--begin::Body-->
-                <div class="card-body p-0">
+                <LoadingPage v-if="loading"></LoadingPage>
+                <div v-else class="card-body p-0">
                     <!--begin::Header-->
                     <div class="px-9 pt-7 card-rounded h-275px w-100 bg-success">
                         <!--begin::Heading-->
@@ -330,7 +333,8 @@
                 <div class="card-header">
                     <div class="card-title">Thông Báo</div>
                 </div>
-                <div class="card-body overflow-scroll">
+                <LoadingPage v-if="loading"></LoadingPage>
+                <div v-else class="card-body overflow-scroll">
                     <div class="postNoti">
                         <div class="fw-bolder text-primary">03 May 2020</div>
                         <p class="text-gray-800 fw-normal mb-5">Bạn vừa nạp 50,000 VNĐ qua cổng thanh toán Vietcombank</p>
@@ -376,50 +380,46 @@
 export default {
     data() {
         return {
-            post_data: "",
-            postData: Object,
             hasImage: false,
-            loading: true,
+            content: '',
+            loading: false,
+            dataToShow: {},
+            dataPost: [],
+            page: 1,
+            hide: true
         }
     },
     created() {
-        this.loadPostData()
         this.loadNotification()
     },
-
     methods: {
-        // loadMore() {
-        //     var id = $(this).data('id');
-        //     $('#load_more_button').html('<b>Đang tải thêm  <i class="fas fa-spinner fa-spin"></i></b>');
-        //     this.loadData(id);
-        // },
-        loadPostData() {
-            let obj = this
-            axios.post('/loadPost', {'id': '1'}).then(res => {
-                this.postData = res.data
-                obj.loading = false
-                if(res.data.image != "") {
-                    obj.hasImage = true
-                }
-                else {
-                    obj.hasImage = false
-                }
-            }).catch(e => {
+        handleLoadMore($state) {
+            axios.post('/loadPost', {'page': this.page})
+                .then(res => {
+                    return res.data;
+                })
+                .then(res => {
+                    $.each(res.data, (key, value) => {
+                        this.dataPost.push(value);
+                    });
+                    if(res.data.length > 0) {
+                        $state.loaded();
+                    }
+                    else {
+                        this.hide = false
+                    }
+                }).catch(e => {
                 console.log("Load")
             })
-
-            // var id = $(this).data('id');
-            // $('#load_more_button').html('<b>Đang tải thêm  <i class="fas fa-spinner fa-spin"></i></b>');
-            // this.loadData(id);
-
-
+            this.page = this.page + 1;
         },
+
         loadNotification() {
             axios.post('/loadNotification', {'status': 'seen'}).then(res => {
-                $.each(res.data, function( key, value ) {
-                    Swal.fire('Thông Báo','Bạn vừa nạp thành công '+value.amount_end+" VNĐ qua Vietcombank",'success')
+                $.each(res.data, function (key, value) {
+                    Swal.fire('Thông Báo', 'Bạn vừa nạp thành công ' + value.amount_end + " VNĐ qua Vietcombank", 'success')
                     axios.post('/updateNofitication', {'id': value.id}).then(res => {
-                       console.log(res)
+                        console.log(res)
 
                     }).catch(e => {
                         console.log("err")
@@ -431,31 +431,8 @@ export default {
             }).catch(e => {
                 console.log("err")
             })
-
-        }
+        },
     }
-    }
-
-
-
-// $(document).ready(function(){
-//
-//     var _token = $('input[name="_token"]').val();
-//
-//     load_data('', _token);
-//
-//     function load_data(id="", _token)
-//     {
-//         $.ajax({
-//             url:"/load_data",
-//             method:"POST",
-//             data:{id:id, _token:_token},
-//             success:function(data)
-//             {
-//                 $('#load_more_button').remove();
-//                 $('#post_data').append(data);
-//             }
-//         })
-//     }
+}
 
 </script>

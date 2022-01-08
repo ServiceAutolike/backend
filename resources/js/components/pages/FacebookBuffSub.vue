@@ -132,6 +132,7 @@
                             <button type="submit" class="btn btn-primary  btn-lg btn-block mr-2" :disabled="isDisabled" @click="createOrder"><i
                                 v-if="isLoading" class="fas fa-circle-notch fa-spin"></i> Tạo Tiến Trình
                             </button>
+
                         </div>
 
                     </div>
@@ -210,7 +211,6 @@
                                 </div>
                             </div>
                         </div>
-
 
                     </div>
 

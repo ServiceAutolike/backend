@@ -1,5 +1,5 @@
 <template>
-    <div class="row">
+    <div class="row" v-loading.fullscreen.lock="fullscreenLoading">
         <div class="col-12 col-xl-12">
             <div class="card mb-5 mb-xl-10">
                 <div class="card-header card-header-stretch pb-0">
@@ -191,14 +191,15 @@
                                         <div class="form-group">
                                             <label>Chọn tốc độ <span class="text-danger">*</span></label>
                                             <!--begin::Select-->
-                                            <select v-model="speedServices" data-hide-search="true"
-                                                    class="form-select form-select-sm bg-body border-body fw-bolder mt-4">
-                                                <option disabled value="">Chọn tốc độ...</option>
-                                                <option value="slow">Chậm</option>
-                                                <option value="medium">Trung Bình</option>
-                                                <option value="normal">Ổn Định</option>
-                                                <option value="high">Nhanh</option>
-                                            </select>
+                                            <el-select v-model="speedServices" placeholder="Chọn tốc độ" style="display: block">
+                                                <el-option
+                                                    v-for="item in speedOption"
+                                                    :key="item.value"
+                                                    :label="item.label"
+                                                    :value="item.value">
+                                                </el-option>
+                                            </el-select>
+
                                             <!--end::Select-->
                                         </div>
                                     </div>
@@ -235,9 +236,8 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="card-footer right">
-                            <button type="submit" class="btn btn-primary  btn-lg btn-block mr-2" :disabled="isDisabled" @click="createOrder"><i
-                                v-if="isLoading" class="fas fa-spinner fa-spin"></i> Tạo Tiến Trình
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary btn-lg btn-block mr-2" :disabled="isDisabled" @click="createOrder"><i v-if="isLoading" class="el-icon-loading"></i> Tạo Tiến Trình
                             </button>
                         </div>
 
@@ -253,6 +253,7 @@
 export default {
     data() {
         return {
+            fullscreenLoading: false,
             loading: true,
             loading_input: false,
             hideIcon: true,
@@ -269,8 +270,21 @@ export default {
             isCheckID: false,
             totalPrice: 1000,
             isLoading: false,
-            isDisabled: false
-
+            isDisabled: false,
+            speedOption: [{
+                value: 'low',
+                label: 'Cực Chậm'
+            }, {
+                value: 'mormal',
+                label: 'Bình Thường'
+            }, {
+                value: 'medium',
+                label: 'Trung Bình'
+            }, {
+                value: 'high',
+                label: 'Nhanh'
+            }],
+            value: 'low'
         }
     },
     methods: {
@@ -350,6 +364,7 @@ export default {
             let obj = this
             obj.isLoading = true
             obj.isDisabled = true
+            obj.fullscreenLoading = true;
             let data = {
                 post_id: obj.post_id,
                 sv: obj.sv,
@@ -363,13 +378,17 @@ export default {
             }
 
             axios.post('/facebook/buff-like', data).then(res => {
-                if (res.data.code != 400) {
-                    Swal.fire("Thành công!", res.data.messages, res.data.status);
-                } else {
-                    Swal.fire("Có lỗi xảy ra!", res.data.messages, res.data.status);
-                }
-                obj.isLoading = false
-                obj.isDisabled = false
+                setTimeout(() => {
+                    this.fullscreenLoading = false;
+                    if (res.data.code != 400) {
+                        Swal.fire("Thành công!", res.data.messages, res.data.status);
+                    } else {
+                        Swal.fire("Có lỗi xảy ra!", res.data.messages, res.data.status);
+                    }
+                    obj.isLoading = false
+                    obj.isDisabled = false
+
+                }, 1500);
             }).catch(e => {
                 obj.isLoading = false
                 obj.isDisabled = false
