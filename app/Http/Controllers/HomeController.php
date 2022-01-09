@@ -6,6 +6,7 @@ use App\Models\PostModel;
 use App\Post;
 use App\Recharge;
 use App\Services;
+use App\User;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
@@ -25,14 +26,29 @@ class HomeController extends Controller
         return view('page.app.dash.index', compact('currentBalance'));
 
     }
-    public function loadMe(Request $request) {
+    public function loadMe() {
+        $month = date('m');
+        $year = date('Y');
+        $user = User::find(Auth::user()->id);
+        $total_recharge = Recharge::where('id_user', Auth::user()->id)->sum('amount_end');
+        $recharge_month = Recharge::whereYear('created_at', $year)->whereMonth('created_at', $month)->sum('amount_end');
+        $recharge_year = Recharge::whereYear('created_at', $year)->sum('amount_end');
 
+        $data = [
+            'data' => $user,
+            'total_recharge' => $total_recharge,
+            'total_recharge_month' => $recharge_month,
+            'total_recharge_year' => $recharge_year
+        ];
+
+        return \response()->json($data);
     }
     public function loadNotification(Request $request)
     {
         $getNewTopup = Recharge::where('id_user', Auth::user()->id)->where('status', 'New')->orderBy('id', 'DESC')->get();
         return \response()->json($getNewTopup);
     }
+
 
     public function updateNotification(Request $request) {
         DB::beginTransaction();
@@ -50,7 +66,7 @@ class HomeController extends Controller
 
     }
     function loadPostData(Request $request) {
-        $data = Post::orderBy('id')->paginate(1);
+        $data = Post::orderBy('id')->paginate(3);
         return \response()->json($data);
     }
     public function findID()

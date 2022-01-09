@@ -4048,6 +4048,53 @@ __webpack_require__.r(__webpack_exports__);
     this.loadNotification();
   },
   methods: {
+    timeAgo: function timeAgo(dateString) {
+      var date = new Date(dateString);
+      var DAY_IN_MS = 86400000; // 24 * 60 * 60 * 1000
+
+      var today = new Date();
+      var seconds = Math.round((today - date) / 1000);
+
+      if (seconds < 20) {
+        return 'Vừa xong';
+      } else if (seconds < 60) {
+        return '1 phút trước';
+      }
+
+      var minutes = Math.round(seconds / 60);
+
+      if (minutes < 60) {
+        return "".concat(minutes, " ph\xFAt tr\u01B0\u1EDBc");
+      }
+
+      var isToday = today.toDateString() === date.toDateString();
+
+      if (isToday) {
+        return 'Hôm nay';
+      }
+
+      var yesterday = new Date(today - DAY_IN_MS);
+      var isYesterday = yesterday.toDateString() === date.toDateString();
+
+      if (isYesterday) {
+        return 'Hôm qua';
+      }
+
+      var daysDiff = Math.round((today - date) / (1000 * 60 * 60 * 24));
+
+      if (daysDiff < 30) {
+        return "".concat(daysDiff, " ng\xE0y tr\u01B0\u1EDBc");
+      }
+
+      var monthsDiff = today.getMonth() - date.getMonth() + 12 * (today.getFullYear() - date.getFullYear());
+
+      if (monthsDiff < 12) {
+        return "".concat(monthsDiff, " th\xE1ng tr\u01B0\u1EDBc");
+      }
+
+      var yearsDiff = today.getYear() - date.getYear();
+      return "".concat(yearsDiff, " n\u0103m tr\u01B0\u1EDBc");
+    },
     handleLoadMore: function handleLoadMore($state) {
       var _this = this;
 
@@ -5665,6 +5712,685 @@ __webpack_require__.r(__webpack_exports__);
         obj.loading = false;
         console.log('Không tồn tại');
       }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/recharge/Bank.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/recharge/Bank.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      dataUser: Object,
+      loading: false,
+      desc: '',
+      fullscreenLoading: true,
+      total_recharge: 0,
+      total_recharge_month: 0,
+      total_recharge_year: 0
+    };
+  },
+  created: function created() {
+    this.loadMe();
+  },
+  methods: {
+    formatNumber: function formatNumber(num) {
+      return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    },
+    loadMe: function loadMe() {
+      var _this = this;
+
+      axios.post('/me').then(function (res) {
+        _this.dataUser = res.data.data;
+        _this.desc = "nap " + res.data.data.name;
+        _this.total_recharge = res.data.total_recharge;
+        setTimeout(function () {
+          return _this.fullscreenLoading = false;
+        }, 500);
+      })["catch"](function (e) {
+        console.log("Error Get Me");
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/recharge/History.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/recharge/History.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      historyRecharge: Object,
+      loading: false,
+      pagination: {
+        'current_page': 1
+      },
+      pagination_payout: {
+        'current_page': 1
+      }
+    };
+  },
+  mounted: function mounted() {
+    this.fechDataHistory();
+  },
+  methods: {
+    formatNumber: function formatNumber(num) {
+      return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    },
+    timeAgo: function timeAgo(dateString) {
+      var date = new Date(dateString);
+      var DAY_IN_MS = 86400000; // 24 * 60 * 60 * 1000
+
+      var today = new Date();
+      var seconds = Math.round((today - date) / 1000);
+
+      if (seconds < 20) {
+        return 'Vừa xong';
+      } else if (seconds < 60) {
+        return '1 phút trước';
+      }
+
+      var minutes = Math.round(seconds / 60);
+
+      if (minutes < 60) {
+        return "".concat(minutes, " ph\xFAt tr\u01B0\u1EDBc");
+      }
+
+      var isToday = today.toDateString() === date.toDateString();
+
+      if (isToday) {
+        return 'Hôm nay';
+      }
+
+      var yesterday = new Date(today - DAY_IN_MS);
+      var isYesterday = yesterday.toDateString() === date.toDateString();
+
+      if (isYesterday) {
+        return 'Hôm qua';
+      }
+
+      var daysDiff = Math.round((today - date) / (1000 * 60 * 60 * 24));
+
+      if (daysDiff < 30) {
+        return "".concat(daysDiff, " ng\xE0y tr\u01B0\u1EDBc");
+      }
+
+      var monthsDiff = today.getMonth() - date.getMonth() + 12 * (today.getFullYear() - date.getFullYear());
+
+      if (monthsDiff < 12) {
+        return "".concat(monthsDiff, " th\xE1ng tr\u01B0\u1EDBc");
+      }
+
+      var yearsDiff = today.getYear() - date.getYear();
+      return "".concat(yearsDiff, " n\u0103m tr\u01B0\u1EDBc");
+    },
+    fechDataHistory: function fechDataHistory() {
+      var obj = this;
+      obj.loading = true;
+      axios.post('/recharge/history?page=' + obj.pagination.current_page).then(function (res) {
+        obj.loading = false;
+        obj.historyRecharge = res.data.fetchDataHistory.data.data;
+        obj.pagination = res.data.fetchDataHistory.pagination;
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/recharge/Momo.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/recharge/Momo.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      dataUser: Object,
+      loading: false,
+      desc: '',
+      fullscreenLoading: true,
+      total_recharge: 0,
+      total_recharge_month: 0,
+      total_recharge_year: 0
+    };
+  },
+  created: function created() {
+    this.loadMe();
+  },
+  methods: {
+    formatNumber: function formatNumber(num) {
+      return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    },
+    loadMe: function loadMe() {
+      var _this = this;
+
+      axios.post('/me').then(function (res) {
+        _this.dataUser = res.data.data;
+        _this.desc = "nap " + res.data.data.name;
+        _this.total_recharge = res.data.total_recharge;
+        setTimeout(function () {
+          return _this.fullscreenLoading = false;
+        }, 500);
+      })["catch"](function (e) {
+        console.log("Error Get Me");
+      });
     }
   }
 });
@@ -7525,7 +8251,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#loading-bar-spinner.spinner-all {\r\n    left: 45%;\r\n    margin-left: -20px;\r\n    top: 15%;\r\n    margin-top: -20px;\r\n    position: absolute;\r\n    z-index: 19 !important;\r\n    -webkit-animation: loading-bar-spinner 400ms linear infinite;\r\n            animation: loading-bar-spinner 400ms linear infinite;\n}\n#loading-bar-spinner.spinner-all .spinner-icon {\r\n    width: 40px;\r\n    height: 40px;\r\n    border:  solid 4px transparent;\r\n    border-top-color:  #009ef7 !important;\r\n    border-left-color: #009ef7 !important;\r\n    border-radius: 50%;\n}\n@-webkit-keyframes loading-bar-spinner {\n0%   { transform: rotate(0deg);   transform: rotate(0deg);\n}\n100% { transform: rotate(360deg); transform: rotate(360deg);\n}\n}\n@keyframes loading-bar-spinner {\n0%   { transform: rotate(0deg);   transform: rotate(0deg);\n}\n100% { transform: rotate(360deg); transform: rotate(360deg);\n}\n}\r\n", ""]);
+exports.push([module.i, "\n#loading-bar-spinner.spinner-all {\n    left: 45%;\n    margin-left: -20px;\n    top: 15%;\n    margin-top: -20px;\n    position: absolute;\n    z-index: 19 !important;\n    -webkit-animation: loading-bar-spinner 400ms linear infinite;\n            animation: loading-bar-spinner 400ms linear infinite;\n}\n#loading-bar-spinner.spinner-all .spinner-icon {\n    width: 40px;\n    height: 40px;\n    border:  solid 4px transparent;\n    border-top-color:  #009ef7 !important;\n    border-left-color: #009ef7 !important;\n    border-radius: 50%;\n}\n@-webkit-keyframes loading-bar-spinner {\n0%   { transform: rotate(0deg);   transform: rotate(0deg);\n}\n100% { transform: rotate(360deg); transform: rotate(360deg);\n}\n}\n@keyframes loading-bar-spinner {\n0%   { transform: rotate(0deg);   transform: rotate(0deg);\n}\n100% { transform: rotate(360deg); transform: rotate(360deg);\n}\n}\n", ""]);
 
 // exports
 
@@ -87689,7 +88415,13 @@ var render = function () {
                                 _c(
                                   "span",
                                   { staticClass: "text-gray-400 fw-bold" },
-                                  [_vm._v(_vm._s(getpostData.created_at))]
+                                  [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.timeAgo(getpostData.created_at)
+                                      )
+                                    ),
+                                  ]
                                 ),
                               ]),
                             ]
@@ -92116,6 +92848,2107 @@ var staticRenderFns = [
         ]),
       ]
     )
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/recharge/Bank.vue?vue&type=template&id=49306b3e&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/recharge/Bank.vue?vue&type=template&id=49306b3e& ***!
+  \**********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      directives: [
+        {
+          name: "loading",
+          rawName: "v-loading.fullscreen.lock",
+          value: _vm.fullscreenLoading,
+          expression: "fullscreenLoading",
+          modifiers: { fullscreen: true, lock: true },
+        },
+      ],
+      staticClass: "row",
+    },
+    [
+      _c("div", { staticClass: "col-8 col-xl-8" }, [
+        _c("div", { staticClass: "card shadow-sm" }, [
+          _c(
+            "div",
+            {
+              staticClass: "card-header collapsible cursor-pointer rotate",
+              attrs: {
+                "data-bs-toggle": "collapse",
+                "data-bs-target": "#kt_docs_card_collapsible",
+              },
+            },
+            [
+              _c("h3", { staticClass: "card-title" }, [
+                _vm._v("Nạp Tiền Qua Ngân Hàng"),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-toolbar rotate-180" }, [
+                _c("span", { staticClass: "svg-icon svg-icon-1" }, [
+                  _c(
+                    "svg",
+                    {
+                      attrs: {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        width: "24",
+                        height: "24",
+                        viewBox: "0 0 24 24",
+                        fill: "none",
+                      },
+                    },
+                    [
+                      _c("rect", {
+                        attrs: {
+                          opacity: "0.5",
+                          x: "11",
+                          y: "18",
+                          width: "13",
+                          height: "2",
+                          rx: "1",
+                          transform: "rotate(-90 11 18)",
+                          fill: "black",
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c("path", {
+                        attrs: {
+                          d: "M11.4343 15.4343L7.25 11.25C6.83579 10.8358 6.16421 10.8358 5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75L11.2929 18.2929C11.6834 18.6834 12.3166 18.6834 12.7071 18.2929L18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25C17.8358 10.8358 17.1642 10.8358 16.75 11.25L12.5657 15.4343C12.2533 15.7467 11.7467 15.7467 11.4343 15.4343Z",
+                          fill: "black",
+                        },
+                      }),
+                    ]
+                  ),
+                ]),
+              ]),
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "collapse show",
+              attrs: { id: "kt_docs_card_collapsible" },
+            },
+            [
+              _c("div", { staticClass: "card-body" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _vm._m(1),
+                _vm._v(" "),
+                _c("div", { staticClass: "row align-items-center mb-3" }, [
+                  _vm._m(2),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-lg-8" }, [
+                    _c("div", { staticClass: "d-flex" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.desc,
+                            expression: "desc",
+                          },
+                        ],
+                        staticClass:
+                          "form-control form-control-solid me-3 flex-grow-1",
+                        attrs: { type: "text" },
+                        domProps: { value: _vm.desc },
+                        on: {
+                          input: function ($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.desc = $event.target.value
+                          },
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass:
+                            "btn btn-light-primary btn-active-primary fw-bolder flex-shrink-0",
+                          attrs: {
+                            id: "bank_copy_btn",
+                            "data-clipboard-target": "#description_bank",
+                          },
+                        },
+                        [_vm._v("Copy")]
+                      ),
+                    ]),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "notice d-flex bg-light-warning rounded border-warning border border-dashed p-6",
+                  },
+                  [
+                    _c(
+                      "span",
+                      {
+                        staticClass:
+                          "svg-icon svg-icon-2tx svg-icon-warning me-4",
+                      },
+                      [
+                        _c(
+                          "svg",
+                          {
+                            attrs: {
+                              xmlns: "http://www.w3.org/2000/svg",
+                              width: "24",
+                              height: "24",
+                              viewBox: "0 0 24 24",
+                              fill: "none",
+                            },
+                          },
+                          [
+                            _c("rect", {
+                              attrs: {
+                                opacity: "0.3",
+                                x: "2",
+                                y: "2",
+                                width: "20",
+                                height: "20",
+                                rx: "10",
+                                fill: "black",
+                              },
+                            }),
+                            _vm._v(" "),
+                            _c("rect", {
+                              attrs: {
+                                x: "11",
+                                y: "14",
+                                width: "7",
+                                height: "2",
+                                rx: "1",
+                                transform: "rotate(-90 11 14)",
+                                fill: "black",
+                              },
+                            }),
+                            _vm._v(" "),
+                            _c("rect", {
+                              attrs: {
+                                x: "11",
+                                y: "17",
+                                width: "2",
+                                height: "2",
+                                rx: "1",
+                                transform: "rotate(-90 11 17)",
+                                fill: "black",
+                              },
+                            }),
+                          ]
+                        ),
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _vm._m(3),
+                  ]
+                ),
+              ]),
+              _vm._v(" "),
+              _vm._m(4),
+            ]
+          ),
+        ]),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-4 col-xl-4" }, [
+        _c(
+          "div",
+          {
+            staticClass:
+              "card bg-success hoverable card-xl-stretch mb-5 mb-xl-8",
+          },
+          [
+            _c("div", { staticClass: "card-body" }, [
+              _c(
+                "span",
+                { staticClass: "svg-icon svg-icon-white svg-icon-3x ms-n1" },
+                [
+                  _c(
+                    "svg",
+                    {
+                      attrs: {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        width: "24",
+                        height: "24",
+                        viewBox: "0 0 24 24",
+                        fill: "none",
+                      },
+                    },
+                    [
+                      _c("path", {
+                        attrs: {
+                          opacity: "0.3",
+                          d: "M14 12V21H10V12C10 11.4 10.4 11 11 11H13C13.6 11 14 11.4 14 12ZM7 2H5C4.4 2 4 2.4 4 3V21H8V3C8 2.4 7.6 2 7 2Z",
+                          fill: "black",
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c("path", {
+                        attrs: {
+                          d: "M21 20H20V16C20 15.4 19.6 15 19 15H17C16.4 15 16 15.4 16 16V20H3C2.4 20 2 20.4 2 21C2 21.6 2.4 22 3 22H21C21.6 22 22 21.6 22 21C22 20.4 21.6 20 21 20Z",
+                          fill: "black",
+                        },
+                      }),
+                    ]
+                  ),
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "text-white fw-bolder fs-2 mb-2 mt-5" },
+                [_vm._v(_vm._s(_vm.formatNumber(_vm.dataUser.point)) + " VNĐ")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "fw-bold text-white" }, [
+                _vm._v("Số tiền hiện có"),
+              ]),
+            ]),
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "card bg-danger hoverable card-xl-stretch mb-xl-8" },
+          [
+            _c("div", { staticClass: "card-body" }, [
+              _c(
+                "span",
+                { staticClass: "svg-icon svg-icon-white svg-icon-3x ms-n1" },
+                [
+                  _c(
+                    "svg",
+                    {
+                      attrs: {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        width: "24",
+                        height: "24",
+                        viewBox: "0 0 24 24",
+                        fill: "none",
+                      },
+                    },
+                    [
+                      _c("path", {
+                        attrs: {
+                          d: "M21 10H13V11C13 11.6 12.6 12 12 12C11.4 12 11 11.6 11 11V10H3C2.4 10 2 10.4 2 11V13H22V11C22 10.4 21.6 10 21 10Z",
+                          fill: "black",
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c("path", {
+                        attrs: {
+                          opacity: "0.3",
+                          d: "M12 12C11.4 12 11 11.6 11 11V3C11 2.4 11.4 2 12 2C12.6 2 13 2.4 13 3V11C13 11.6 12.6 12 12 12Z",
+                          fill: "black",
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c("path", {
+                        attrs: {
+                          opacity: "0.3",
+                          d: "M18.1 21H5.9C5.4 21 4.9 20.6 4.8 20.1L3 13H21L19.2 20.1C19.1 20.6 18.6 21 18.1 21ZM13 18V15C13 14.4 12.6 14 12 14C11.4 14 11 14.4 11 15V18C11 18.6 11.4 19 12 19C12.6 19 13 18.6 13 18ZM17 18V15C17 14.4 16.6 14 16 14C15.4 14 15 14.4 15 15V18C15 18.6 15.4 19 16 19C16.6 19 17 18.6 17 18ZM9 18V15C9 14.4 8.6 14 8 14C7.4 14 7 14.4 7 15V18C7 18.6 7.4 19 8 19C8.6 19 9 18.6 9 18Z",
+                          fill: "black",
+                        },
+                      }),
+                    ]
+                  ),
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "text-white fw-bolder fs-2 mb-2 mt-5" },
+                [_vm._v(_vm._s(_vm.formatNumber(_vm.total_recharge)) + " VNĐ")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "fw-bold text-white" }, [
+                _vm._v("Số tiền đã nạp"),
+              ]),
+            ]),
+          ]
+        ),
+        _vm._v(" "),
+        _vm._m(5),
+      ]),
+    ]
+  )
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "mb-10" }, [
+      _c("p", [
+        _vm._v(
+          "Bạn vui lòng chuyển khoản chính xác nội dung chuyển khoản bên dưới hệ thống sẽ tự động\n                            cộng tiền cho bạn sau 1 - 5 phút sau khi nhận được tiền. Nếu chuyển khác ngân hàng sẽ\n                            mất thời gian lâu hơn, tùy thời gian xử lý của mỗi ngân hàng.Nếu sau 10 phút từ khi tiền\n                            trong tài khoản của bạn bị trừ mà vẫn chưa được cộng tiền vui lòng nhấn vào liên hệ hỗ\n                            trợ."
+        ),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "form-group row mt-4 align-items-center" },
+      [
+        _c("div", { staticClass: "img-bank col-sm-4" }, [
+          _c("label", { staticClass: "col-form-label bold" }, [
+            _vm._v("Thông tin tài khoản"),
+          ]),
+          _vm._v(" "),
+          _c("div", [
+            _c("img", {
+              attrs: {
+                src: "/Backend-Assets/media/bank/vcb.png",
+                width: "100",
+              },
+            }),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-sm" }, [
+          _c(
+            "div",
+            { staticClass: "card bg-dark hoverable card-xl-stretch " },
+            [
+              _c("div", { staticClass: "card-body text-gray-100" }, [
+                _c("div", { staticClass: "fw-bold text-gray-100 mb-1" }, [
+                  _vm._v("Số tài khoản: "),
+                  _c("span", { staticClass: "badge badge-success" }, [
+                    _vm._v("0491000168154"),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "fw-bold text-gray-100 mb-1" }, [
+                  _vm._v("Chủ tài khoản: "),
+                  _c("span", { staticClass: "bold" }, [
+                    _vm._v("NGUYEN THI HAN"),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "fw-bold text-gray-100 mb-1" }, [
+                  _vm._v("Chi nhánh: "),
+                  _c("span", { staticClass: "bold" }, [_vm._v("Thăng Long")]),
+                ]),
+              ]),
+            ]
+          ),
+        ]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-4" }, [
+      _c("label", [
+        _c("i", {
+          staticClass: "fas fa-exclamation-circle ms-2 fs-7",
+          attrs: {
+            "data-bs-toggle": "tooltip",
+            title: "",
+            "data-bs-original-title":
+              "Vui lòng nhập đúng nội dung chuyển khoản để được xử lý nhanh nhất",
+            "aria-label":
+              "Vui lòng nhập đúng nội dung chuyển khoản để được xử lý nhanh nhất",
+          },
+        }),
+        _vm._v("\n                                Nội dung chuyển tiền "),
+        _c("span", { staticClass: "text-danger" }, [_vm._v("*")]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "d-flex flex-stack flex-grow-1" }, [
+      _c("div", { staticClass: "fw-bold" }, [
+        _c("h4", { staticClass: "text-gray-900 fw-bolder" }, [
+          _vm._v("Lưu ý!"),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "fs-6 text-gray-700" }, [
+          _vm._v(
+            "- Nạp sai cú pháp hoặc sai số tài khoản sẽ bị trừ 10% phí giao dịch, tối đa trừ 50.000 VND. Ví dụ nạp sai 100.000 trừ 10.000, 200.000 trừ 20.000, 500.000 trừ 50.000, 1 triệu trừ 50.000, 10 triệu trừ 50.000...\n                                "
+          ),
+        ]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-footer" }, [
+      _c("p", [
+        _c("small", [
+          _c("i", [
+            _c("span", { staticClass: "text-danger" }, [_vm._v("*")]),
+            _vm._v(
+              ' Bạn có thể "Kiểm Tra Nạp Tiền" nếu thời gian chờ\n                        quá lâu, đây là cáh kiểm tra thủ công khi hệ thống nạp tiền bị gián đoạn.\n                    '
+            ),
+          ]),
+        ]),
+      ]),
+      _vm._v(" "),
+      _c("button", { staticClass: "btn btn-primary" }, [
+        _vm._v("Kiểm Tra Nạp Tiền"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card" }, [
+      _c(
+        "div",
+        {
+          staticClass: "card-header collapsible cursor-pointer rotate",
+          attrs: {
+            "data-bs-toggle": "collapse",
+            "data-bs-target": "#kt_docs_card_collapsible",
+          },
+        },
+        [_c("h3", { staticClass: "card-title" }, [_vm._v("Lưu ý")])]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body cl-red" }, [
+        _c("div", { staticClass: "card-text" }, [
+          _c("p", [
+            _vm._v(
+              "- Nạp sai cú pháp hoặc sai số tài khoản sẽ bị trừ 10% phí giao dịch, tối đa trừ 50.000 VNĐ. Ví dụ nạp sai 100.000 trừ 10.000, 200.000 trừ 20.000 , 500.000 trừ 50.000, 1 triệu trừ 50.000, 10 triệu trừ 50.000..."
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "- Buổi tối 18-24h Vietcombank thường tổng kết các giao dịch trong ngày nên thường chậm và lag."
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "- Do đó chuyển khoản vào thời gian này có thể bị auto nạp chậm, sau vài tiếng mới nhận được tiền."
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "- Các bạn nên ưu tiên chuyển vào ban ngày để nhận tiền nhanh nhất nhé."
+            ),
+          ]),
+        ]),
+      ]),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/recharge/Card.vue?vue&type=template&id=90fb53dc&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/recharge/Card.vue?vue&type=template&id=90fb53dc& ***!
+  \**********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "col-12 col-xl-8 mb-4" }, [
+      _c("div", { staticClass: "card shadow-sm" }, [
+        _c(
+          "div",
+          {
+            staticClass: "card-header collapsible cursor-pointer rotate",
+            attrs: {
+              "data-bs-toggle": "collapse",
+              "data-bs-target": "#kt_docs_card_collapsible",
+            },
+          },
+          [
+            _c("h3", { staticClass: "card-title" }, [
+              _vm._v("Nạp Tiền Bằng Thẻ Cào Điện Thoại"),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-toolbar rotate-180" }, [
+              _c("span", { staticClass: "svg-icon svg-icon-1" }, [
+                _c(
+                  "svg",
+                  {
+                    attrs: {
+                      xmlns: "http://www.w3.org/2000/svg",
+                      width: "24",
+                      height: "24",
+                      viewBox: "0 0 24 24",
+                      fill: "none",
+                    },
+                  },
+                  [
+                    _c("rect", {
+                      attrs: {
+                        opacity: "0.5",
+                        x: "11",
+                        y: "18",
+                        width: "13",
+                        height: "2",
+                        rx: "1",
+                        transform: "rotate(-90 11 18)",
+                        fill: "black",
+                      },
+                    }),
+                    _vm._v(" "),
+                    _c("path", {
+                      attrs: {
+                        d: "M11.4343 15.4343L7.25 11.25C6.83579 10.8358 6.16421 10.8358 5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75L11.2929 18.2929C11.6834 18.6834 12.3166 18.6834 12.7071 18.2929L18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25C17.8358 10.8358 17.1642 10.8358 16.75 11.25L12.5657 15.4343C12.2533 15.7467 11.7467 15.7467 11.4343 15.4343Z",
+                        fill: "black",
+                      },
+                    }),
+                  ]
+                ),
+              ]),
+            ]),
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "collapse show",
+            attrs: { id: "kt_docs_card_collapsible" },
+          },
+          [
+            _c("div", { staticClass: "card-body" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "notice d-flex bg-light-warning rounded border-warning border border-dashed p-6",
+                },
+                [
+                  _c(
+                    "span",
+                    {
+                      staticClass:
+                        "svg-icon svg-icon-2tx svg-icon-warning me-4",
+                    },
+                    [
+                      _c(
+                        "svg",
+                        {
+                          attrs: {
+                            xmlns: "http://www.w3.org/2000/svg",
+                            width: "24",
+                            height: "24",
+                            viewBox: "0 0 24 24",
+                            fill: "none",
+                          },
+                        },
+                        [
+                          _c("rect", {
+                            attrs: {
+                              opacity: "0.3",
+                              x: "2",
+                              y: "2",
+                              width: "20",
+                              height: "20",
+                              rx: "10",
+                              fill: "black",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("rect", {
+                            attrs: {
+                              x: "11",
+                              y: "14",
+                              width: "7",
+                              height: "2",
+                              rx: "1",
+                              transform: "rotate(-90 11 14)",
+                              fill: "black",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("rect", {
+                            attrs: {
+                              x: "11",
+                              y: "17",
+                              width: "2",
+                              height: "2",
+                              rx: "1",
+                              transform: "rotate(-90 11 17)",
+                              fill: "black",
+                            },
+                          }),
+                        ]
+                      ),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _vm._m(1),
+                ]
+              ),
+            ]),
+            _vm._v(" "),
+            _vm._m(2),
+          ]
+        ),
+      ]),
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-12 col-xl-4" }, [
+      _c(
+        "div",
+        {
+          staticClass: "card bg-success hoverable card-xl-stretch mb-5 mb-xl-8",
+        },
+        [
+          _c("div", { staticClass: "card-body" }, [
+            _c(
+              "span",
+              { staticClass: "svg-icon svg-icon-white svg-icon-3x ms-n1" },
+              [
+                _c(
+                  "svg",
+                  {
+                    attrs: {
+                      xmlns: "http://www.w3.org/2000/svg",
+                      width: "24",
+                      height: "24",
+                      viewBox: "0 0 24 24",
+                      fill: "none",
+                    },
+                  },
+                  [
+                    _c("path", {
+                      attrs: {
+                        opacity: "0.3",
+                        d: "M14 12V21H10V12C10 11.4 10.4 11 11 11H13C13.6 11 14 11.4 14 12ZM7 2H5C4.4 2 4 2.4 4 3V21H8V3C8 2.4 7.6 2 7 2Z",
+                        fill: "black",
+                      },
+                    }),
+                    _vm._v(" "),
+                    _c("path", {
+                      attrs: {
+                        d: "M21 20H20V16C20 15.4 19.6 15 19 15H17C16.4 15 16 15.4 16 16V20H3C2.4 20 2 20.4 2 21C2 21.6 2.4 22 3 22H21C21.6 22 22 21.6 22 21C22 20.4 21.6 20 21 20Z",
+                        fill: "black",
+                      },
+                    }),
+                  ]
+                ),
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "text-white fw-bolder fs-2 mb-2 mt-5" }, [
+              _vm._v("0 VNĐ"),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "fw-bold text-white" }, [
+              _vm._v("Số tiền hiện có"),
+            ]),
+          ]),
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "card bg-danger hoverable card-xl-stretch mb-xl-8" },
+        [
+          _c("div", { staticClass: "card-body" }, [
+            _c(
+              "span",
+              { staticClass: "svg-icon svg-icon-white svg-icon-3x ms-n1" },
+              [
+                _c(
+                  "svg",
+                  {
+                    attrs: {
+                      xmlns: "http://www.w3.org/2000/svg",
+                      width: "24",
+                      height: "24",
+                      viewBox: "0 0 24 24",
+                      fill: "none",
+                    },
+                  },
+                  [
+                    _c("path", {
+                      attrs: {
+                        d: "M21 10H13V11C13 11.6 12.6 12 12 12C11.4 12 11 11.6 11 11V10H3C2.4 10 2 10.4 2 11V13H22V11C22 10.4 21.6 10 21 10Z",
+                        fill: "black",
+                      },
+                    }),
+                    _vm._v(" "),
+                    _c("path", {
+                      attrs: {
+                        opacity: "0.3",
+                        d: "M12 12C11.4 12 11 11.6 11 11V3C11 2.4 11.4 2 12 2C12.6 2 13 2.4 13 3V11C13 11.6 12.6 12 12 12Z",
+                        fill: "black",
+                      },
+                    }),
+                    _vm._v(" "),
+                    _c("path", {
+                      attrs: {
+                        opacity: "0.3",
+                        d: "M18.1 21H5.9C5.4 21 4.9 20.6 4.8 20.1L3 13H21L19.2 20.1C19.1 20.6 18.6 21 18.1 21ZM13 18V15C13 14.4 12.6 14 12 14C11.4 14 11 14.4 11 15V18C11 18.6 11.4 19 12 19C12.6 19 13 18.6 13 18ZM17 18V15C17 14.4 16.6 14 16 14C15.4 14 15 14.4 15 15V18C15 18.6 15.4 19 16 19C16.6 19 17 18.6 17 18ZM9 18V15C9 14.4 8.6 14 8 14C7.4 14 7 14.4 7 15V18C7 18.6 7.4 19 8 19C8.6 19 9 18.6 9 18Z",
+                        fill: "black",
+                      },
+                    }),
+                  ]
+                ),
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "text-white fw-bolder fs-2 mb-2 mt-5" }, [
+              _vm._v("0 VNĐ"),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "fw-bold text-white" }, [
+              _vm._v("Số tiền đã nạp"),
+            ]),
+          ]),
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "card mt-4" }, [
+        _c(
+          "div",
+          {
+            staticClass: "card-header collapsible cursor-pointer rotate",
+            attrs: {
+              "data-bs-toggle": "collapse",
+              "data-bs-target": "#history",
+            },
+          },
+          [
+            _c("h3", { staticClass: "card-title" }, [
+              _vm._v("Lịch Sử Nạp Tiền"),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-toolbar rotate-180" }, [
+              _c("span", { staticClass: "svg-icon svg-icon-1" }, [
+                _c(
+                  "svg",
+                  {
+                    attrs: {
+                      xmlns: "http://www.w3.org/2000/svg",
+                      width: "24",
+                      height: "24",
+                      viewBox: "0 0 24 24",
+                      fill: "none",
+                    },
+                  },
+                  [
+                    _c("rect", {
+                      attrs: {
+                        opacity: "0.5",
+                        x: "11",
+                        y: "18",
+                        width: "13",
+                        height: "2",
+                        rx: "1",
+                        transform: "rotate(-90 11 18)",
+                        fill: "black",
+                      },
+                    }),
+                    _vm._v(" "),
+                    _c("path", {
+                      attrs: {
+                        d: "M11.4343 15.4343L7.25 11.25C6.83579 10.8358 6.16421 10.8358 5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75L11.2929 18.2929C11.6834 18.6834 12.3166 18.6834 12.7071 18.2929L18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25C17.8358 10.8358 17.1642 10.8358 16.75 11.25L12.5657 15.4343C12.2533 15.7467 11.7467 15.7467 11.4343 15.4343Z",
+                        fill: "black",
+                      },
+                    }),
+                  ]
+                ),
+              ]),
+            ]),
+          ]
+        ),
+        _vm._v(" "),
+        _vm._m(3),
+      ]),
+    ]),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("form", { attrs: { method: "POST" } }, [
+      _c("div", { staticClass: "row mb-6" }, [
+        _c(
+          "label",
+          { staticClass: "col-lg-4 col-form-label required fw-bold fs-6" },
+          [_vm._v("Loại thẻ")]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "col-lg-8 fv-row fv-plugins-icon-container" },
+          [
+            _c(
+              "select",
+              {
+                staticClass: "form-select form-select-solid form-select-lg",
+                attrs: {
+                  name: "currnecy",
+                  "aria-label": "-- Chọn nhà mạng ---",
+                  "data-control": "select2",
+                  "data-placeholder": "Chọn nhà mạng..",
+                },
+              },
+              [
+                _c("option", { attrs: { value: "" } }, [
+                  _vm._v("Chọn nhà mạng.."),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "option",
+                  {
+                    attrs: {
+                      "data-kt-flag": "flags/united-states.svg",
+                      value: "USD",
+                    },
+                  },
+                  [_vm._v("\n                                        Viettel")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "option",
+                  {
+                    attrs: {
+                      "data-kt-flag": "flags/united-kingdom.svg",
+                      value: "GBP",
+                    },
+                  },
+                  [
+                    _vm._v(
+                      "\n                                        Vinaphone"
+                    ),
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "option",
+                  {
+                    attrs: {
+                      "data-kt-flag": "flags/australia.svg",
+                      value: "AUD",
+                    },
+                  },
+                  [_vm._v("\n                                        Mobifone")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "option",
+                  {
+                    attrs: { "data-kt-flag": "flags/japan.svg", value: "JPY" },
+                  },
+                  [
+                    _vm._v(
+                      "\n                                        Vietnammobile"
+                    ),
+                  ]
+                ),
+              ]
+            ),
+          ]
+        ),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row mb-6" }, [
+        _c(
+          "label",
+          { staticClass: "col-lg-4 col-form-label required fw-bold fs-6" },
+          [_vm._v("Mệnh giá")]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "col-lg-8 fv-row fv-plugins-icon-container" },
+          [
+            _c(
+              "select",
+              {
+                staticClass: "form-select form-select-solid form-select-lg",
+                attrs: {
+                  name: "currnecy",
+                  "aria-label": "-- Chọn mệnh giá ---",
+                  "data-control": "select2",
+                  "data-placeholder": "Mệnh giá..",
+                },
+              },
+              [
+                _c("option", { attrs: { value: "" } }, [
+                  _vm._v("Chọn mệnh giá thẻ cào."),
+                ]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "10000" } }, [
+                  _vm._v("\n                                        10,000đ"),
+                ]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "20000" } }, [
+                  _vm._v("\n                                        20,000đ"),
+                ]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "50000" } }, [
+                  _vm._v("\n                                        50,000đ"),
+                ]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "100000" } }, [
+                  _vm._v("\n                                        100,000đ"),
+                ]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "200000" } }, [
+                  _vm._v("\n                                        200,000đ"),
+                ]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "500000" } }, [
+                  _vm._v("\n                                        500,000đ"),
+                ]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "1000000" } }, [
+                  _vm._v(
+                    "\n                                        1,000,000đ"
+                  ),
+                ]),
+              ]
+            ),
+          ]
+        ),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row mb-6" }, [
+        _c(
+          "label",
+          { staticClass: "col-lg-4 col-form-label required fw-bold fs-6" },
+          [_vm._v("Số seri")]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "col-lg-8 fv-row fv-plugins-icon-container" },
+          [
+            _c("input", {
+              staticClass: "form-control form-control-lg form-control-solid",
+              attrs: { type: "number", name: "seri_card" },
+            }),
+            _vm._v(" "),
+            _c("div", {
+              staticClass: "fv-plugins-message-container invalid-feedback",
+            }),
+          ]
+        ),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row mb-6" }, [
+        _c(
+          "label",
+          { staticClass: "col-lg-4 col-form-label required fw-bold fs-6" },
+          [_vm._v("Số thẻ")]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "col-lg-8 fv-row fv-plugins-icon-container" },
+          [
+            _c("input", {
+              staticClass: "form-control form-control-lg form-control-solid",
+              attrs: { type: "number", name: "number_card" },
+            }),
+            _vm._v(" "),
+            _c("div", {
+              staticClass: "fv-plugins-message-container invalid-feedback",
+            }),
+          ]
+        ),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "d-flex flex-stack flex-grow-1" }, [
+      _c("div", { staticClass: "fw-bold" }, [
+        _c("h4", { staticClass: "text-gray-900 fw-bolder" }, [
+          _vm._v("Lưu ý!"),
+        ]),
+        _vm._v(" "),
+        _c("p", { staticClass: "fs-6 text-muted text-gray-700" }, [
+          _vm._v(
+            "Nạp bằng thẻ điện thoại phí nạp là 30%. (Ví dụ nạp thẻ 100,000 sẽ được 70,000 đ)\n                                "
+          ),
+        ]),
+        _vm._v(" "),
+        _c("p", { staticClass: "fs-6 text-muted text-gray-700" }, [
+          _vm._v(
+            "Gửi sai mệnh giá sẽ mất 100% thẻ, vì vậy hãy nhìn lại mệnh giá 1 lần nữa trước khi bấm NẠP TIỀN để tránh mất tiền\n                                "
+          ),
+        ]),
+        _vm._v(" "),
+        _c("p", { staticClass: "fs-6 text-muted text-gray-700" }, [
+          _vm._v(
+            "Nạp sai quá nhiều lần và có hành vi spam sẽ bị hủy thẻ. Vi phạm nhiều = Khóa tài khoản\n                                "
+          ),
+        ]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-footer" }, [
+      _c("button", { staticClass: "btn btn-primary" }, [_vm._v("Nạp Tiền")]),
+      _vm._v(" "),
+      _c("button", { staticClass: "btn btn-light btn-active-light-primary" }, [
+        _vm._v("Làm Mới"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-body py-3" }, [
+      _c("div", { staticClass: "table-responsive" }, [
+        _c(
+          "table",
+          {
+            staticClass:
+              "table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3",
+          },
+          [
+            _c("thead", [
+              _c("tr", { staticClass: "fw-bolder text-muted" }, [
+                _c("th", [_vm._v("Thời gian")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Số tiền")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Trạng thái")]),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c("tbody", [
+              _c("tr", [
+                _c("td", [
+                  _c("span", { staticClass: "time text-muted" }, [
+                    _vm._v("12/05/2021 12:00"),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("span", { staticClass: "fw-bold d-block fs-7" }, [
+                    _vm._v("+12,000 VNĐ"),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("span", { staticClass: "badge badge-success" }, [
+                    _vm._v("Thành công"),
+                  ]),
+                ]),
+              ]),
+              _vm._v(" "),
+              _c("tr", [
+                _c("td", [
+                  _c("span", { staticClass: "time text-muted" }, [
+                    _vm._v("12/05/2021 12:00"),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("span", { staticClass: "fw-bold d-block fs-7" }, [
+                    _vm._v("+12,000 VNĐ"),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("span", { staticClass: "badge badge-success" }, [
+                    _vm._v("Thành công"),
+                  ]),
+                ]),
+              ]),
+              _vm._v(" "),
+              _c("tr", [
+                _c("td", [
+                  _c("span", { staticClass: "time text-muted" }, [
+                    _vm._v("12/05/2021 12:00"),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("span", { staticClass: "fw-bold d-block fs-7" }, [
+                    _vm._v("+12,000 VNĐ"),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("span", { staticClass: "badge badge-success" }, [
+                    _vm._v("Thành công"),
+                  ]),
+                ]),
+              ]),
+              _vm._v(" "),
+              _c("tr", [
+                _c("td", [
+                  _c("span", { staticClass: "time text-muted" }, [
+                    _vm._v("12/05/2021 12:00"),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("span", { staticClass: "fw-bold d-block fs-7" }, [
+                    _vm._v("200,000 VNĐ"),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("span", { staticClass: "badge badge-warning" }, [
+                    _vm._v("Đang chờ..."),
+                  ]),
+                ]),
+              ]),
+            ]),
+          ]
+        ),
+      ]),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/recharge/History.vue?vue&type=template&id=2d3b2c82&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/recharge/History.vue?vue&type=template&id=2d3b2c82& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "col-md-12 col-12" }, [
+      _c(
+        "div",
+        { staticClass: "card mb-5 mb-xxl-10" },
+        [
+          _vm._m(0),
+          _vm._v(" "),
+          _vm.loading
+            ? _c("LoadingPage")
+            : _c("div", { staticClass: "card-body p-0" }, [
+                _c("div", { staticClass: "table-responsive" }, [
+                  _c(
+                    "table",
+                    {
+                      staticClass:
+                        "table table-flush align-middle table-row-bordered table-row-solid gy-4 gs-9",
+                    },
+                    [
+                      _c(
+                        "thead",
+                        {
+                          staticClass:
+                            "border-gray-200 fs-5 fw-bold bg-lighten",
+                        },
+                        [
+                          _c("tr", [
+                            _c("th", { staticClass: "min-w-100px" }, [
+                              _vm._v("Mã Giao Dịch"),
+                            ]),
+                            _vm._v(" "),
+                            _c("th", { staticClass: "min-w-100px" }, [
+                              _vm._v("Số Tiền"),
+                            ]),
+                            _vm._v(" "),
+                            _c("th", { staticClass: "min-w-100px" }, [
+                              _vm._v("Số Nhận Được"),
+                            ]),
+                            _vm._v(" "),
+                            _c("th", { staticClass: "min-w-100px" }, [
+                              _vm._v("Phí (%)"),
+                            ]),
+                            _vm._v(" "),
+                            _c("th", { staticClass: "min-w-100px" }, [
+                              _vm._v("Khuyến Mãi (%)"),
+                            ]),
+                            _vm._v(" "),
+                            _c("th", { staticClass: "min-w-150px" }, [
+                              _vm._v("Cổng Nạp"),
+                            ]),
+                            _vm._v(" "),
+                            _c("th", { staticClass: "min-w-150px" }, [
+                              _vm._v("Trạng Thái"),
+                            ]),
+                            _vm._v(" "),
+                            _c("th", { staticClass: "min-w-150px" }, [
+                              _vm._v("Thời Gian"),
+                            ]),
+                          ]),
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        { staticClass: "fw-6 fw-bold text-gray-600" },
+                        [
+                          _vm.historyRecharge.length == "0"
+                            ? _c("tr", [
+                                _c(
+                                  "td",
+                                  {
+                                    staticClass: "text-center",
+                                    attrs: { scope: "row", colspan: "9" },
+                                  },
+                                  [_vm._v("Không có dữ liệu")]
+                                ),
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm._l(_vm.historyRecharge, function (historyData) {
+                            return _c("tr", [
+                              _c("td", [
+                                _c(
+                                  "span",
+                                  { staticClass: "badge badge-light" },
+                                  [_vm._v(_vm._s(historyData.transaction_code))]
+                                ),
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _c("span", { staticClass: "bold" }, [
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm.formatNumber(historyData.amount)
+                                    ) + " VNĐ"
+                                  ),
+                                ]),
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _c(
+                                  "span",
+                                  { staticClass: "bold text-success" },
+                                  [
+                                    _vm._v(
+                                      "+" +
+                                        _vm._s(
+                                          _vm.formatNumber(
+                                            historyData.amount_end
+                                          )
+                                        ) +
+                                        " VNĐ"
+                                    ),
+                                  ]
+                                ),
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _c("span", [
+                                  _vm._v(_vm._s(historyData.fee) + " %"),
+                                ]),
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _c("span", [
+                                  _c("b", [
+                                    _vm._v(
+                                      "+" +
+                                        _vm._s(
+                                          _vm.formatNumber(
+                                            (historyData.amount_end *
+                                              historyData.discount) /
+                                              100
+                                          )
+                                        ) +
+                                        " VND"
+                                    ),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "span",
+                                    { staticClass: "badge badge-warning" },
+                                    [_vm._v(_vm._s(historyData.discount) + "%")]
+                                  ),
+                                ]),
+                              ]),
+                              _vm._v(" "),
+                              historyData.type == "vcb"
+                                ? _c("td", [_vm._v("Ngân Hàng")])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              historyData.type == "momo"
+                                ? _c("td", [_vm._v("Ví Momo")])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              historyData.type == "momo"
+                                ? _c("td", [_vm._v("Thẻ Điện Thoại")])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _c("td", [
+                                _c(
+                                  "span",
+                                  { staticClass: "badge badge-success" },
+                                  [_vm._v("Thành công")]
+                                ),
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(
+                                  _vm._s(_vm.timeAgo(historyData.created_at))
+                                ),
+                              ]),
+                            ])
+                          }),
+                        ],
+                        2
+                      ),
+                    ]
+                  ),
+                ]),
+              ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-footer" }, [
+            _c("div", { staticClass: "d-flex flex-stack flex-wrap right" }, [
+              _vm.pagination.last_page > 1
+                ? _c(
+                    "p",
+                    { staticClass: "bg-transparent m-0" },
+                    [
+                      _c("pagination", {
+                        attrs: { pagination: _vm.pagination, offset: 5 },
+                        on: {
+                          paginate: function ($event) {
+                            return _vm.fechDataHistory()
+                          },
+                        },
+                      }),
+                    ],
+                    1
+                  )
+                : _vm._e(),
+            ]),
+          ]),
+        ],
+        1
+      ),
+    ]),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("div", { staticClass: "card-title" }, [
+        _c("h3", [_vm._v("Lịch Sử Nạp Tiền")]),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-toolbar" }, [
+        _c("div", { staticClass: "my-1 me-4" }, [
+          _c("input", {
+            staticClass: "form-control form-control-solid",
+            attrs: { type: "text", placeholder: "Nhập ID nạp tiền" },
+          }),
+        ]),
+        _vm._v(" "),
+        _c("button", { staticClass: "btn btn-sm btn-primary my-1" }, [
+          _vm._v("Tìm Kiếm"),
+        ]),
+      ]),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/recharge/Momo.vue?vue&type=template&id=ba0fc874&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/recharge/Momo.vue?vue&type=template&id=ba0fc874& ***!
+  \**********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      directives: [
+        {
+          name: "loading",
+          rawName: "v-loading.fullscreen.lock",
+          value: _vm.fullscreenLoading,
+          expression: "fullscreenLoading",
+          modifiers: { fullscreen: true, lock: true },
+        },
+      ],
+      staticClass: "row",
+    },
+    [
+      _c("div", { staticClass: "col-12 col-xl-8 mb-4" }, [
+        _c("div", { staticClass: "card shadow-sm" }, [
+          _c(
+            "div",
+            {
+              staticClass: "card-header collapsible cursor-pointer rotate",
+              attrs: {
+                "data-bs-toggle": "collapse",
+                "data-bs-target": "#kt_docs_card_collapsible",
+              },
+            },
+            [
+              _c("h3", { staticClass: "card-title" }, [
+                _vm._v("Nạp Tiền Qua Momo"),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-toolbar rotate-180" }, [
+                _c("span", { staticClass: "svg-icon svg-icon-1" }, [
+                  _c(
+                    "svg",
+                    {
+                      attrs: {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        width: "24",
+                        height: "24",
+                        viewBox: "0 0 24 24",
+                        fill: "none",
+                      },
+                    },
+                    [
+                      _c("rect", {
+                        attrs: {
+                          opacity: "0.5",
+                          x: "11",
+                          y: "18",
+                          width: "13",
+                          height: "2",
+                          rx: "1",
+                          transform: "rotate(-90 11 18)",
+                          fill: "black",
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c("path", {
+                        attrs: {
+                          d: "M11.4343 15.4343L7.25 11.25C6.83579 10.8358 6.16421 10.8358 5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75L11.2929 18.2929C11.6834 18.6834 12.3166 18.6834 12.7071 18.2929L18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25C17.8358 10.8358 17.1642 10.8358 16.75 11.25L12.5657 15.4343C12.2533 15.7467 11.7467 15.7467 11.4343 15.4343Z",
+                          fill: "black",
+                        },
+                      }),
+                    ]
+                  ),
+                ]),
+              ]),
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "collapse show",
+              attrs: { id: "kt_docs_card_collapsible" },
+            },
+            [
+              _c("div", { staticClass: "card-body" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _vm._m(1),
+                _vm._v(" "),
+                _c("div", { staticClass: "row align-items-center mb-3" }, [
+                  _vm._m(2),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-lg-8" }, [
+                    _c("div", { staticClass: "d-flex" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.desc,
+                            expression: "desc",
+                          },
+                        ],
+                        staticClass:
+                          "form-control form-control-solid me-3 flex-grow-1",
+                        attrs: { id: "description_bank", type: "text" },
+                        domProps: { value: _vm.desc },
+                        on: {
+                          input: function ($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.desc = $event.target.value
+                          },
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass:
+                            "btn btn-light-primary btn-active-primary fw-bolder flex-shrink-0",
+                          attrs: {
+                            id: "bank_copy_btn",
+                            "data-clipboard-target": "#description_bank",
+                          },
+                        },
+                        [_vm._v("Copy")]
+                      ),
+                    ]),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "notice d-flex bg-light-warning rounded border-warning border border-dashed p-6",
+                  },
+                  [
+                    _c(
+                      "span",
+                      {
+                        staticClass:
+                          "svg-icon svg-icon-2tx svg-icon-warning me-4",
+                      },
+                      [
+                        _c(
+                          "svg",
+                          {
+                            attrs: {
+                              xmlns: "http://www.w3.org/2000/svg",
+                              width: "24",
+                              height: "24",
+                              viewBox: "0 0 24 24",
+                              fill: "none",
+                            },
+                          },
+                          [
+                            _c("rect", {
+                              attrs: {
+                                opacity: "0.3",
+                                x: "2",
+                                y: "2",
+                                width: "20",
+                                height: "20",
+                                rx: "10",
+                                fill: "black",
+                              },
+                            }),
+                            _vm._v(" "),
+                            _c("rect", {
+                              attrs: {
+                                x: "11",
+                                y: "14",
+                                width: "7",
+                                height: "2",
+                                rx: "1",
+                                transform: "rotate(-90 11 14)",
+                                fill: "black",
+                              },
+                            }),
+                            _vm._v(" "),
+                            _c("rect", {
+                              attrs: {
+                                x: "11",
+                                y: "17",
+                                width: "2",
+                                height: "2",
+                                rx: "1",
+                                transform: "rotate(-90 11 17)",
+                                fill: "black",
+                              },
+                            }),
+                          ]
+                        ),
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _vm._m(3),
+                  ]
+                ),
+              ]),
+              _vm._v(" "),
+              _vm._m(4),
+            ]
+          ),
+        ]),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-12 col-xl-4" }, [
+        _c(
+          "div",
+          {
+            staticClass:
+              "card bg-success hoverable card-xl-stretch mb-5 mb-xl-8",
+          },
+          [
+            _c("div", { staticClass: "card-body" }, [
+              _c(
+                "span",
+                { staticClass: "svg-icon svg-icon-white svg-icon-3x ms-n1" },
+                [
+                  _c(
+                    "svg",
+                    {
+                      attrs: {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        width: "24",
+                        height: "24",
+                        viewBox: "0 0 24 24",
+                        fill: "none",
+                      },
+                    },
+                    [
+                      _c("path", {
+                        attrs: {
+                          opacity: "0.3",
+                          d: "M14 12V21H10V12C10 11.4 10.4 11 11 11H13C13.6 11 14 11.4 14 12ZM7 2H5C4.4 2 4 2.4 4 3V21H8V3C8 2.4 7.6 2 7 2Z",
+                          fill: "black",
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c("path", {
+                        attrs: {
+                          d: "M21 20H20V16C20 15.4 19.6 15 19 15H17C16.4 15 16 15.4 16 16V20H3C2.4 20 2 20.4 2 21C2 21.6 2.4 22 3 22H21C21.6 22 22 21.6 22 21C22 20.4 21.6 20 21 20Z",
+                          fill: "black",
+                        },
+                      }),
+                    ]
+                  ),
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "text-white fw-bolder fs-2 mb-2 mt-5" },
+                [_vm._v(_vm._s(_vm.formatNumber(_vm.dataUser.point)) + " VNĐ")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "fw-bold text-white" }, [
+                _vm._v("Số tiền hiện có"),
+              ]),
+            ]),
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "card bg-danger hoverable card-xl-stretch mb-xl-8" },
+          [
+            _c("div", { staticClass: "card-body" }, [
+              _c(
+                "span",
+                { staticClass: "svg-icon svg-icon-white svg-icon-3x ms-n1" },
+                [
+                  _c(
+                    "svg",
+                    {
+                      attrs: {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        width: "24",
+                        height: "24",
+                        viewBox: "0 0 24 24",
+                        fill: "none",
+                      },
+                    },
+                    [
+                      _c("path", {
+                        attrs: {
+                          d: "M21 10H13V11C13 11.6 12.6 12 12 12C11.4 12 11 11.6 11 11V10H3C2.4 10 2 10.4 2 11V13H22V11C22 10.4 21.6 10 21 10Z",
+                          fill: "black",
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c("path", {
+                        attrs: {
+                          opacity: "0.3",
+                          d: "M12 12C11.4 12 11 11.6 11 11V3C11 2.4 11.4 2 12 2C12.6 2 13 2.4 13 3V11C13 11.6 12.6 12 12 12Z",
+                          fill: "black",
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c("path", {
+                        attrs: {
+                          opacity: "0.3",
+                          d: "M18.1 21H5.9C5.4 21 4.9 20.6 4.8 20.1L3 13H21L19.2 20.1C19.1 20.6 18.6 21 18.1 21ZM13 18V15C13 14.4 12.6 14 12 14C11.4 14 11 14.4 11 15V18C11 18.6 11.4 19 12 19C12.6 19 13 18.6 13 18ZM17 18V15C17 14.4 16.6 14 16 14C15.4 14 15 14.4 15 15V18C15 18.6 15.4 19 16 19C16.6 19 17 18.6 17 18ZM9 18V15C9 14.4 8.6 14 8 14C7.4 14 7 14.4 7 15V18C7 18.6 7.4 19 8 19C8.6 19 9 18.6 9 18Z",
+                          fill: "black",
+                        },
+                      }),
+                    ]
+                  ),
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "text-white fw-bolder fs-2 mb-2 mt-5" },
+                [_vm._v(_vm._s(_vm.formatNumber(_vm.total_recharge)) + " VNĐ")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "fw-bold text-white" }, [
+                _vm._v("Số tiền đã nạp"),
+              ]),
+            ]),
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "card mt-4" }, [
+          _c(
+            "div",
+            {
+              staticClass: "card-header collapsible cursor-pointer rotate",
+              attrs: {
+                "data-bs-toggle": "collapse",
+                "data-bs-target": "#history",
+              },
+            },
+            [
+              _c("h3", { staticClass: "card-title" }, [
+                _vm._v("Lịch Sử Nạp Tiền"),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-toolbar rotate-180" }, [
+                _c("span", { staticClass: "svg-icon svg-icon-1" }, [
+                  _c(
+                    "svg",
+                    {
+                      attrs: {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        width: "24",
+                        height: "24",
+                        viewBox: "0 0 24 24",
+                        fill: "none",
+                      },
+                    },
+                    [
+                      _c("rect", {
+                        attrs: {
+                          opacity: "0.5",
+                          x: "11",
+                          y: "18",
+                          width: "13",
+                          height: "2",
+                          rx: "1",
+                          transform: "rotate(-90 11 18)",
+                          fill: "black",
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c("path", {
+                        attrs: {
+                          d: "M11.4343 15.4343L7.25 11.25C6.83579 10.8358 6.16421 10.8358 5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75L11.2929 18.2929C11.6834 18.6834 12.3166 18.6834 12.7071 18.2929L18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25C17.8358 10.8358 17.1642 10.8358 16.75 11.25L12.5657 15.4343C12.2533 15.7467 11.7467 15.7467 11.4343 15.4343Z",
+                          fill: "black",
+                        },
+                      }),
+                    ]
+                  ),
+                ]),
+              ]),
+            ]
+          ),
+          _vm._v(" "),
+          _vm._m(5),
+        ]),
+      ]),
+    ]
+  )
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "mb-10" }, [
+      _c("p", [
+        _vm._v(
+          "Bạn vui lòng chuyển khoản chính xác nội dung chuyển khoản bên dưới hệ thống sẽ tự động cộng tiền cho bạn sau 1 - 5 phút sau khi nhận được tiền. Nếu sau 10 phút từ khi tiền trong tài khoản của bạn bị trừ mà vẫn chưa được cộng tiền vui lòng nhấn vào liên hệ hỗ trợ."
+        ),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "form-group row mt-4 align-items-center" },
+      [
+        _c("div", { staticClass: "img-bank col-sm-4" }, [
+          _c("label", { staticClass: "col-form-label bold" }, [
+            _vm._v("Thông tin tài khoản"),
+          ]),
+          _vm._v(" "),
+          _c("div", [
+            _c("img", {
+              attrs: {
+                src: "/Backend-Assets/media/bank/momo.png",
+                width: "80",
+              },
+            }),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-sm" }, [
+          _c(
+            "div",
+            { staticClass: "card bg-dark hoverable card-xl-stretch " },
+            [
+              _c("div", { staticClass: "card-body text-gray-100" }, [
+                _c("div", { staticClass: "fw-bold text-gray-100 mb-1" }, [
+                  _vm._v("Số Momo: "),
+                  _c("span", { staticClass: "badge badge-success" }, [
+                    _vm._v("0971456287"),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "fw-bold text-gray-100 mb-1" }, [
+                  _vm._v("Tên tài khoản: "),
+                  _c("span", { staticClass: "bold" }, [
+                    _vm._v("NGUYEN THI HAN"),
+                  ]),
+                ]),
+              ]),
+            ]
+          ),
+        ]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-4" }, [
+      _c("label", [
+        _c("i", {
+          staticClass: "fas fa-exclamation-circle ms-2 fs-7",
+          attrs: {
+            "data-bs-toggle": "tooltip",
+            title: "",
+            "data-bs-original-title":
+              "Vui lòng nhập đúng nội dung chuyển khoản để được xử lý nhanh nhất",
+            "aria-label":
+              "Vui lòng nhập đúng nội dung chuyển khoản để được xử lý nhanh nhất",
+          },
+        }),
+        _vm._v("\n                                Lời nhắn chuyển tiền "),
+        _c("span", { staticClass: "text-danger" }, [_vm._v("*")]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "d-flex flex-stack flex-grow-1" }, [
+      _c("div", { staticClass: "fw-bold" }, [
+        _c("h4", { staticClass: "text-gray-900 fw-bolder" }, [
+          _vm._v("Lưu ý!"),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "fs-6 text-gray-700" }, [
+          _vm._v(
+            "Nạp sai cú pháp vui lòng gửi Yêu cầu hỗ trợ hoặc\n                                    liên hệ qua Zalo sau đó cung cấp hóa đơn chuyển tiền để được nạp thủ công.\n                                "
+          ),
+        ]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-footer" }, [
+      _c("p", [
+        _c("small", [
+          _c("i", [
+            _c("span", { staticClass: "text-danger" }, [_vm._v("*")]),
+            _vm._v(
+              ' Bạn có thể "Kiểm Tra Nạp Tiền" nếu thời gian chờ\n                        quá lâu, đây là cáh kiểm tra thủ công khi hệ thống nạp tiền bị gián đoạn.\n                    '
+            ),
+          ]),
+        ]),
+      ]),
+      _vm._v(" "),
+      _c("button", { staticClass: "btn btn-primary" }, [
+        _vm._v("Kiểm Tra Nạp Tiền"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-body py-3" }, [
+      _c("div", { staticClass: "table-responsive" }, [
+        _c(
+          "table",
+          {
+            staticClass:
+              "table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3",
+          },
+          [
+            _c("thead", [
+              _c("tr", { staticClass: "fw-bolder text-muted" }, [
+                _c("th", [_vm._v("Thời gian")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Số tiền")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Trạng thái")]),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c("tbody", [
+              _c("tr", [
+                _c("td", [
+                  _c("span", { staticClass: "time text-muted" }, [
+                    _vm._v("12/05/2021 12:00"),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("span", { staticClass: "fw-bold d-block fs-7" }, [
+                    _vm._v("+12,000 VNĐ"),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("span", { staticClass: "badge badge-success" }, [
+                    _vm._v("Thành công"),
+                  ]),
+                ]),
+              ]),
+              _vm._v(" "),
+              _c("tr", [
+                _c("td", [
+                  _c("span", { staticClass: "time text-muted" }, [
+                    _vm._v("12/05/2021 12:00"),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("span", { staticClass: "fw-bold d-block fs-7" }, [
+                    _vm._v("+12,000 VNĐ"),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("span", { staticClass: "badge badge-success" }, [
+                    _vm._v("Thành công"),
+                  ]),
+                ]),
+              ]),
+              _vm._v(" "),
+              _c("tr", [
+                _c("td", [
+                  _c("span", { staticClass: "time text-muted" }, [
+                    _vm._v("12/05/2021 12:00"),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("span", { staticClass: "fw-bold d-block fs-7" }, [
+                    _vm._v("+12,000 VNĐ"),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("span", { staticClass: "badge badge-success" }, [
+                    _vm._v("Thành công"),
+                  ]),
+                ]),
+              ]),
+              _vm._v(" "),
+              _c("tr", [
+                _c("td", [
+                  _c("span", { staticClass: "time text-muted" }, [
+                    _vm._v("12/05/2021 12:00"),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("span", { staticClass: "fw-bold d-block fs-7" }, [
+                    _vm._v("200,000 VNĐ"),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("span", { staticClass: "badge badge-warning" }, [
+                    _vm._v("Đang chờ..."),
+                  ]),
+                ]),
+              ]),
+            ]),
+          ]
+        ),
+      ]),
+    ])
   },
 ]
 render._withStripped = true
@@ -107546,7 +110379,8 @@ Vue.component('pagination', __webpack_require__(/*! ./components/PaginationCompo
 var app = new Vue({
   el: '#app',
   router: router,
-  linkActiveClass: "active"
+  linkActiveClass: "active",
+  fullscreenLoading: true
 });
 
 /***/ }),
@@ -108279,6 +111113,267 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/pages/recharge/Bank.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/pages/recharge/Bank.vue ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Bank_vue_vue_type_template_id_49306b3e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Bank.vue?vue&type=template&id=49306b3e& */ "./resources/js/components/pages/recharge/Bank.vue?vue&type=template&id=49306b3e&");
+/* harmony import */ var _Bank_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Bank.vue?vue&type=script&lang=js& */ "./resources/js/components/pages/recharge/Bank.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Bank_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Bank_vue_vue_type_template_id_49306b3e___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Bank_vue_vue_type_template_id_49306b3e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/pages/recharge/Bank.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/recharge/Bank.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/pages/recharge/Bank.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Bank_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Bank.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/recharge/Bank.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Bank_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/recharge/Bank.vue?vue&type=template&id=49306b3e&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/pages/recharge/Bank.vue?vue&type=template&id=49306b3e& ***!
+  \****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Bank_vue_vue_type_template_id_49306b3e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Bank.vue?vue&type=template&id=49306b3e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/recharge/Bank.vue?vue&type=template&id=49306b3e&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Bank_vue_vue_type_template_id_49306b3e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Bank_vue_vue_type_template_id_49306b3e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/recharge/Card.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/pages/recharge/Card.vue ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Card_vue_vue_type_template_id_90fb53dc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Card.vue?vue&type=template&id=90fb53dc& */ "./resources/js/components/pages/recharge/Card.vue?vue&type=template&id=90fb53dc&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+var script = {}
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  script,
+  _Card_vue_vue_type_template_id_90fb53dc___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Card_vue_vue_type_template_id_90fb53dc___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/pages/recharge/Card.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/recharge/Card.vue?vue&type=template&id=90fb53dc&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/pages/recharge/Card.vue?vue&type=template&id=90fb53dc& ***!
+  \****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Card_vue_vue_type_template_id_90fb53dc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Card.vue?vue&type=template&id=90fb53dc& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/recharge/Card.vue?vue&type=template&id=90fb53dc&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Card_vue_vue_type_template_id_90fb53dc___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Card_vue_vue_type_template_id_90fb53dc___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/recharge/History.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/components/pages/recharge/History.vue ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _History_vue_vue_type_template_id_2d3b2c82___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./History.vue?vue&type=template&id=2d3b2c82& */ "./resources/js/components/pages/recharge/History.vue?vue&type=template&id=2d3b2c82&");
+/* harmony import */ var _History_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./History.vue?vue&type=script&lang=js& */ "./resources/js/components/pages/recharge/History.vue?vue&type=script&lang=js&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _History_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _History_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _History_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _History_vue_vue_type_template_id_2d3b2c82___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _History_vue_vue_type_template_id_2d3b2c82___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/pages/recharge/History.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/recharge/History.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/pages/recharge/History.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_History_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./History.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/recharge/History.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_History_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/recharge/History.vue?vue&type=template&id=2d3b2c82&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/pages/recharge/History.vue?vue&type=template&id=2d3b2c82& ***!
+  \*******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_History_vue_vue_type_template_id_2d3b2c82___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./History.vue?vue&type=template&id=2d3b2c82& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/recharge/History.vue?vue&type=template&id=2d3b2c82&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_History_vue_vue_type_template_id_2d3b2c82___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_History_vue_vue_type_template_id_2d3b2c82___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/recharge/Momo.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/pages/recharge/Momo.vue ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Momo_vue_vue_type_template_id_ba0fc874___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Momo.vue?vue&type=template&id=ba0fc874& */ "./resources/js/components/pages/recharge/Momo.vue?vue&type=template&id=ba0fc874&");
+/* harmony import */ var _Momo_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Momo.vue?vue&type=script&lang=js& */ "./resources/js/components/pages/recharge/Momo.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Momo_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Momo_vue_vue_type_template_id_ba0fc874___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Momo_vue_vue_type_template_id_ba0fc874___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/pages/recharge/Momo.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/recharge/Momo.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/pages/recharge/Momo.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Momo_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Momo.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/recharge/Momo.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Momo_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/recharge/Momo.vue?vue&type=template&id=ba0fc874&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/pages/recharge/Momo.vue?vue&type=template&id=ba0fc874& ***!
+  \****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Momo_vue_vue_type_template_id_ba0fc874___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Momo.vue?vue&type=template&id=ba0fc874& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/recharge/Momo.vue?vue&type=template&id=ba0fc874&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Momo_vue_vue_type_template_id_ba0fc874___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Momo_vue_vue_type_template_id_ba0fc874___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/routerPage.js":
 /*!************************************!*\
   !*** ./resources/js/routerPage.js ***!
@@ -108294,13 +111389,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_pages_FacebookBuffSub__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/pages/FacebookBuffSub */ "./resources/js/components/pages/FacebookBuffSub.vue");
 /* harmony import */ var _components_pages_FacebookBuffComment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/pages/FacebookBuffComment */ "./resources/js/components/pages/FacebookBuffComment.vue");
 /* harmony import */ var _components_pages_Dashboard__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/pages/Dashboard */ "./resources/js/components/pages/Dashboard.vue");
+/* harmony import */ var _components_pages_recharge_Bank__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/pages/recharge/Bank */ "./resources/js/components/pages/recharge/Bank.vue");
+/* harmony import */ var _components_pages_recharge_Momo__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/pages/recharge/Momo */ "./resources/js/components/pages/recharge/Momo.vue");
+/* harmony import */ var _components_pages_recharge_Card__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/pages/recharge/Card */ "./resources/js/components/pages/recharge/Card.vue");
+/* harmony import */ var _components_pages_recharge_History__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/pages/recharge/History */ "./resources/js/components/pages/recharge/History.vue");
 // Account Page Views
 
 
 
 
 
-var routes = [// Account Page
+
+
+
+
+var routes = [// Recharge
+{
+  path: '/recharge/bank',
+  name: 'RechargeBank',
+  component: _components_pages_recharge_Bank__WEBPACK_IMPORTED_MODULE_5__["default"]
+}, {
+  path: '/recharge/momo',
+  name: 'RechargeMomo',
+  component: _components_pages_recharge_Momo__WEBPACK_IMPORTED_MODULE_6__["default"]
+}, {
+  path: '/recharge/card',
+  name: 'RechargeCard',
+  component: _components_pages_recharge_Card__WEBPACK_IMPORTED_MODULE_7__["default"]
+}, {
+  path: '/recharge/history',
+  name: 'RechargeHistory',
+  component: _components_pages_recharge_History__WEBPACK_IMPORTED_MODULE_8__["default"]
+}, // Account Page
 {
   path: '/home',
   name: 'Dashboard',
@@ -108353,8 +111473,8 @@ var routes = [// Account Page
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\backend\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\backend\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/backend/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/backend/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
