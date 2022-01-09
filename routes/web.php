@@ -25,14 +25,15 @@ Route::group(['middleware' => 'login'], function () {
     Route::post('/loadNotification', 'HomeController@loadNotification')->name('home.test');
     Route::post('/updateNofitication', 'HomeController@updateNotification')->name('home.updated');
     Route::post('/me', 'HomeController@loadMe')->name('home.me');
-
     Route::post('/loadPost', 'HomeController@loadPostData')->name('home.load_data');
+
     Route::group(['prefix' => 'recharge'], function (){
         Route::get('/bank', 'RechargeController@rechargeBank')->name('recharge.bank');
         Route::get('/momo', 'RechargeController@rechargeMomo')->name('recharge.momo');
         Route::get('/card', 'RechargeController@rechargeCard')->name('recharge.card');
         Route::get('/history', 'RechargeController@history')->name('recharge.history');
         Route::post('/history', 'RechargeController@getHistory')->name('recharge.phistory');
+        Route::post('/scan', 'RechargeController@checkRechargeVCB')->name('recharge.scan');
     });
 
     Route::post('/updateTransaction/{type}', 'FacebookController@updateTransaction')->name('faceUser.updateTransaction');

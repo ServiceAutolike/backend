@@ -61,42 +61,12 @@
                                 </div>
                             </div>
                         </div>
-
-
-                        <div class="notice d-flex bg-light-warning rounded border-warning border border-dashed p-6">
-                            <!--begin::Icon-->
-                            <!--begin::Svg Icon | path: icons/duotune/general/gen044.svg-->
-                            <span class="svg-icon svg-icon-2tx svg-icon-warning me-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                     fill="none">
-                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black"></rect>
-                                    <rect x="11" y="14" width="7" height="2" rx="1" transform="rotate(-90 11 14)"
-                                          fill="black"></rect>
-                                    <rect x="11" y="17" width="2" height="2" rx="1" transform="rotate(-90 11 17)"
-                                          fill="black"></rect>
-                                </svg>
-                            </span>
-                            <!--end::Svg Icon-->
-                            <!--end::Icon-->
-                            <!--begin::Wrapper-->
-                            <div class="d-flex flex-stack flex-grow-1">
-                                <!--begin::Content-->
-                                <div class="fw-bold">
-                                    <h4 class="text-gray-900 fw-bolder">Lưu ý!</h4>
-                                    <div class="fs-6 text-gray-700">
-                                        <p>- Nạp sai cú pháp hoặc sai số tài khoản sẽ bị trừ 10% phí giao dịch, tối đa trừ 50.000 VNĐ. Ví dụ nạp sai 100.000 trừ 10.000, 200.000 trừ 20.000 , 500.000 trừ 50.000, 1 triệu trừ 50.000, 10 triệu trừ 50.000...</p>
-                                        <p>- Buổi tối 18-24h Vietcombank thường tổng kết các giao dịch trong ngày nên thường chậm và lag.</p>
-                                        <p>- Do đó chuyển khoản vào thời gian này có thể bị auto nạp chậm, sau vài tiếng mới nhận được tiền.</p>
-                                        <p>- Các bạn nên ưu tiên chuyển vào ban ngày để nhận tiền nhanh nhất nhé.</p>
-                                    </div>
-                                </div>
-                                <!--end::Content-->
-                            </div>
-                            <!--end::Wrapper-->
-                        </div>
-
                     </div>
-
+                    <div class="card-footer">
+                        <p><small><i><span class="text-danger">*</span> Bạn có thể ấn "<b class="text-danger">Tôi Đã Chuyển Tiền</b>" để hệ thống kiểm tra thủ công hoặc bạn có thể đợi 5-10 phút để hệ thống tự cập nhật số dư cho bạn.
+                        </i></small></p>
+                        <button class="btn btn-success" @click="scanRecharge" :disabled="isDisabled"><i class="el-icon-check" v-if="isStatic"></i><i class="el-icon-loading" v-if="isClick"></i> {{ txtBtn }}</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -143,6 +113,35 @@
                 <!--end::Body-->
             </div>
 
+            <div class="notice d-flex bg-light-warning rounded border-warning border border-dashed p-6">
+                <!--begin::Icon-->
+                <!--begin::Svg Icon | path: icons/duotune/general/gen044.svg-->
+                <span class="svg-icon svg-icon-2tx svg-icon-warning me-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                     fill="none">
+                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black"></rect>
+                                    <rect x="11" y="14" width="7" height="2" rx="1" transform="rotate(-90 11 14)"
+                                          fill="black"></rect>
+                                    <rect x="11" y="17" width="2" height="2" rx="1" transform="rotate(-90 11 17)"
+                                          fill="black"></rect>
+                                </svg>
+                            </span>
+                <!--end::Svg Icon-->
+                <!--end::Icon-->
+                <!--begin::Wrapper-->
+                <div class="d-flex flex-stack flex-grow-1">
+                    <!--begin::Content-->
+                    <div class="fw-bold">
+                        <h4 class="text-gray-900 fw-bolder">Lưu ý!</h4>
+                        <div class="fs-6 text-gray-700">
+                            <p>- Nạp sai cú pháp hoặc sai số tài khoản sẽ bị trừ 10% phí giao dịch, tối đa trừ 50.000 VNĐ. Ví dụ nạp sai 100.000 trừ 10.000, 200.000 trừ 20.000 , 500.000 trừ 50.000, 1 triệu trừ 50.000, 10 triệu trừ 50.000...</p>
+                        </div>
+                    </div>
+                    <!--end::Content-->
+                </div>
+                <!--end::Wrapper-->
+            </div>
+
 
         </div>
     </div>
@@ -152,7 +151,12 @@ export default {
     data() {
         return {
             dataUser: Object,
+            dataScan: Object,
+            txtBtn: 'Tôi Đã Chuyển Tiền',
             loading: true,
+            isDisabled: false,
+            isStatic: true,
+            isClick: false,
             desc: '',
             total_recharge: 0,
             total_recharge_month: 0,
@@ -163,6 +167,36 @@ export default {
         this.loadMe()
     },
     methods: {
+        formatNumber(num) {
+            return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+        },
+        async scanRecharge() {
+            toastr.info('Bắt đầu chạy tiến trình, vui lòng không thoát trang....')
+            this.txtBtn = 'Đang kiểm tra...'
+            this.isDisabled = true
+            this.isStatic = false
+            this.isClick = true
+            while (true) {
+                try {
+                    let response = await axios.post('/recharge/scan');
+                    this.dataScan = response.data
+                    if (response.data.status != 'error') {
+                        this.txtBtn = 'Tôi Đã Chuyển Tiền'
+                        this.isDisabled = false
+                        this.isStatic = true
+                        this.isClick = false
+                        Swal.fire('Thông Báo', 'Bạn đã nạp thành công '+this.formatNumber(response.data.amount)+ ' VND','success');
+                        break
+                    } else {
+                        toastr.warning('Đang kiểm tra thông tin chuyển khoản của bạn....')
+                    }
+                }
+                catch (e) {
+                    toastr.error('Đã có lỗi xảy ra....')
+                    break
+                }
+            }
+        },
         async copyURL(text) {
             text = this.desc
             try {
@@ -172,9 +206,6 @@ export default {
             } catch($e) {
                 Swal.fire('Thông Báo','Lỗi không thể sao chép!','error')
             }
-        },
-        formatNumber(num) {
-            return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
         },
         loadMe() {
             axios.post('/me').then(res => {

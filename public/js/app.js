@@ -5899,12 +5899,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       dataUser: Object,
+      dataScan: Object,
+      txtBtn: 'Tôi Đã Chuyển Tiền',
       loading: true,
+      isDisabled: false,
+      isStatic: true,
+      isClick: false,
       desc: '',
       total_recharge: 0,
       total_recharge_month: 0,
@@ -5915,18 +5919,84 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     this.loadMe();
   },
   methods: {
-    copyURL: function copyURL(text) {
+    formatNumber: function formatNumber(num) {
+      return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    },
+    scanRecharge: function scanRecharge() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                text = _this.desc;
+                toastr.info('Bắt đầu chạy tiến trình, vui lòng không thoát trang....');
+                _this.txtBtn = 'Đang kiểm tra...';
+                _this.isDisabled = true;
+                _this.isStatic = false;
+                _this.isClick = true;
+
+              case 5:
+                if (false) {}
+
+                _context.prev = 6;
+                _context.next = 9;
+                return axios.post('/recharge/scan');
+
+              case 9:
+                response = _context.sent;
+                _this.dataScan = response.data;
+
+                if (!(response.data.status != 'error')) {
+                  _context.next = 20;
+                  break;
+                }
+
+                _this.txtBtn = 'Tôi Đã Chuyển Tiền';
+                _this.isDisabled = false;
+                _this.isStatic = true;
+                _this.isClick = false;
+                Swal.fire('Thông Báo', 'Bạn đã nạp thành công ' + _this.formatNumber(response.data.amount) + ' VND', 'success');
+                return _context.abrupt("break", 29);
+
+              case 20:
+                toastr.warning('Đang kiểm tra thông tin chuyển khoản của bạn....');
+
+              case 21:
+                _context.next = 27;
+                break;
+
+              case 23:
+                _context.prev = 23;
+                _context.t0 = _context["catch"](6);
+                toastr.error('Đã có lỗi xảy ra....');
+                return _context.abrupt("break", 29);
+
+              case 27:
+                _context.next = 5;
+                break;
+
+              case 29:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[6, 23]]);
+      }))();
+    },
+    copyURL: function copyURL(text) {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                text = _this2.desc;
 
                 try {
-                  _this.$refs.desc.select();
+                  _this2.$refs.desc.select();
 
                   document.execCommand('copy');
                   Swal.fire('Thông Báo', 'Đã sao chép thành công!', 'success');
@@ -5936,24 +6006,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee);
+        }, _callee2);
       }))();
     },
-    formatNumber: function formatNumber(num) {
-      return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-    },
     loadMe: function loadMe() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.post('/me').then(function (res) {
-        _this2.dataUser = res.data.data;
-        _this2.desc = "nap " + res.data.data.name;
-        _this2.total_recharge = res.data.total_recharge;
+        _this3.dataUser = res.data.data;
+        _this3.desc = "nap " + res.data.data.name;
+        _this3.total_recharge = res.data.total_recharge;
         setTimeout(function () {
-          return _this2.loading = false;
+          return _this3.loading = false;
         }, 400);
       })["catch"](function (e) {
         console.log("Error Get Me");
@@ -8324,7 +8391,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#loading-bar-spinner.spinner-all {\r\n    left: 45%;\r\n    margin-left: -20px;\r\n    top: 15%;\r\n    margin-top: -20px;\r\n    position: absolute;\r\n    z-index: 19 !important;\r\n    -webkit-animation: loading-bar-spinner 400ms linear infinite;\r\n            animation: loading-bar-spinner 400ms linear infinite;\n}\n#loading-bar-spinner.spinner-all .spinner-icon {\r\n    width: 40px;\r\n    height: 40px;\r\n    border:  solid 4px transparent;\r\n    border-top-color:  #009ef7 !important;\r\n    border-left-color: #009ef7 !important;\r\n    border-radius: 50%;\n}\n@-webkit-keyframes loading-bar-spinner {\n0%   { transform: rotate(0deg);   transform: rotate(0deg);\n}\n100% { transform: rotate(360deg); transform: rotate(360deg);\n}\n}\n@keyframes loading-bar-spinner {\n0%   { transform: rotate(0deg);   transform: rotate(0deg);\n}\n100% { transform: rotate(360deg); transform: rotate(360deg);\n}\n}\r\n", ""]);
+exports.push([module.i, "\n#loading-bar-spinner.spinner-all {\n    left: 45%;\n    margin-left: -20px;\n    top: 15%;\n    margin-top: -20px;\n    position: absolute;\n    z-index: 19 !important;\n    -webkit-animation: loading-bar-spinner 400ms linear infinite;\n            animation: loading-bar-spinner 400ms linear infinite;\n}\n#loading-bar-spinner.spinner-all .spinner-icon {\n    width: 40px;\n    height: 40px;\n    border:  solid 4px transparent;\n    border-top-color:  #009ef7 !important;\n    border-left-color: #009ef7 !important;\n    border-radius: 50%;\n}\n@-webkit-keyframes loading-bar-spinner {\n0%   { transform: rotate(0deg);   transform: rotate(0deg);\n}\n100% { transform: rotate(360deg); transform: rotate(360deg);\n}\n}\n@keyframes loading-bar-spinner {\n0%   { transform: rotate(0deg);   transform: rotate(0deg);\n}\n100% { transform: rotate(360deg); transform: rotate(360deg);\n}\n}\n", ""]);
 
 // exports
 
@@ -93864,115 +93931,29 @@ var render = function () {
                       ]),
                     ]),
                   ]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "notice d-flex bg-light-warning rounded border-warning border border-dashed p-6",
-                    },
-                    [
-                      _c(
-                        "span",
-                        {
-                          staticClass:
-                            "svg-icon svg-icon-2tx svg-icon-warning me-4",
-                        },
-                        [
-                          _c(
-                            "svg",
-                            {
-                              attrs: {
-                                xmlns: "http://www.w3.org/2000/svg",
-                                width: "24",
-                                height: "24",
-                                viewBox: "0 0 24 24",
-                                fill: "none",
-                              },
-                            },
-                            [
-                              _c("rect", {
-                                attrs: {
-                                  opacity: "0.3",
-                                  x: "2",
-                                  y: "2",
-                                  width: "20",
-                                  height: "20",
-                                  rx: "10",
-                                  fill: "black",
-                                },
-                              }),
-                              _vm._v(" "),
-                              _c("rect", {
-                                attrs: {
-                                  x: "11",
-                                  y: "14",
-                                  width: "7",
-                                  height: "2",
-                                  rx: "1",
-                                  transform: "rotate(-90 11 14)",
-                                  fill: "black",
-                                },
-                              }),
-                              _vm._v(" "),
-                              _c("rect", {
-                                attrs: {
-                                  x: "11",
-                                  y: "17",
-                                  width: "2",
-                                  height: "2",
-                                  rx: "1",
-                                  transform: "rotate(-90 11 17)",
-                                  fill: "black",
-                                },
-                              }),
-                            ]
-                          ),
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "d-flex flex-stack flex-grow-1" },
-                        [
-                          _c("div", { staticClass: "fw-bold" }, [
-                            _c(
-                              "h4",
-                              { staticClass: "text-gray-900 fw-bolder" },
-                              [_vm._v("Lưu ý!")]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "fs-6 text-gray-700" }, [
-                              _c("p", [
-                                _vm._v(
-                                  "- Nạp sai cú pháp hoặc sai số tài khoản sẽ bị trừ 10% phí giao dịch, tối đa trừ 50.000 VNĐ. Ví dụ nạp sai 100.000 trừ 10.000, 200.000 trừ 20.000 , 500.000 trừ 50.000, 1 triệu trừ 50.000, 10 triệu trừ 50.000..."
-                                ),
-                              ]),
-                              _vm._v(" "),
-                              _c("p", [
-                                _vm._v(
-                                  "- Buổi tối 18-24h Vietcombank thường tổng kết các giao dịch trong ngày nên thường chậm và lag."
-                                ),
-                              ]),
-                              _vm._v(" "),
-                              _c("p", [
-                                _vm._v(
-                                  "- Do đó chuyển khoản vào thời gian này có thể bị auto nạp chậm, sau vài tiếng mới nhận được tiền."
-                                ),
-                              ]),
-                              _vm._v(" "),
-                              _c("p", [
-                                _vm._v(
-                                  "- Các bạn nên ưu tiên chuyển vào ban ngày để nhận tiền nhanh nhất nhé."
-                                ),
-                              ]),
-                            ]),
-                          ]),
-                        ]
-                      ),
-                    ]
-                  ),
                 ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-footer" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-success",
+                  attrs: { disabled: _vm.isDisabled },
+                  on: { click: _vm.scanRecharge },
+                },
+                [
+                  _vm.isStatic
+                    ? _c("i", { staticClass: "el-icon-check" })
+                    : _vm._e(),
+                  _vm.isClick
+                    ? _c("i", { staticClass: "el-icon-loading" })
+                    : _vm._e(),
+                  _vm._v(" " + _vm._s(_vm.txtBtn)),
+                ]
+              ),
+            ]),
           ],
           1
         ),
@@ -94109,10 +94090,117 @@ var render = function () {
         ],
         1
       ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass:
+            "notice d-flex bg-light-warning rounded border-warning border border-dashed p-6",
+        },
+        [
+          _c(
+            "span",
+            { staticClass: "svg-icon svg-icon-2tx svg-icon-warning me-4" },
+            [
+              _c(
+                "svg",
+                {
+                  attrs: {
+                    xmlns: "http://www.w3.org/2000/svg",
+                    width: "24",
+                    height: "24",
+                    viewBox: "0 0 24 24",
+                    fill: "none",
+                  },
+                },
+                [
+                  _c("rect", {
+                    attrs: {
+                      opacity: "0.3",
+                      x: "2",
+                      y: "2",
+                      width: "20",
+                      height: "20",
+                      rx: "10",
+                      fill: "black",
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("rect", {
+                    attrs: {
+                      x: "11",
+                      y: "14",
+                      width: "7",
+                      height: "2",
+                      rx: "1",
+                      transform: "rotate(-90 11 14)",
+                      fill: "black",
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("rect", {
+                    attrs: {
+                      x: "11",
+                      y: "17",
+                      width: "2",
+                      height: "2",
+                      rx: "1",
+                      transform: "rotate(-90 11 17)",
+                      fill: "black",
+                    },
+                  }),
+                ]
+              ),
+            ]
+          ),
+          _vm._v(" "),
+          _vm._m(1),
+        ]
+      ),
     ]),
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [
+      _c("small", [
+        _c("i", [
+          _c("span", { staticClass: "text-danger" }, [_vm._v("*")]),
+          _vm._v(' Bạn có thể ấn "'),
+          _c("b", { staticClass: "text-danger" }, [
+            _vm._v("Tôi Đã Chuyển Tiền"),
+          ]),
+          _vm._v(
+            '" để hệ thống kiểm tra thủ công hoặc bạn có thể đợi 5-10 phút để hệ thống tự cập nhật số dư cho bạn.\n                    '
+          ),
+        ]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "d-flex flex-stack flex-grow-1" }, [
+      _c("div", { staticClass: "fw-bold" }, [
+        _c("h4", { staticClass: "text-gray-900 fw-bolder" }, [
+          _vm._v("Lưu ý!"),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "fs-6 text-gray-700" }, [
+          _c("p", [
+            _vm._v(
+              "- Nạp sai cú pháp hoặc sai số tài khoản sẽ bị trừ 10% phí giao dịch, tối đa trừ 50.000 VNĐ. Ví dụ nạp sai 100.000 trừ 10.000, 200.000 trừ 20.000 , 500.000 trừ 50.000, 1 triệu trừ 50.000, 10 triệu trừ 50.000..."
+            ),
+          ]),
+        ]),
+      ]),
+    ])
+  },
+]
 render._withStripped = true
 
 
@@ -112210,8 +112298,8 @@ var routes = [// Recharge
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\backend\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\backend\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/backend/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/backend/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
