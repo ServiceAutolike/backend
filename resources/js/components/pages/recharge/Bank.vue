@@ -1,5 +1,5 @@
 <template>
-    <div class="row" v-loading.fullscreen.lock="fullscreenLoading">
+    <div class="row">
         <div class="col-8 col-xl-8">
             <div class="card shadow-sm">
                 <div class="card-header collapsible cursor-pointer rotate" data-bs-toggle="collapse"
@@ -19,7 +19,8 @@
                     </div>
                 </div>
                 <div id="kt_docs_card_collapsible" class="collapse show">
-                    <div class="card-body">
+                    <LoadingPage v-if="loading"></LoadingPage>
+                    <div v-else class="card-body">
                         <div class="mb-10">
                             <p>Bạn vui lòng chuyển khoản chính xác nội dung chuyển khoản bên dưới hệ thống sẽ tự động
                                 cộng tiền cho bạn sau 1 - 5 phút sau khi nhận được tiền. Nếu chuyển khác ngân hàng sẽ
@@ -55,8 +56,8 @@
                             </div>
                             <div class="col-lg-8">
                                 <div class="d-flex">
-                                    <input v-model="desc" type="text" class="form-control form-control-solid me-3 flex-grow-1" />
-                                    <button id="bank_copy_btn" class="btn btn-light-primary btn-active-primary fw-bolder flex-shrink-0" data-clipboard-target="#description_bank">Copy</button>
+                                    <input v-model="desc" type="text" class="form-control form-control-solid me-3 flex-grow-1" ref="desc" />
+                                    <button class="btn btn-light-primary btn-active-primary fw-bolder flex-shrink-0" @click="copyURL">Copy</button>
                                 </div>
                             </div>
                         </div>
@@ -82,7 +83,11 @@
                                 <!--begin::Content-->
                                 <div class="fw-bold">
                                     <h4 class="text-gray-900 fw-bolder">Lưu ý!</h4>
-                                    <div class="fs-6 text-gray-700">- Nạp sai cú pháp hoặc sai số tài khoản sẽ bị trừ 10% phí giao dịch, tối đa trừ 50.000 VND. Ví dụ nạp sai 100.000 trừ 10.000, 200.000 trừ 20.000, 500.000 trừ 50.000, 1 triệu trừ 50.000, 10 triệu trừ 50.000...
+                                    <div class="fs-6 text-gray-700">
+                                        <p>- Nạp sai cú pháp hoặc sai số tài khoản sẽ bị trừ 10% phí giao dịch, tối đa trừ 50.000 VNĐ. Ví dụ nạp sai 100.000 trừ 10.000, 200.000 trừ 20.000 , 500.000 trừ 50.000, 1 triệu trừ 50.000, 10 triệu trừ 50.000...</p>
+                                        <p>- Buổi tối 18-24h Vietcombank thường tổng kết các giao dịch trong ngày nên thường chậm và lag.</p>
+                                        <p>- Do đó chuyển khoản vào thời gian này có thể bị auto nạp chậm, sau vài tiếng mới nhận được tiền.</p>
+                                        <p>- Các bạn nên ưu tiên chuyển vào ban ngày để nhận tiền nhanh nhất nhé.</p>
                                     </div>
                                 </div>
                                 <!--end::Content-->
@@ -92,19 +97,14 @@
 
                     </div>
 
-                    <div class="card-footer">
-                        <p><small><i><span class="text-danger">*</span> Bạn có thể "Kiểm Tra Nạp Tiền" nếu thời gian chờ
-                            quá lâu, đây là cáh kiểm tra thủ công khi hệ thống nạp tiền bị gián đoạn.
-                        </i></small></p>
-                        <button class="btn btn-primary">Kiểm Tra Nạp Tiền</button>
-                    </div>
                 </div>
             </div>
         </div>
         <div class="col-4 col-xl-4">
             <div class="card bg-success hoverable card-xl-stretch mb-5 mb-xl-8">
                 <!--begin::Body-->
-                <div class="card-body">
+                <LoadingPage v-if="loading"></LoadingPage>
+                <div class="card-body" v-else>
                     <!--begin::Svg Icon | path: icons/duotune/graphs/gra005.svg-->
                     <span class="svg-icon svg-icon-white svg-icon-3x ms-n1">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -122,7 +122,8 @@
 
             <div class="card bg-danger hoverable card-xl-stretch mb-xl-8">
                 <!--begin::Body-->
-                <div class="card-body">
+                <LoadingPage v-if="loading"></LoadingPage>
+                <div class="card-body" v-else>
                     <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm002.svg-->
                     <span class="svg-icon svg-icon-white svg-icon-3x ms-n1">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -141,20 +142,7 @@
                 </div>
                 <!--end::Body-->
             </div>
-            <div class="card">
-                <div class="card-header collapsible cursor-pointer rotate" data-bs-toggle="collapse"
-                     data-bs-target="#kt_docs_card_collapsible">
-                    <h3 class="card-title">Lưu ý</h3>
-                </div>
-                <div class="card-body cl-red">
-                    <div class="card-text">
-                        <p>- Nạp sai cú pháp hoặc sai số tài khoản sẽ bị trừ 10% phí giao dịch, tối đa trừ 50.000 VNĐ. Ví dụ nạp sai 100.000 trừ 10.000, 200.000 trừ 20.000 , 500.000 trừ 50.000, 1 triệu trừ 50.000, 10 triệu trừ 50.000...</p>
-                        <p>- Buổi tối 18-24h Vietcombank thường tổng kết các giao dịch trong ngày nên thường chậm và lag.</p>
-                        <p>- Do đó chuyển khoản vào thời gian này có thể bị auto nạp chậm, sau vài tiếng mới nhận được tiền.</p>
-                        <p>- Các bạn nên ưu tiên chuyển vào ban ngày để nhận tiền nhanh nhất nhé.</p>
-                    </div>
-                </div>
-            </div>
+
 
         </div>
     </div>
@@ -164,9 +152,8 @@ export default {
     data() {
         return {
             dataUser: Object,
-            loading: false,
+            loading: true,
             desc: '',
-            fullscreenLoading: true,
             total_recharge: 0,
             total_recharge_month: 0,
             total_recharge_year: 0,
@@ -176,6 +163,16 @@ export default {
         this.loadMe()
     },
     methods: {
+        async copyURL(text) {
+            text = this.desc
+            try {
+                this.$refs.desc.select();
+                document.execCommand('copy');
+                Swal.fire('Thông Báo','Đã sao chép thành công!','success')
+            } catch($e) {
+                Swal.fire('Thông Báo','Lỗi không thể sao chép!','error')
+            }
+        },
         formatNumber(num) {
             return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
         },
@@ -184,7 +181,7 @@ export default {
                 this.dataUser = res.data.data
                 this.desc = "nap "+res.data.data.name
                 this.total_recharge = res.data.total_recharge
-                setTimeout(() => this.fullscreenLoading = false, 500);
+                setTimeout(() => this.loading = false, 400);
             }).catch(e => {
                 console.log("Error Get Me")
             })

@@ -394,3 +394,12 @@ label {
 .aside-menu .menu .menu-item .menu-link.router-link-exact-active .menu-bullet .bullet {
     background-color: #ffffff;
 }
+.footer {
+    background-color: #fff;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+#kt_content {
+    margin-bottom: 50px;
+}

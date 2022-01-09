@@ -49,8 +49,8 @@
                             </div>
                             <div class="col-lg-8">
                                 <div class="d-flex">
-                                    <input id="description_bank" type="text" class="form-control form-control-solid me-3 flex-grow-1" v-model="desc" />
-                                    <button id="bank_copy_btn" class="btn btn-light-primary btn-active-primary fw-bolder flex-shrink-0" data-clipboard-target="#description_bank">Copy</button>
+                                    <input type="text" class="form-control form-control-solid me-3 flex-grow-1" v-model="desc" ref="desc" />
+                                    <button class="btn btn-light-primary btn-active-primary fw-bolder flex-shrink-0" @click="copyURL">Copy</button>
                                 </div>
                             </div>
                         </div>
@@ -256,6 +256,16 @@ export default {
         this.loadMe()
     },
     methods: {
+        async copyURL(text) {
+            text = this.desc
+            try {
+                this.$refs.desc.select();
+                document.execCommand('copy');
+                Swal.fire('Thông Báo','Đã sao chép thành công!','success')
+            } catch($e) {
+                Swal.fire('Thông Báo','Lỗi không thể sao chép!','error')
+            }
+        },
         formatNumber(num) {
             return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
         },
