@@ -108941,7 +108941,8 @@ Vue.component('pagination', __webpack_require__(/*! ./components/PaginationCompo
 var app = new Vue({
   el: '#app',
   router: router,
-  linkActiveClass: "active"
+  linkActiveClass: "active",
+  fullscreenLoading: true
 });
 
 /***/ }),
