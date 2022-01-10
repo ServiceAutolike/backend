@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ListComment;
 use App\RatePrice;
 use App\Services;
 use GuzzleHttp\Client;
@@ -16,6 +17,54 @@ use Illuminate\Support\Facades\DB;
 
 class FacebookController extends Controller
 {
+
+    public function createListComment(Request $request) {
+        $data = [
+            'name' => $request->name,
+            'contents' => $request->comment,
+        ];
+        $header = [
+            'Content-Type' => 'application/json',
+            'Token' => Config::get('api.key.token'),
+            'agency-secret-key' => Config::get('api.key.agency')
+        ];
+        $dataCreate = Http::withHeaders($header)->post(Config::get('api.urlRequest.comment'), $data);
+        if($dataCreate['code'] == 200) {
+            DB::beginTransaction();
+            try {
+                $listcomment = new ListComment();
+                $listcomment->id_user = Auth::user()->id;
+                if(isset($dataCreate['data']['comment_id'])) {
+                    $listcomment->id_comment = $dataCreate['data']['comment_id'];
+                }
+                $listcomment->name = $request->name;
+                $listcomment->content = json_encode($request->comment, true);
+                $listcomment->created_at = Carbon::now()->toDateTimeString();
+                $listcomment->updated_at = Carbon::now()->toDateTimeString();
+                $listcomment->save();
+                $data = [
+                    'status' => 200,
+                    'data' => $dataCreate['message']
+                ];
+            }
+            catch (\Exception $e) {
+                $data = [
+                    'status' => 400,
+                    'message' => $dataCreate['message'],
+                ];
+                DB::rollBack();
+            }
+            DB::commit();
+        }
+        else {
+            $data = [
+                'status' => 500,
+                'message' => $dataCreate['message']
+            ];
+        }
+
+        return response()->json($data);
+    }
     public function buffFollowUser()
     {
         return view('page.app.facebook.user.buff-follow');

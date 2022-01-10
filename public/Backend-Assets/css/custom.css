@@ -344,6 +344,13 @@ label {
 .color-white {
     color: white;
 }
+.isError {
+    color: #F56C6C;
+    font-size: 12px;
+}
+.errorform textarea {
+    border-color: #F56C6C !important;
+}
 .alert.alert-custom {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -379,11 +386,6 @@ label {
 .align-items-center {
     align-items: center;
 }
-.footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
 .aside-menu .menu .menu-item .menu-link.router-link-exact-active {
     transition: color 0.2s ease, background-color 0.2s ease;
     background-color: #009ef7;
@@ -398,4 +400,13 @@ label {
 }
 .aside-menu .menu .menu-item .menu-link.router-link-exact-active .menu-bullet .bullet {
     background-color: #ffffff;
+}
+.footer {
+    background-color: #fff;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+#kt_content {
+    margin-bottom: 50px;
 }
