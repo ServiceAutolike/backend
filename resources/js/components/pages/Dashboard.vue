@@ -22,7 +22,7 @@
                                 <!--begin::Info-->
                                 <div class="d-flex flex-column">
                                     <a class="text-gray-900 text-hover-primary fs-6 fw-bolder">Quản Trị Viên</a>
-                                    <span class="text-gray-400 fw-bold">{{ getpostData.created_at }}</span>
+                                    <span class="text-gray-400 fw-bold">{{ timeAgo(getpostData.created_at) }}</span>
                                 </div>
                                 <!--end::Info-->
                             </div>
@@ -122,7 +122,7 @@
                         <!--begin::Balance-->
                         <div class="d-flex text-center flex-column text-white pt-8">
                             <span class="fw-bold fs-7">Số Dư Hiện Tại</span>
-                            <span class="fw-bolder fs-2x pt-1">0 VNĐ</span>
+                            <span class="fw-bolder fs-2x pt-1">{{ formatNumber(dataUser.point) }} VNĐ</span>
                         </div>
                         <!--end::Balance-->
                     </div>
@@ -152,23 +152,22 @@
                             <div class="d-flex align-items-center flex-wrap w-100">
                                 <!--begin::Title-->
                                 <div class="mb-1 pe-3 flex-grow-1">
-                                    <a href="#" class="fs-5 text-gray-800 text-hover-primary fw-bolder">Tổng Nạp</a>
-                                    <div class="text-gray-400 fw-bold fs-7">Trong Tuần</div>
+                                    <span class="fs-5 text-gray-800 text-hover-primary fw-bolder">Tổng Nạp</span>
                                 </div>
                                 <!--end::Title-->
                                 <!--begin::Label-->
                                 <div class="d-flex align-items-center">
-                                    <div class="fw-bolder fs-5 text-gray-800 pe-1">500,000 VNĐ</div>
+                                    <div class="fw-bolder fs-5 text-gray-800 pe-1">{{ formatNumber(total_recharge) }} VNĐ</div>
                                     <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
                                     <span class="svg-icon svg-icon-5 svg-icon-success ms-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <rect opacity="0.5" x="13" y="6" width="13" height="2" rx="1" transform="rotate(90 13 6)" fill="black"></rect>
-                                <path
-                                    d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z"
-                                    fill="black"
-                                ></path>
-                            </svg>
-                        </span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <rect opacity="0.5" x="13" y="6" width="13" height="2" rx="1" transform="rotate(90 13 6)" fill="black"></rect>
+                                            <path
+                                                d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z"
+                                                fill="black"
+                                            ></path>
+                                        </svg>
+                                    </span>
                                     <!--end::Svg Icon-->
                                 </div>
                                 <!--end::Label-->
@@ -198,23 +197,22 @@
                             <div class="d-flex align-items-center flex-wrap w-100">
                                 <!--begin::Title-->
                                 <div class="mb-1 pe-3 flex-grow-1">
-                                    <a href="#" class="fs-5 text-gray-800 text-hover-primary fw-bolder">Tổng Nạp</a>
-                                    <div class="text-gray-400 fw-bold fs-7">Trong Tháng</div>
+                                    <span class="fs-5 text-gray-800 text-hover-primary fw-bolder">Tháng Này</span>
                                 </div>
                                 <!--end::Title-->
                                 <!--begin::Label-->
                                 <div class="d-flex align-items-center">
-                                    <div class="fw-bolder fs-5 text-gray-800 pe-1">1,200,000 VNĐ</div>
+                                    <div class="fw-bolder fs-5 text-gray-800 pe-1">{{ formatNumber(total_recharge_month) }} VNĐ</div>
                                     <!--begin::Svg Icon | path: icons/duotune/arrows/arr065.svg-->
                                     <span class="svg-icon svg-icon-5 svg-icon-danger ms-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <rect opacity="0.5" x="11" y="18" width="13" height="2" rx="1" transform="rotate(-90 11 18)" fill="black"></rect>
-                                <path
-                                    d="M11.4343 15.4343L7.25 11.25C6.83579 10.8358 6.16421 10.8358 5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75L11.2929 18.2929C11.6834 18.6834 12.3166 18.6834 12.7071 18.2929L18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25C17.8358 10.8358 17.1642 10.8358 16.75 11.25L12.5657 15.4343C12.2533 15.7467 11.7467 15.7467 11.4343 15.4343Z"
-                                    fill="black"
-                                ></path>
-                            </svg>
-                        </span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <rect opacity="0.5" x="11" y="18" width="13" height="2" rx="1" transform="rotate(-90 11 18)" fill="black"></rect>
+                                            <path
+                                                d="M11.4343 15.4343L7.25 11.25C6.83579 10.8358 6.16421 10.8358 5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75L11.2929 18.2929C11.6834 18.6834 12.3166 18.6834 12.7071 18.2929L18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25C17.8358 10.8358 17.1642 10.8358 16.75 11.25L12.5657 15.4343C12.2533 15.7467 11.7467 15.7467 11.4343 15.4343Z"
+                                                fill="black"
+                                            ></path>
+                                        </svg>
+                                    </span>
                                     <!--end::Svg Icon-->
                                 </div>
                                 <!--end::Label-->
@@ -226,42 +224,41 @@
                         <div class="d-flex align-items-center mb-6">
                             <!--begin::Symbol-->
                             <div class="symbol symbol-45px w-40px me-5">
-                    <span class="symbol-label bg-lighten">
-                        <!--begin::Svg Icon | path: icons/duotune/electronics/elc005.svg-->
-                        <span class="svg-icon svg-icon-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <path opacity="0.3" d="M15 19H7C5.9 19 5 18.1 5 17V7C5 5.9 5.9 5 7 5H15C16.1 5 17 5.9 17 7V17C17 18.1 16.1 19 15 19Z" fill="black"></path>
-                                <path
-                                    d="M8.5 2H13.4C14 2 14.5 2.4 14.6 3L14.9 5H6.89999L7.2 3C7.4 2.4 7.9 2 8.5 2ZM7.3 21C7.4 21.6 7.9 22 8.5 22H13.4C14 22 14.5 21.6 14.6 21L14.9 19H6.89999L7.3 21ZM18.3 10.2C18.5 9.39995 18.5 8.49995 18.3 7.69995C18.2 7.29995 17.8 6.90002 17.3 6.90002H17V10.9H17.3C17.8 11 18.2 10.7 18.3 10.2Z"
-                                    fill="black"
-                                ></path>
-                            </svg>
-                        </span>
-                        <!--end::Svg Icon-->
-                    </span>
+                                <span class="symbol-label bg-lighten">
+                                    <!--begin::Svg Icon | path: icons/duotune/electronics/elc005.svg-->
+                                    <span class="svg-icon svg-icon-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <path opacity="0.3" d="M15 19H7C5.9 19 5 18.1 5 17V7C5 5.9 5.9 5 7 5H15C16.1 5 17 5.9 17 7V17C17 18.1 16.1 19 15 19Z" fill="black"></path>
+                                            <path
+                                                d="M8.5 2H13.4C14 2 14.5 2.4 14.6 3L14.9 5H6.89999L7.2 3C7.4 2.4 7.9 2 8.5 2ZM7.3 21C7.4 21.6 7.9 22 8.5 22H13.4C14 22 14.5 21.6 14.6 21L14.9 19H6.89999L7.3 21ZM18.3 10.2C18.5 9.39995 18.5 8.49995 18.3 7.69995C18.2 7.29995 17.8 6.90002 17.3 6.90002H17V10.9H17.3C17.8 11 18.2 10.7 18.3 10.2Z"
+                                                fill="black"
+                                            ></path>
+                                        </svg>
+                                    </span>
+                                    <!--end::Svg Icon-->
+                                </span>
                             </div>
                             <!--end::Symbol-->
                             <!--begin::Description-->
                             <div class="d-flex align-items-center flex-wrap w-100">
                                 <!--begin::Title-->
                                 <div class="mb-1 pe-3 flex-grow-1">
-                                    <a href="#" class="fs-5 text-gray-800 text-hover-primary fw-bolder">Đã Chi</a>
-                                    <div class="text-gray-400 fw-bold fs-7">Tuần Này</div>
+                                    <span class="fs-5 text-gray-800 text-hover-primary fw-bolder">Đã Chi Tiêu</span>
                                 </div>
                                 <!--end::Title-->
                                 <!--begin::Label-->
                                 <div class="d-flex align-items-center">
-                                    <div class="fw-bolder fs-5 text-gray-800 pe-1">12,000,000 VNĐ</div>
+                                    <div class="fw-bolder fs-5 text-gray-800 pe-1">0 VNĐ</div>
                                     <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
                                     <span class="svg-icon svg-icon-5 svg-icon-success ms-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <rect opacity="0.5" x="13" y="6" width="13" height="2" rx="1" transform="rotate(90 13 6)" fill="black"></rect>
-                                <path
-                                    d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z"
-                                    fill="black"
-                                ></path>
-                            </svg>
-                        </span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <rect opacity="0.5" x="13" y="6" width="13" height="2" rx="1" transform="rotate(90 13 6)" fill="black"></rect>
+                                            <path
+                                                d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z"
+                                                fill="black"
+                                            ></path>
+                                        </svg>
+                                    </span>
                                     <!--end::Svg Icon-->
                                 </div>
                                 <!--end::Label-->
@@ -273,47 +270,35 @@
                         <div class="d-flex align-items-center">
                             <!--begin::Symbol-->
                             <div class="symbol symbol-45px w-40px me-5">
-                    <span class="symbol-label bg-lighten">
-                        <!--begin::Svg Icon | path: icons/duotune/general/gen005.svg-->
-                        <span class="svg-icon svg-icon-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <path
-                                    opacity="0.3"
-                                    d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22ZM12.5 18C12.5 17.4 12.6 17.5 12 17.5H8.5C7.9 17.5 8 17.4 8 18C8 18.6 7.9 18.5 8.5 18.5L12 18C12.6 18 12.5 18.6 12.5 18ZM16.5 13C16.5 12.4 16.6 12.5 16 12.5H8.5C7.9 12.5 8 12.4 8 13C8 13.6 7.9 13.5 8.5 13.5H15.5C16.1 13.5 16.5 13.6 16.5 13ZM12.5 8C12.5 7.4 12.6 7.5 12 7.5H8C7.4 7.5 7.5 7.4 7.5 8C7.5 8.6 7.4 8.5 8 8.5H12C12.6 8.5 12.5 8.6 12.5 8Z"
-                                    fill="black"
-                                ></path>
-                                <rect x="7" y="17" width="6" height="2" rx="1" fill="black"></rect>
-                                <rect x="7" y="12" width="10" height="2" rx="1" fill="black"></rect>
-                                <rect x="7" y="7" width="6" height="2" rx="1" fill="black"></rect>
-<path d="M15 8H20L14 2V7C14 7.6 14.4 8 15 8Z" fill="black"></path>
-                            </svg>
-                        </span>
-                        <!--end::Svg Icon-->
-                    </span>
+                                <span class="symbol-label bg-lighten">
+                                    <!--begin::Svg Icon | path: icons/duotune/general/gen005.svg-->
+                                    <span class="svg-icon svg-icon-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <path
+                                                opacity="0.3"
+                                                d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22ZM12.5 18C12.5 17.4 12.6 17.5 12 17.5H8.5C7.9 17.5 8 17.4 8 18C8 18.6 7.9 18.5 8.5 18.5L12 18C12.6 18 12.5 18.6 12.5 18ZM16.5 13C16.5 12.4 16.6 12.5 16 12.5H8.5C7.9 12.5 8 12.4 8 13C8 13.6 7.9 13.5 8.5 13.5H15.5C16.1 13.5 16.5 13.6 16.5 13ZM12.5 8C12.5 7.4 12.6 7.5 12 7.5H8C7.4 7.5 7.5 7.4 7.5 8C7.5 8.6 7.4 8.5 8 8.5H12C12.6 8.5 12.5 8.6 12.5 8Z"
+                                                fill="black"
+                                            ></path>
+                                            <rect x="7" y="17" width="6" height="2" rx="1" fill="black"></rect>
+                                            <rect x="7" y="12" width="10" height="2" rx="1" fill="black"></rect>
+                                            <rect x="7" y="7" width="6" height="2" rx="1" fill="black"></rect>
+                                            <path d="M15 8H20L14 2V7C14 7.6 14.4 8 15 8Z" fill="black"></path>
+                                        </svg>
+                                    </span>
+                                    <!--end::Svg Icon-->
+                                </span>
                             </div>
                             <!--end::Symbol-->
                             <!--begin::Description-->
                             <div class="d-flex align-items-center flex-wrap w-100">
                                 <!--begin::Title-->
                                 <div class="mb-1 pe-3 flex-grow-1">
-                                    <a href="#" class="fs-5 text-gray-800 text-hover-primary fw-bolder">Dịch Vụ</a>
-                                    <div class="text-gray-400 fw-bold fs-7">Đang Chạy</div>
+                                    <span class="fs-5 text-gray-800 text-hover-primary fw-bolder">Cấp Độ</span>
                                 </div>
                                 <!--end::Title-->
                                 <!--begin::Label-->
                                 <div class="d-flex align-items-center">
-                                    <div class="fw-bolder fs-5 text-gray-800 pe-1">0</div>
-                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr065.svg-->
-                                    <span class="svg-icon svg-icon-5 svg-icon-danger ms-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <rect opacity="0.5" x="11" y="18" width="13" height="2" rx="1" transform="rotate(-90 11 18)" fill="black"></rect>
-                                <path
-                                    d="M11.4343 15.4343L7.25 11.25C6.83579 10.8358 6.16421 10.8358 5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75L11.2929 18.2929C11.6834 18.6834 12.3166 18.6834 12.7071 18.2929L18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25C17.8358 10.8358 17.1642 10.8358 16.75 11.25L12.5657 15.4343C12.2533 15.7467 11.7467 15.7467 11.4343 15.4343Z"
-                                    fill="black"
-                                ></path>
-                            </svg>
-                        </span>
-                                    <!--end::Svg Icon-->
+                                    <span class="fw-bolder fs-5 pe-1 text-warning">Thành Viên</span>
                                 </div>
                                 <!--end::Label-->
                             </div>
@@ -386,13 +371,72 @@ export default {
             dataToShow: {},
             dataPost: [],
             page: 1,
-            hide: true
+            hide: true,
+            dataUser: Object,
+            total_recharge: 0,
+            total_recharge_month: 0,
+            total_recharge_year: 0,
         }
     },
     created() {
+        this.loadMe()
         this.loadNotification()
     },
     methods: {
+        formatNumber(num) {
+            return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+        },
+        timeAgo(dateString) {
+            const date = new Date(dateString);
+            const DAY_IN_MS = 86400000; // 24 * 60 * 60 * 1000
+            const today = new Date();
+            const seconds = Math.round((today - date) / 1000);
+
+            if (seconds < 20) {
+                return 'Vừa xong';
+            }
+            else if (seconds < 60) {
+                return '1 phút trước';
+            }
+
+            const minutes = Math.round(seconds / 60);
+            if (minutes < 60) {
+                return `${minutes} phút trước`;
+            }
+
+            const isToday = today.toDateString() === date.toDateString();
+            if (isToday) {
+                return 'Hôm nay'
+            }
+
+            const yesterday = new Date(today - DAY_IN_MS);
+            const isYesterday = yesterday.toDateString() === date.toDateString();
+            if (isYesterday) {
+                return 'Hôm qua'
+            }
+
+            const daysDiff = Math.round((today - date) / (1000 * 60 * 60 * 24));
+            if (daysDiff < 30) {
+                return `${daysDiff} ngày trước`;
+            }
+
+            const monthsDiff = today.getMonth() - date.getMonth() + (12 * (today.getFullYear() - date.getFullYear()));
+            if (monthsDiff < 12) {
+                return `${monthsDiff} tháng trước`;
+            }
+
+            const yearsDiff = today.getYear() - date.getYear();
+            return `${yearsDiff} năm trước`;
+        },
+        loadMe() {
+            axios.post('/me').then(res => {
+                this.dataUser = res.data.data
+                this.desc = "nap "+res.data.data.name
+                this.total_recharge = res.data.total_recharge
+            }).catch(e => {
+                console.log("Error Get Me")
+            })
+        },
         handleLoadMore($state) {
             axios.post('/loadPost', {'page': this.page})
                 .then(res => {
