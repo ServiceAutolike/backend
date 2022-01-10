@@ -344,6 +344,13 @@ label {
 .color-white {
     color: white;
 }
+.isError {
+    color: #F56C6C;
+    font-size: 12px;
+}
+.errorform textarea {
+    border-color: #F56C6C !important;
+}
 .alert.alert-custom {
     display: -webkit-box;
     display: -ms-flexbox;

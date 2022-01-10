@@ -4396,6 +4396,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -4403,9 +4423,16 @@ __webpack_require__.r(__webpack_exports__);
       loading_input: false,
       isTable: false,
       hideIcon: true,
+      isError: '',
+      name_comment: '',
+      comment: '',
+      hasError: false,
+      listcomment: [],
+      speed: 'low',
       activeItem: 'create',
       post_id: "",
       note: '',
+      dialogVisible: false,
       activeClass: '',
       errorClass: '',
       speedServices: '',
@@ -4431,14 +4458,11 @@ __webpack_require__.r(__webpack_exports__);
       },
       pagination_payout: {
         'current_page': 1
-      }
+      },
+      rules: {}
     };
   },
   methods: {
-    showModal: function showModal() {
-      var element = this.$refs.modal.$el;
-      $(element).modal('show');
-    },
     isActive: function isActive(menuItem) {
       return this.activeItem === menuItem;
     },
@@ -4498,6 +4522,24 @@ __webpack_require__.r(__webpack_exports__);
       var yearsDiff = today.getYear() - date.getYear();
       return "".concat(yearsDiff, " n\u0103m tr\u01B0\u1EDBc");
     },
+    createComment: function createComment() {
+      var _this = this;
+
+      this.listcomment = this.comment.split('\n');
+      var data = {
+        "name": this.name_comment,
+        "comment": this.listcomment
+      };
+      axios.post('/facebook/createListComment', data).then(function (res) {
+        if (res.data.status == 200) {
+          Swal.fire('Thành Công', 'Tạo comment ' + _this.name_comment + ' thành công', 'success');
+          _this.dialogVisible = false;
+        } else {
+          toastr.error(res.data.message);
+        }
+      });
+    },
+    getListComment: function getListComment() {},
     updateTransaction: function updateTransaction() {
       var obj = this;
       obj.loadingTable = true;
@@ -4559,7 +4601,7 @@ __webpack_require__.r(__webpack_exports__);
       obj.totalPrice = obj.number_seeding * obj.sitePrice;
     },
     findID: function findID(url) {
-      var _this = this;
+      var _this2 = this;
 
       var obj = this;
       obj.loading_input = true;
@@ -4569,14 +4611,14 @@ __webpack_require__.r(__webpack_exports__);
       };
       axios.post('/api/find-id', data).then(function (res) {
         if (res.data.code != 400) {
-          _this.isCheckID = true;
-          _this.post_id = res.data.id;
-          _this.isResult = true;
-          _this.name = res.data.name;
-          _this.idFB = res.data.id;
+          _this2.isCheckID = true;
+          _this2.post_id = res.data.id;
+          _this2.isResult = true;
+          _this2.name = res.data.name;
+          _this2.idFB = res.data.id;
           toastr.success("Đã tìm thấy thông tin ID: " + res.data.name);
         } else {
-          _this.isCheckID = false;
+          _this2.isCheckID = false;
           toastr.error(res.data.message);
         }
 
@@ -5258,10 +5300,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -5491,13 +5529,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -5906,6 +5937,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       dataScan: Object,
       txtBtn: 'Tôi Đã Chuyển Tiền',
       loading: true,
+      total: '',
       isDisabled: false,
       isStatic: true,
       isClick: false,
@@ -5915,7 +5947,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       total_recharge_year: 0
     };
   },
-  created: function created() {
+  mounted: function mounted() {
     this.loadMe();
   },
   methods: {
@@ -5931,7 +5963,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                toastr.info('Bắt đầu chạy tiến trình, vui lòng không thoát trang....');
+                toastr.success('Bắt đầu chạy tiến trình, vui lòng không thoát trang....');
                 _this.txtBtn = 'Đang kiểm tra...';
                 _this.isDisabled = true;
                 _this.isStatic = false;
@@ -5957,32 +5989,40 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.isDisabled = false;
                 _this.isStatic = true;
                 _this.isClick = false;
+
+                _this.loadMe();
+
                 Swal.fire('Thông Báo', 'Bạn đã nạp thành công ' + _this.formatNumber(response.data.amount) + ' VND', 'success');
-                return _context.abrupt("break", 29);
-
-              case 20:
-                toastr.warning('Đang kiểm tra thông tin chuyển khoản của bạn....');
-
-              case 21:
-                _context.next = 27;
+                _context.next = 22;
                 break;
 
-              case 23:
-                _context.prev = 23;
-                _context.t0 = _context["catch"](6);
-                toastr.error('Đã có lỗi xảy ra....');
-                return _context.abrupt("break", 29);
+              case 20:
+                toastr.info('Đang kiểm tra thông tin chuyển khoản của bạn....');
+                return _context.abrupt("continue", 5);
 
-              case 27:
+              case 22:
+                _context.next = 31;
+                break;
+
+              case 24:
+                _context.prev = 24;
+                _context.t0 = _context["catch"](6);
+                toastr.error('Đã có lỗi xảy ra, tiến trình đã dừng....');
+                _this.isDisabled = false;
+                _this.isStatic = true;
+                _this.isClick = false;
+                return _context.abrupt("break", 33);
+
+              case 31:
                 _context.next = 5;
                 break;
 
-              case 29:
+              case 33:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[6, 23]]);
+        }, _callee, null, [[6, 24]]);
       }))();
     },
     copyURL: function copyURL(text) {
@@ -90561,27 +90601,190 @@ var render = function () {
                   ),
                   _vm._v(" "),
                   _c("div", { staticClass: "row align-items-center" }, [
-                    _vm._m(1),
+                    _c("div", { staticClass: "col-md-10" }, [
+                      _c(
+                        "div",
+                        { staticClass: "form-group" },
+                        [
+                          _vm._m(1),
+                          _vm._v(" "),
+                          _c(
+                            "el-select",
+                            {
+                              staticStyle: { display: "block" },
+                              attrs: { placeholder: "Chọn list bình luận" },
+                              model: {
+                                value: _vm.listcomment,
+                                callback: function ($$v) {
+                                  _vm.listcomment = $$v
+                                },
+                                expression: "listcomment",
+                              },
+                            },
+                            [
+                              _c("el-option", {
+                                attrs: { label: "Zone one", value: "shanghai" },
+                              }),
+                              _vm._v(" "),
+                              _c("el-option", {
+                                attrs: { label: "Zone two", value: "beijing" },
+                              }),
+                            ],
+                            1
+                          ),
+                        ],
+                        1
+                      ),
+                    ]),
                     _vm._v(" "),
                     _c(
                       "div",
                       { staticClass: "col-md-2" },
                       [
                         _c(
-                          "button",
+                          "el-button",
                           {
-                            staticClass: "btn btn-sm btn-primary",
-                            on: { click: _vm.showModal },
+                            attrs: { type: "primary" },
+                            on: {
+                              click: function ($event) {
+                                _vm.dialogVisible = true
+                              },
+                            },
                           },
                           [
-                            _c("i", { staticClass: "fas fa-plus-circle" }),
-                            _vm._v(
-                              " Tạo List Comment\n                                        "
-                            ),
+                            _c("i", {
+                              staticClass:
+                                "el-icon-circle-plus-outline color-white",
+                            }),
+                            _vm._v(" Tạo List Comment"),
                           ]
                         ),
                         _vm._v(" "),
-                        _c("Modal", { ref: "modal" }),
+                        _c(
+                          "el-dialog",
+                          {
+                            attrs: {
+                              title: "Tạo List Comment",
+                              visible: _vm.dialogVisible,
+                              width: "30%",
+                            },
+                            on: {
+                              "update:visible": function ($event) {
+                                _vm.dialogVisible = $event
+                              },
+                            },
+                          },
+                          [
+                            _c("label", { staticClass: "mb-2" }, [
+                              _vm._v("Tên thể loại: "),
+                            ]),
+                            _vm._v(" "),
+                            _c("el-input", {
+                              attrs: { placeholder: "Mỹ phẩm, Đông y..." },
+                              model: {
+                                value: _vm.name_comment,
+                                callback: function ($$v) {
+                                  _vm.name_comment = $$v
+                                },
+                                expression: "name_comment",
+                              },
+                            }),
+                            _vm._v(" "),
+                            _c("label", { staticClass: "mb-2 mt-3" }, [
+                              _vm._v("Nhập bình luận: "),
+                              _c(
+                                "span",
+                                { staticClass: "badge badge-success" },
+                                [_vm._v("1")]
+                              ),
+                            ]),
+                            _vm._v(" "),
+                            _c("el-input", {
+                              class: { errorform: _vm.hasError },
+                              attrs: {
+                                rows: 5,
+                                placeholder:
+                                  "Nhập comment, mỗi dòng 1 nội dung được tính là 1 lần seeding",
+                                type: "textarea",
+                              },
+                              model: {
+                                value: _vm.comment,
+                                callback: function ($$v) {
+                                  _vm.comment = $$v
+                                },
+                                expression: "comment",
+                              },
+                            }),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "isError" }, [
+                              _vm._v(_vm._s(_vm.isError)),
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "notice bg-light-danger rounded border-danger border border-dashed p-5 mt-2",
+                              },
+                              [
+                                _c("p", [
+                                  _c("b", { staticClass: "text-danger" }, [
+                                    _vm._v("Lưu ý: "),
+                                  ]),
+                                  _c("br"),
+                                  _vm._v(
+                                    "\n                                                1. Cứ mỗi dòng tính là 1 comment"
+                                  ),
+                                  _c("br"),
+                                  _vm._v(
+                                    "\n                                                2. Yêu cầu tối thiểu 20 comment"
+                                  ),
+                                  _c("br"),
+                                  _vm._v(
+                                    "\n                                                3. Nghiêm cấm bình luận những nội có cử chỉ, lời nói thô bạo, khiêu khích, trêu ghẹo, xúc phạm nhân phẩm, danh dự của Cá nhân hoặc Tổ chức."
+                                  ),
+                                  _c("br"),
+                                  _vm._v(
+                                    "\n                                                4. Hệ thống chỉ xét duyệt từ 8h sáng đến 12h đêm hằng ngày"
+                                  ),
+                                ]),
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                staticClass: "dialog-footer",
+                                attrs: { slot: "footer" },
+                                slot: "footer",
+                              },
+                              [
+                                _c(
+                                  "el-button",
+                                  {
+                                    on: {
+                                      click: function ($event) {
+                                        _vm.dialogVisible = false
+                                      },
+                                    },
+                                  },
+                                  [_vm._v("Hủy")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "el-button",
+                                  {
+                                    attrs: { type: "primary" },
+                                    on: { click: _vm.createComment },
+                                  },
+                                  [_vm._v("Tạo")]
+                                ),
+                              ],
+                              1
+                            ),
+                          ],
+                          1
+                        ),
                       ],
                       1
                     ),
@@ -90623,63 +90826,48 @@ var render = function () {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-6" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _vm._m(3),
-                        _vm._v(" "),
-                        _c(
-                          "select",
-                          {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
+                      _c(
+                        "div",
+                        { staticClass: "form-group" },
+                        [
+                          _vm._m(3),
+                          _vm._v(" "),
+                          _c(
+                            "el-select",
+                            {
+                              staticStyle: { display: "block" },
+                              attrs: { placeholder: "Chọn tốc độ" },
+                              on: { change: _vm.changeTotal },
+                              model: {
                                 value: _vm.speedServices,
+                                callback: function ($$v) {
+                                  _vm.speedServices = $$v
+                                },
                                 expression: "speedServices",
                               },
-                            ],
-                            staticClass:
-                              "form-select form-select-sm bg-body border-body",
-                            on: {
-                              change: [
-                                function ($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function (o) {
-                                      return o.selected
-                                    })
-                                    .map(function (o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.speedServices = $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                },
-                                _vm.changeTotal,
-                              ],
                             },
-                          },
-                          [
-                            _c(
-                              "option",
-                              { attrs: { value: "low", selected: "selected" } },
-                              [_vm._v("Rất Chậm")]
-                            ),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "normal" } }, [
-                              _vm._v("Chậm"),
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "medium" } }, [
-                              _vm._v("Trung Bình"),
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "high" } }, [
-                              _vm._v("Nhanh"),
-                            ]),
-                          ]
-                        ),
-                      ]),
+                            [
+                              _c("el-option", {
+                                attrs: { label: "Rất Chậm", value: "low" },
+                              }),
+                              _vm._v(" "),
+                              _c("el-option", {
+                                attrs: { label: "Chậm", value: "normal" },
+                              }),
+                              _vm._v(" "),
+                              _c("el-option", {
+                                attrs: { label: "Trung Bình", value: "medium" },
+                              }),
+                              _vm._v(" "),
+                              _c("el-option", {
+                                attrs: { label: "Nhanh", value: "high" },
+                              }),
+                            ],
+                            1
+                          ),
+                        ],
+                        1
+                      ),
                     ]),
                   ]),
                   _vm._v(" "),
@@ -91148,17 +91336,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-10" }, [
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", [
-          _vm._v("Chọn bộ comment "),
-          _c("span", { staticClass: "text-danger" }, [_vm._v("*")]),
-        ]),
-        _vm._v(" "),
-        _c("select", { staticClass: "form-control" }, [
-          _c("option", [_vm._v("Mỹ Phầm")]),
-        ]),
-      ]),
+    return _c("label", [
+      _vm._v("Chọn bộ comment "),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")]),
     ])
   },
   function () {
@@ -93046,63 +93226,41 @@ var render = function () {
                                               { staticClass: "textend" },
                                               [
                                                 _c(
-                                                  "a",
+                                                  "el-button",
                                                   {
-                                                    staticClass:
-                                                      "btn btn-icon btn-bg-light btn-active-color-primary btn-sm",
-                                                    attrs: { href: "#" },
-                                                  },
-                                                  [
-                                                    _c(
-                                                      "span",
-                                                      {
-                                                        staticClass:
-                                                          "svg-icon svg-icon-3",
+                                                    attrs: { size: "mini" },
+                                                    on: {
+                                                      click: function ($event) {
+                                                        return _vm.handleEdit(
+                                                          _vm.scope.$index,
+                                                          _vm.scope.row
+                                                        )
                                                       },
-                                                      [
-                                                        _c(
-                                                          "svg",
-                                                          {
-                                                            attrs: {
-                                                              xmlns:
-                                                                "http://www.w3.org/2000/svg",
-                                                              width: "24",
-                                                              height: "24",
-                                                              viewBox:
-                                                                "0 0 24 24",
-                                                              fill: "none",
-                                                            },
-                                                          },
-                                                          [
-                                                            _c("path", {
-                                                              attrs: {
-                                                                d: "M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z",
-                                                                fill: "black",
-                                                              },
-                                                            }),
-                                                            _vm._v(" "),
-                                                            _c("path", {
-                                                              attrs: {
-                                                                opacity: "0.5",
-                                                                d: "M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z",
-                                                                fill: "black",
-                                                              },
-                                                            }),
-                                                            _vm._v(" "),
-                                                            _c("path", {
-                                                              attrs: {
-                                                                opacity: "0.5",
-                                                                d: "M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z",
-                                                                fill: "black",
-                                                              },
-                                                            }),
-                                                          ]
-                                                        ),
-                                                      ]
-                                                    ),
-                                                  ]
+                                                    },
+                                                  },
+                                                  [_vm._v("Edit")]
                                                 ),
-                                              ]
+                                                _vm._v(" "),
+                                                _c(
+                                                  "el-button",
+                                                  {
+                                                    attrs: {
+                                                      size: "mini",
+                                                      type: "danger",
+                                                    },
+                                                    on: {
+                                                      click: function ($event) {
+                                                        return _vm.handleDelete(
+                                                          _vm.scope.$index,
+                                                          _vm.scope.row
+                                                        )
+                                                      },
+                                                    },
+                                                  },
+                                                  [_vm._v("Delete")]
+                                                ),
+                                              ],
+                                              1
                                             ),
                                           ]
                                         )
@@ -93560,64 +93718,31 @@ var render = function () {
                                           ),
                                         ]),
                                         _vm._v(" "),
-                                        _c("td", { staticClass: "textend" }, [
-                                          _c(
-                                            "a",
-                                            {
-                                              staticClass:
-                                                "btn btn-icon btn-bg-light btn-active-color-primary btn-sm",
-                                              attrs: { href: "#" },
-                                            },
-                                            [
-                                              _c(
-                                                "span",
-                                                {
-                                                  staticClass:
-                                                    "svg-icon svg-icon-3",
+                                        _c(
+                                          "td",
+                                          { staticClass: "textend" },
+                                          [
+                                            _c(
+                                              "el-button",
+                                              {
+                                                attrs: {
+                                                  size: "mini",
+                                                  type: "danger",
                                                 },
-                                                [
-                                                  _c(
-                                                    "svg",
-                                                    {
-                                                      attrs: {
-                                                        xmlns:
-                                                          "http://www.w3.org/2000/svg",
-                                                        width: "24",
-                                                        height: "24",
-                                                        viewBox: "0 0 24 24",
-                                                        fill: "none",
-                                                      },
-                                                    },
-                                                    [
-                                                      _c("path", {
-                                                        attrs: {
-                                                          d: "M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z",
-                                                          fill: "black",
-                                                        },
-                                                      }),
-                                                      _vm._v(" "),
-                                                      _c("path", {
-                                                        attrs: {
-                                                          opacity: "0.5",
-                                                          d: "M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z",
-                                                          fill: "black",
-                                                        },
-                                                      }),
-                                                      _vm._v(" "),
-                                                      _c("path", {
-                                                        attrs: {
-                                                          opacity: "0.5",
-                                                          d: "M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z",
-                                                          fill: "black",
-                                                        },
-                                                      }),
-                                                    ]
-                                                  ),
-                                                ]
-                                              ),
-                                            ]
-                                          ),
-                                        ]),
+                                                on: {
+                                                  click: function ($event) {
+                                                    return _vm.handleDelete(
+                                                      _vm.scope.$index,
+                                                      _vm.scope.row
+                                                    )
+                                                  },
+                                                },
+                                              },
+                                              [_vm._v("Hủy")]
+                                            ),
+                                          ],
+                                          1
+                                        ),
                                       ]
                                     )
                                   }
@@ -93939,7 +94064,7 @@ var render = function () {
               _c(
                 "button",
                 {
-                  staticClass: "btn btn-success",
+                  staticClass: "btn btn-sm btn-primary",
                   attrs: { disabled: _vm.isDisabled },
                   on: { click: _vm.scanRecharge },
                 },
@@ -94075,7 +94200,10 @@ var render = function () {
                 _vm._v(" "),
                 _c(
                   "div",
-                  { staticClass: "text-white fw-bolder fs-2 mb-2 mt-5" },
+                  {
+                    ref: "total",
+                    staticClass: "text-white fw-bolder fs-2 mb-2 mt-5",
+                  },
                   [
                     _vm._v(
                       _vm._s(_vm.formatNumber(_vm.total_recharge)) + " VNĐ"
@@ -94169,7 +94297,7 @@ var staticRenderFns = [
       _c("small", [
         _c("i", [
           _c("span", { staticClass: "text-danger" }, [_vm._v("*")]),
-          _vm._v(' Bạn có thể ấn "'),
+          _vm._v(' Bạn có thể xác nhận "'),
           _c("b", { staticClass: "text-danger" }, [
             _vm._v("Tôi Đã Chuyển Tiền"),
           ]),

@@ -45,6 +45,7 @@ Route::group(['middleware' => 'login'], function () {
         Route::post('/buff-like', 'FacebookController@buffLikeUserStore')->name('faceUser.postLike');
         Route::get('/buff-comment', 'FacebookController@buffCommentUser')->name('faceUser.cmt');
         Route::post('/buff-comment', 'FacebookController@postbuffComment')->name('faceUser.postComment');
+        Route::post('/createListComment', 'FacebookController@createListComment')->name('faceUser.createListComment');
 
         Route::get('/history/{type}', 'FacebookController@transaction_history')->name('faceUser.history');
         Route::post('/history/{type}', 'FacebookController@postHistory')->name('faceUser.phistory');

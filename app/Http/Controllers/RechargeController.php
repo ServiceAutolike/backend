@@ -45,7 +45,7 @@ class RechargeController extends Controller
     public function checkRechargeVCB() {
         $date = date('d/m/Y', time());
         $data = [
-            'begin' => '08/01/2022',
+            'begin' => '06/01/2022',
             'end' => '10/01/2022',
             'username' => '0974137996',
             'password' => 'Khanhduy3110@123',

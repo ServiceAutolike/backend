@@ -63,9 +63,9 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <p><small><i><span class="text-danger">*</span> Bạn có thể ấn "<b class="text-danger">Tôi Đã Chuyển Tiền</b>" để hệ thống kiểm tra thủ công hoặc bạn có thể đợi 5-10 phút để hệ thống tự cập nhật số dư cho bạn.
+                        <p><small><i><span class="text-danger">*</span> Bạn có thể xác nhận "<b class="text-danger">Tôi Đã Chuyển Tiền</b>" để hệ thống kiểm tra thủ công hoặc bạn có thể đợi 5-10 phút để hệ thống tự cập nhật số dư cho bạn.
                         </i></small></p>
-                        <button class="btn btn-success" @click="scanRecharge" :disabled="isDisabled"><i class="el-icon-check" v-if="isStatic"></i><i class="el-icon-loading" v-if="isClick"></i> {{ txtBtn }}</button>
+                        <button class="btn btn-sm btn-primary" @click="scanRecharge" :disabled="isDisabled"><i class="el-icon-check" v-if="isStatic"></i><i class="el-icon-loading" v-if="isClick"></i> {{ txtBtn }}</button>
                     </div>
                 </div>
             </div>
@@ -107,7 +107,7 @@
                         </svg>
                     </span>
                     <!--end::Svg Icon-->
-                    <div class="text-white fw-bolder fs-2 mb-2 mt-5">{{ formatNumber(total_recharge) }} VNĐ</div>
+                    <div class="text-white fw-bolder fs-2 mb-2 mt-5" ref="total">{{ formatNumber(total_recharge) }} VNĐ</div>
                     <div class="fw-bold text-white">Số tiền đã nạp</div>
                 </div>
                 <!--end::Body-->
@@ -154,6 +154,7 @@ export default {
             dataScan: Object,
             txtBtn: 'Tôi Đã Chuyển Tiền',
             loading: true,
+            total: '',
             isDisabled: false,
             isStatic: true,
             isClick: false,
@@ -163,7 +164,7 @@ export default {
             total_recharge_year: 0,
         }
     },
-    created() {
+    mounted() {
         this.loadMe()
     },
     methods: {
@@ -171,7 +172,7 @@ export default {
             return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
         },
         async scanRecharge() {
-            toastr.info('Bắt đầu chạy tiến trình, vui lòng không thoát trang....')
+            toastr.success('Bắt đầu chạy tiến trình, vui lòng không thoát trang....')
             this.txtBtn = 'Đang kiểm tra...'
             this.isDisabled = true
             this.isStatic = false
@@ -185,14 +186,18 @@ export default {
                         this.isDisabled = false
                         this.isStatic = true
                         this.isClick = false
+                        this.loadMe()
                         Swal.fire('Thông Báo', 'Bạn đã nạp thành công '+this.formatNumber(response.data.amount)+ ' VND','success');
-                        break
                     } else {
-                        toastr.warning('Đang kiểm tra thông tin chuyển khoản của bạn....')
+                        toastr.info('Đang kiểm tra thông tin chuyển khoản của bạn....')
+                        continue
                     }
                 }
                 catch (e) {
-                    toastr.error('Đã có lỗi xảy ra....')
+                    toastr.error('Đã có lỗi xảy ra, tiến trình đã dừng....')
+                    this.isDisabled = false
+                    this.isStatic = true
+                    this.isClick = false
                     break
                 }
             }
@@ -217,6 +222,6 @@ export default {
                 console.log("Error Get Me")
             })
         }
-    }
+    },
 }
 </script>
