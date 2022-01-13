@@ -1,5 +1,8 @@
 <template>
+
     <div class="row">
+        <Modal v-if="showModal"></Modal>
+
         <div class="col-12 col-xl-12">
             <div class="card mb-5 mb-xl-10">
                 <div class="card-header card-header-stretch pb-0">
@@ -34,7 +37,7 @@
 											</span>
 
                                     <!--end::Svg Icon-->
-                                    <input type="text" id="kt_filter_search" class="form-control form-control-sm w-150px ps-9" placeholder="Nhập ID bài viết" />
+                                    <input type="text" @keyup="changeUp" class="form-control form-control-sm w-150px ps-9" placeholder="Nhập ID bài viết" />
                                 </div>
                                 <!--end::Search-->
                                 <a href="/" class="btn btn-primary btn-sm">Tìm Kiếm</a>
@@ -79,10 +82,15 @@
                                     <div class="col-md-10">
                                         <div class="form-group">
                                             <label>Chọn bộ comment <span
-                                                class="text-danger">*</span></label>
-                                            <el-select v-model="listcomment" placeholder="Chọn list bình luận" style="display: block">
-                                                <el-option label="Zone one" value="shanghai"></el-option>
-                                                <el-option label="Zone two" value="beijing"></el-option>
+                                                class="text-danger">*</span>
+                                            </label>
+                                            <el-select v-model="id_comment" filterable placeholder="Chọn list bình luận" style="display: block;">
+                                                <el-option
+                                                    v-for="getAllComment in allcomment"
+                                                    :key="getAllComment.id"
+                                                    :label="getAllComment.name"
+                                                    :value="getAllComment.id_comment">
+                                                </el-option>
                                             </el-select>
                                         </div>
                                     </div>
@@ -92,22 +100,25 @@
                                             title="Tạo List Comment"
                                             :visible.sync="dialogVisible"
                                             width="30%">
-                                            <label class="mb-2">Tên thể loại: </label>
-                                            <el-input placeholder="Mỹ phẩm, Đông y..." v-model="name_comment"></el-input>
-                                            <label class="mb-2 mt-3">Nhập bình luận: <span class="badge badge-success">1</span></label>
-                                            <el-input :rows="5" placeholder="Nhập comment, mỗi dòng 1 nội dung được tính là 1 lần seeding" type="textarea" v-model="comment" v-bind:class="{ errorform: hasError }" ></el-input>
-                                            <span class="isError">{{ isError }}</span>
-                                            <div class="notice bg-light-danger rounded border-danger border border-dashed p-5 mt-2">
-                                                <p><b class="text-danger">Lưu ý: </b><br>
-                                                1. Cứ mỗi dòng tính là 1 comment<br>
-                                                2. Yêu cầu tối thiểu 20 comment<br>
-                                                3. Nghiêm cấm bình luận những nội có cử chỉ, lời nói thô bạo, khiêu khích, trêu ghẹo, xúc phạm nhân phẩm, danh dự của Cá nhân hoặc Tổ chức.<br>
-                                                4. Hệ thống chỉ xét duyệt từ 8h sáng đến 12h đêm hằng ngày</p>
-                                            </div>
-                                            <span slot="footer" class="dialog-footer">
-                                            <el-button @click="dialogVisible = false">Hủy</el-button>
-                                            <el-button type="primary" @click="createComment">Tạo</el-button>
-                                          </span>
+                                            <el-form :model="commentForm" :rules="rules" ref="ruleForm" class="commentForm">
+                                                <el-form-item label="Tên thể loại" prop="name_comment">
+                                                    <el-input placeholder="Mỹ phẩm, Đông y..." v-model="commentForm.name_comment"></el-input>
+                                                </el-form-item>
+                                                <el-form-item :label="totalcomment" prop="comment">
+                                                    <el-input :rows="5" placeholder="Nhập comment, mỗi dòng 1 nội dung được tính là 1 lần seeding" type="textarea" v-model="commentForm.comment" @input="changeUp"></el-input>
+                                                </el-form-item>
+                                                <div class="notice bg-light-warning rounded border-warning border border-dashed p-5 mt-7">
+                                                    <p><b class="text-danger">Lưu ý: </b><br>
+                                                    1. Cứ mỗi dòng tính là 1 comment<br>
+                                                    2. Yêu cầu tối thiểu 20 comment<br>
+                                                    3. Nghiêm cấm bình luận những nội có cử chỉ, lời nói thô bạo, khiêu khích, trêu ghẹo, xúc phạm nhân phẩm, danh dự của Cá nhân hoặc Tổ chức.<br>
+                                                    4. Hệ thống chỉ xét duyệt từ 8h sáng đến 12h đêm hằng ngày</p>
+                                                </div>
+                                                <div class="el-dialog__footer" style="padding: 10px 0px 20px;">
+                                                    <button type="button" @click="submitForm('ruleForm')" class="btn btn-primary"><i v-if="btnLoading" class="el-icon-loading"></i> Tạo Comment</button>
+                                                    <el-button @click="dialogVisible = false">Đóng</el-button>
+                                                </div>
+                                            </el-form>
                                         </el-dialog>
                                     </div>
                                 </div>
@@ -209,17 +220,7 @@
                                             </td>
                                             <td>{{ timeAgo(historyData.created_at) }}</td>
                                             <td class="textend">
-                                                <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
-                                                    <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
-                                                    <span class="svg-icon svg-icon-3">
-																	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																		<path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="black"></path>
-																		<path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="black"></path>
-																		<path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="black"></path>
-																	</svg>
-																</span>
-                                                    <!--end::Svg Icon-->
-                                                </a>
+
                                             </td>
                                         </tr>
                                         </tbody>
@@ -239,10 +240,7 @@
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
-
                 </div>
             </div>
         </div>
@@ -253,18 +251,23 @@
 export default {
     data() {
         return {
+            commentForm: {
+                name_comment: '',
+                comment: '',
+            },
             loading: true,
             loading_input: false,
             isTable: false,
             hideIcon: true,
-            isError: '',
-            name_comment: '',
-            comment: '',
-            hasError: false,
+            btnLoading: false,
             listcomment: [],
+            id_comment: '',
+            totalcomment: "Số lượng (0 bình luận)",
+            allcomment: Object,
             speed: 'low',
             activeItem: 'create',
             post_id: "",
+            showModal: false,
             note: '',
             dialogVisible: false,
             activeClass: '',
@@ -294,9 +297,16 @@ export default {
                 'current_page': 1
             },
             rules: {
-
+                name_comment: [
+                    { required: true, message: 'Vui lòng nhập tên thể loại', trigger: 'blur' },],
+                comment: [
+                    { required: true, message: 'Vui lòng nhập ít nhất 1 bình luận', trigger: 'change' }
+                ],
             }
         };
+    },
+    created() {
+        this.getListComment()
     },
     methods: {
         isActive(menuItem) {
@@ -353,25 +363,54 @@ export default {
             const yearsDiff = today.getYear() - date.getYear();
             return `${yearsDiff} năm trước`;
         },
+        changeUp() {
+            if(this.commentForm.comment != "") {
+                this.listcomment = this.commentForm.comment.split('\n')
+                this.totalcomment = "Số lượng (" + this.listcomment.length + " bình luận)"
+            }
+            else {
+                console.log(this.listcomment)
+                this.totalcomment = "Số lượng (0 bình luận)"
+            }
+        },
         createComment() {
-            this.listcomment = this.comment.split('\n')
+            this.btnLoading = true
+            this.listcomment = this.commentForm.comment.split('\n')
             let data = {
-                "name": this.name_comment,
+                "name": this.commentForm.name_comment,
                 "comment": this.listcomment
             }
             axios.post('/facebook/createListComment',data).then(res => {
-                if(res.data.status == 200) {
-                    Swal.fire('Thành Công', 'Tạo comment '+this.name_comment+' thành công', 'success');
+                this.btnLoading = false
+                if(res.data.code == 200) {
+                    Swal.fire('Thành Công', 'Tạo comment '+this.commentForm.name_comment+' thành công', 'success');
                     this.dialogVisible = false
+                    this.getListComment()
                 }
                 else {
-                    toastr.error(res.data.message)
+                    this.$message({
+                        showClose: true,
+                        message: res.data.message,
+                        type: 'error'
+                    });
                 }
 
             })
         },
-        getListComment() {
+        submitForm(formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    this.createComment()
+                } else {
+                    return false;
+                }
+            });
+        },
 
+        getListComment() {
+            axios.get('/facebook/listcomment').then(res => {
+                this.allcomment = res.data
+            })
         },
         updateTransaction() {
             let obj = this

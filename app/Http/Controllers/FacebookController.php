@@ -17,7 +17,10 @@ use Illuminate\Support\Facades\DB;
 
 class FacebookController extends Controller
 {
-
+    public function getListComment() {
+        $listcomment = ListComment::where('id_user', Auth::user()->id)->orderBy('id', 'DESC')->get();
+        return response()->json($listcomment);
+    }
     public function createListComment(Request $request) {
         $data = [
             'name' => $request->name,
@@ -34,31 +37,28 @@ class FacebookController extends Controller
             try {
                 $listcomment = new ListComment();
                 $listcomment->id_user = Auth::user()->id;
-                if(isset($dataCreate['data']['comment_id'])) {
-                    $listcomment->id_comment = $dataCreate['data']['comment_id'];
-                }
+                $listcomment->id_comment = $dataCreate['data']['comment_id'];
                 $listcomment->name = $request->name;
                 $listcomment->content = json_encode($request->comment, true);
                 $listcomment->created_at = Carbon::now()->toDateTimeString();
                 $listcomment->updated_at = Carbon::now()->toDateTimeString();
                 $listcomment->save();
                 $data = [
-                    'status' => 200,
-                    'data' => $dataCreate['message']
+                    'code' => 200,
                 ];
+
             }
             catch (\Exception $e) {
                 $data = [
-                    'status' => 400,
-                    'message' => $dataCreate['message'],
+                    'code' => 400,
+                    'message' => 'Không thể thêm list comment!'
                 ];
-                DB::rollBack();
             }
             DB::commit();
         }
         else {
             $data = [
-                'status' => 500,
+                'code' => 500,
                 'message' => $dataCreate['message']
             ];
         }

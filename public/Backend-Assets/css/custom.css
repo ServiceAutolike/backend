@@ -25,10 +25,7 @@
 .btn-block {
     width: 100% !important;
 }
-label {
-    display: inline-block;
-    margin-bottom: 0.5rem;
-}
+
 .table.gy-3 td, .table.gy-3 th {
     font-size: 12px;
 }
@@ -409,4 +406,22 @@ label {
 }
 #kt_content {
     margin-bottom: 50px;
+}
+.el-icon-loading {
+    color: #ffffff !important;
+}
+.el-dialog__body {
+    padding: 0px 20px !important;
+}
+.el-form-item {
+    margin-bottom: 10px !important;
+}
+.el-form-item__label {
+    line-height: 30px;
+}
+.show {
+    display: block !important;
+}
+label {
+    margin-bottom: 8px;
 }

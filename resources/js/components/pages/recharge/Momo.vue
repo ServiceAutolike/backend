@@ -1,5 +1,5 @@
 <template>
-    <div class="row" v-loading.fullscreen.lock="fullscreenLoading">
+    <div class="row">
         <div class="col-12 col-xl-8 mb-4">
             <div class="card shadow-sm">
                 <div class="card-header collapsible cursor-pointer rotate" data-bs-toggle="collapse"
@@ -19,7 +19,8 @@
                     </div>
                 </div>
                 <div id="kt_docs_card_collapsible" class="collapse show">
-                    <div class="card-body">
+                    <LoadingPage v-if="loading"></LoadingPage>
+                    <div v-else class="card-body">
                         <div class="mb-10">
                             <p>Bạn vui lòng chuyển khoản chính xác nội dung chuyển khoản bên dưới hệ thống sẽ tự động cộng tiền cho bạn sau 1 - 5 phút sau khi nhận được tiền. Nếu sau 10 phút từ khi tiền trong tài khoản của bạn bị trừ mà vẫn chưa được cộng tiền vui lòng nhấn vào liên hệ hỗ trợ.</p>
                         </div>
@@ -88,18 +89,21 @@
                     </div>
 
                     <div class="card-footer">
-                        <p><small><i><span class="text-danger">*</span> Bạn có thể "Kiểm Tra Nạp Tiền" nếu thời gian chờ
-                            quá lâu, đây là cáh kiểm tra thủ công khi hệ thống nạp tiền bị gián đoạn.
-                        </i></small></p>
-                        <button class="btn btn-primary">Kiểm Tra Nạp Tiền</button>
+                        <LoadingPage v-if="loading"></LoadingPage>
+                        <div v-else>
+                            <p><small><i><span class="text-danger">*</span> Bạn có thể xác nhận "<b class="text-danger">Tôi Đã Chuyển Tiền</b>" để hệ thống kiểm tra thủ công hoặc bạn có thể đợi 5-10 phút để hệ thống tự cập nhật số dư cho bạn.
+                            </i></small></p>
+                            <button class="btn btn-sm btn-primary" @click="scanMomo" :disabled="isDisabled"><i class="el-icon-check" v-if="isStatic"></i><i class="el-icon-loading" v-if="isClick"></i> {{ txtBtn }}</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-12 col-xl-4">
             <div class="card bg-success hoverable card-xl-stretch mb-5 mb-xl-8">
+                <LoadingPage v-if="loading"></LoadingPage>
                 <!--begin::Body-->
-                <div class="card-body">
+                <div v-else class="card-body">
                     <!--begin::Svg Icon | path: icons/duotune/graphs/gra005.svg-->
                     <span class="svg-icon svg-icon-white svg-icon-3x ms-n1">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -116,8 +120,9 @@
 
 
             <div class="card bg-danger hoverable card-xl-stretch mb-xl-8">
+                <LoadingPage v-if="loading"></LoadingPage>
                 <!--begin::Body-->
-                <div class="card-body">
+                <div v-else class="card-body">
                     <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm002.svg-->
                     <span class="svg-icon svg-icon-white svg-icon-3x ms-n1">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -136,10 +141,6 @@
                 </div>
                 <!--end::Body-->
             </div>
-
-
-
-
 
 
             <div class="card mt-4">
@@ -161,8 +162,9 @@
                 </div>
 
                 <div class="card-body py-3">
+                    <LoadingPage v-if="loading"></LoadingPage>
                     <!--begin::Table container-->
-                    <div class="table-responsive">
+                    <div v-else class="table-responsive">
                         <!--begin::Table-->
                         <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
                             <!--begin::Table head-->
@@ -176,55 +178,19 @@
                             <!--end::Table head-->
                             <!--begin::Table body-->
                             <tbody>
-                            <tr>
+                            <tr v-for="item in dataTransaction">
                                 <td>
-                                    <span class="time text-muted">12/05/2021 12:00</span>
+                                    <span class="time text-muted">{{ timeAgo(item.created_at) }}</span>
                                 </td>
                                 <td>
-                                    <span class="fw-bold d-block fs-7">+12,000 VNĐ</span>
+                                    <span class="fw-bold d-block fs-7">+{{ formatNumber(item.amount_end) }} VNĐ</span>
                                 </td>
                                 <td>
-                                    <span class="badge badge-success">Thành công</span>
+                                    <span class="badge badge-light-success" v-if="item.status == 'Updated'">Thành công</span>
+                                    <span class="badge badge-light-success" v-if="item.status == 'New'">Thành công</span>
+
                                 </td>
                             </tr>
-
-                            <tr>
-                                <td>
-                                    <span class="time text-muted">12/05/2021 12:00</span>
-                                </td>
-                                <td>
-                                    <span class="fw-bold d-block fs-7">+12,000 VNĐ</span>
-                                </td>
-                                <td>
-                                    <span class="badge badge-success">Thành công</span>
-                                </td>
-                            </tr>
-
-
-                            <tr>
-                                <td>
-                                    <span class="time text-muted">12/05/2021 12:00</span>
-                                </td>
-                                <td>
-                                    <span class="fw-bold d-block fs-7">+12,000 VNĐ</span>
-                                </td>
-                                <td>
-                                    <span class="badge badge-success">Thành công</span>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <span class="time text-muted">12/05/2021 12:00</span>
-                                </td>
-                                <td>
-                                    <span class="fw-bold d-block fs-7">200,000 VNĐ</span>
-                                </td>
-                                <td>
-                                    <span class="badge badge-warning">Đang chờ...</span>
-                                </td>
-                            </tr>
-
 
                             </tbody>
                             <!--end::Table body-->
@@ -244,18 +210,129 @@ export default {
     data() {
         return {
             dataUser: Object,
-            loading: false,
+            dataTransaction: Object,
+            txtBtn: 'Tôi Đã Chuyển Tiền',
             desc: '',
+            isDisabled: false,
+            isStatic: true,
+            isClick: false,
             fullscreenLoading: true,
             total_recharge: 0,
             total_recharge_month: 0,
+            arr_success: Object,
             total_recharge_year: 0,
+            loading: true
         }
     },
     created() {
         this.loadMe()
+        this.loadTransaction()
     },
+    watch: {
+        $route: {
+            immediate: true,
+            handler(to, from) {
+                document.title = 'Dashboard | Neex Capital';
+            }
+        },
+        // '$route': 'fetchData'
+    },
+
     methods: {
+        formatNumber(number) {
+            return Intl.NumberFormat().format(number);
+        },
+        timeAgo(dateString) {
+            const date = new Date(dateString);
+            const DAY_IN_MS = 86400000; // 24 * 60 * 60 * 1000
+            const today = new Date();
+            const seconds = Math.round((today - date) / 1000);
+
+            if (seconds < 20) {
+                return 'Vừa xong';
+            }
+            else if (seconds < 60) {
+                return '1 phút trước';
+            }
+
+            const minutes = Math.round(seconds / 60);
+            if (minutes < 60) {
+                return `${minutes} phút trước`;
+            }
+
+            const isToday = today.toDateString() === date.toDateString();
+            if (isToday) {
+                return 'Hôm nay'
+            }
+
+            const yesterday = new Date(today - DAY_IN_MS);
+            const isYesterday = yesterday.toDateString() === date.toDateString();
+            if (isYesterday) {
+                return 'Hôm qua'
+            }
+
+            const daysDiff = Math.round((today - date) / (1000 * 60 * 60 * 24));
+            if (daysDiff < 30) {
+                return `${daysDiff} ngày trước`;
+            }
+
+            const monthsDiff = today.getMonth() - date.getMonth() + (12 * (today.getFullYear() - date.getFullYear()));
+            if (monthsDiff < 12) {
+                return `${monthsDiff} tháng trước`;
+            }
+
+            const yearsDiff = today.getYear() - date.getYear();
+            return `${yearsDiff} năm trước`;
+        },
+        loadTransaction() {
+            axios.post('/recharge/transaction', {
+                params: {
+                    type: 'momo'
+                }
+            }).then(res => {
+                this.loading = false
+                this.dataTransaction = res.data
+            })
+        },
+        updatedStatus() {
+            axios.post('/recharge/scan/updated').then(res => {
+                this.loading = false
+                if(res.data.code) {
+                    return true
+                }
+                else {
+                    Swal.fire('Lỗi', 'Không thể cập nhật dữ liệu', 'error')
+                    return false
+                }
+            })
+        },
+        scanMomo() {
+            this.txtBtn = 'Đang kiểm tra...'
+            this.isDisabled = true
+            this.isStatic = false
+            this.isClick = true
+
+            axios.post('/recharge/scan/momo').then(res => {
+                this.loading = false
+                if(res.data.code == 200) {
+                    this.txtBtn = 'Tôi đã chuyển tiền'
+                    this.isDisabled = false
+                    this.isStatic = true
+                    this.isClick = false
+                    Swal.fire('Thông báo', 'Bạn vừa nạp thành công '+this.formatNumber(res.data.total_recharge_new)+' VND qua cổng thanh toán Momo', 'success')
+                    this.loadMe()
+                    this.updatedStatus()
+                    this.loadTransaction()
+                }
+                else {
+                    Swal.fire('Thông báo', 'Chúng tôi không tìm thấy giao dịch nạp mới nào của bạn!', 'error')
+                    this.txtBtn = 'Tôi đã chuyển tiền'
+                    this.isDisabled = false
+                    this.isStatic = true
+                    this.isClick = false
+                }
+            })
+        },
         async copyURL(text) {
             text = this.desc
             try {
@@ -266,11 +343,9 @@ export default {
                 Swal.fire('Thông Báo','Lỗi không thể sao chép!','error')
             }
         },
-        formatNumber(num) {
-            return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
-        },
         loadMe() {
             axios.post('/me').then(res => {
+                this.loading = false
                 this.dataUser = res.data.data
                 this.desc = "nap "+res.data.data.name
                 this.total_recharge = res.data.total_recharge

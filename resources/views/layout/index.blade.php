@@ -467,9 +467,10 @@
 <script src="{{ asset('Backend-Assets/plugins/global/plugins.bundle.js') }}"></script>
 <script src="{{ asset('Backend-Assets/js/scripts.bundle.js') }}"></script>
 <!--end::Global Javascript Bundle-->
-<script src="{{ asset('Backend-Assets/plugins/custom/ckeditor/ckeditor-classic.bundle.js') }}"></script>
-<script src="{{ asset('Backend-Assets/js/custom/documentation/editors/ckeditor/classic.js') }}"></script>
-
+@if(auth()->user()->role == "admin")
+    <script src="{{ asset('Backend-Assets/plugins/custom/ckeditor/ckeditor-classic.bundle.js') }}"></script>
+    <script src="{{ asset('Backend-Assets/js/custom/documentation/editors/ckeditor/classic.js') }}"></script>
+@endif
 <!--end::Page Vendors Javascript-->
 <!--begin::Page Custom Javascript(used by this page)-->
 <script src="{{ asset('Backend-Assets/js/custom/widgets.js') }}"></script>
