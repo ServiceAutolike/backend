@@ -20,6 +20,14 @@ class FacebookController extends Controller
 {
 
 
+    public function addMemberGroup() {
+        return view('page.app.facebook.buff-member-group');
+    }
+
+    public function buffLivestream() {
+        return view('page.app.facebook.buff-livestream');
+    }
+
     public function postbuffComment(Request $request) {
         $getPriceFollow = RatePrice::where('type_services', 'facebook_comment')->value('price');
         $getBalance = Auth::user()->point;
@@ -214,7 +222,7 @@ class FacebookController extends Controller
     }
     public function buffFollowUser()
     {
-        return view('page.app.facebook.user.buff-follow');
+        return view('.buff-follow');
     }
 
     public function postBuffFollowUser(Request $request) {
@@ -310,7 +318,7 @@ class FacebookController extends Controller
 
     public function buffLikeUser()
     {
-        return view('page.app.facebook.user.buff-like');
+        return view('page.app.facebook.buff-like');
     }
 
 
@@ -632,12 +640,12 @@ class FacebookController extends Controller
 
     public function buffCommentUser()
     {
-        return view('page.app.facebook.user.buff-comment');
+        return view('page.app.facebook.buff-comment');
     }
 
     public function buffShareUser()
     {
-        return view('page.app.facebook.user.buff-share');
+        return view('page.app.facebook.buff-share');
     }
 
     public function buffLikePage()

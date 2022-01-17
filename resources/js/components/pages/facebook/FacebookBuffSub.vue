@@ -62,24 +62,23 @@
                                         class="text-danger">*</span></label>
                                     <div v-bind:class="{'spinner spinner-success spinner-right': loading_input}">
                                         <input type="text" v-bind:class="[activeClass, errorClass]" class="form-control"
-                                               id="user_id" v-model="post_id" placeholder="Nhập URL hoặc ID bài viết"
-                                               @keyup="findID(post_id)" required>
+                                               id="user_id" v-model="user_id" placeholder="Nhập URL hoặc ID bài viết"
+                                               @keyup="findID(user_id)" required>
                                     </div>
                                 </div>
                                 <div v-if="isResult">
                                     <div class="d-flex align-items-center rounded p-5 mb-7 alert-custom alert alert-success">
                                         <!--begin::Icon-->
                                         <div class="symbol symbol-50px me-5">
-                                            <img :src=picture alt="">
+                                            <img :src=avatar alt="">
                                         </div>
                                         <!--end::Icon-->
                                         <!--begin::Title-->
                                         <div class="flex-grow-1 me-2">
                                             <span class="fw-bolder text-gray-800 text-hover-primary fs-6">{{ namefb }}</span>
                                             <span class="text-muted fw-bold d-block">
-                                                {{ timeAgo(time) }}
+                                                Bạn có <b class="text-danger">{{ follow }} </b> người theo dõi
                                             </span>
-                                            <span class="content">{{ content }}</span>
                                         </div>
 
                                         <!--end::Title-->
@@ -90,23 +89,17 @@
                                 <div class="form-group">
                                     <label for="number_seeding">Số lượng cần tăng <span
                                         class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" id="number_seeding"
+                                    <input type="number" class="form-control form-control-solid" id="number_seeding"
                                            name="number" min="20" value="20" v-model="number_seeding"
                                            @keyup="changeTotal">
-                                </div>
-
-
-                                <div class="form-group">
-                                    <label>Nội dung <span class="badge badge-success">0</span></label>
-                                    <el-input :rows="5" placeholder="Nhập comment, mỗi dòng được tính là 1 nội dung" type="textarea"></el-input>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="sitePrice">Giá/1 lượt share (VNĐ) <span
+                                            <label for="sitePrice">Giá/1 lượt theo dõi (VNĐ) <span
                                                 class="text-danger">*</span></label>
-                                            <input type="number" class="form-control" id="sitePrice"
+                                            <input type="number" class="form-control form-control-solid" id="sitePrice"
                                                    name="sitePrice" value="60" v-model="sitePrice" disabled>
                                         </div>
                                     </div>
@@ -141,8 +134,8 @@
                                             class="text-danger">{{ Number(totalPrice).toLocaleString() }} VNĐ</strong>
                                         </h2>
                                         <div>Bạn sẽ mua <strong
-                                            class="text-danger">{{ Number(number_seeding).toLocaleString() }} share</strong> với giá <strong class="text-danger">{{ sitePrice }}<sup>đ</sup>/1</strong>
-                                            <strong class="text-danger">share</strong> tốc độ <b class="text-success">{{ speed }}</b></div>
+                                            class="text-danger">{{ Number(number_seeding).toLocaleString() }} theo dõi</strong> với giá <strong class="text-danger">{{ sitePrice }}<sup>đ</sup>/1</strong>
+                                            <strong class="text-danger">theo dõi</strong> tốc độ <b class="text-success">{{ speed }}</b></div>
                                     </div>
                                 </div>
                             </form>
@@ -239,20 +232,19 @@ export default {
         return {
             loading: true,
             loading_input: false,
-            post_id: '',
-            time: '',
             namefb: '',
-            picture: '',
-            content: '',
+            avatar: '',
+            follow: 0,
             note: '',
             isTable: false,
             id_search: '',
             speedServices: 'high',
             hideIcon: true,
             activeItem: 'create',
+            user_id: "",
             activeClass: '',
             errorClass: '',
-            type_check: 'post',
+            type_check: 'user',
             speed: "Nhanh",
             number_seeding: 20,
             sitePrice: 60,
@@ -307,48 +299,6 @@ export default {
                 this.isTable = false
             }
             this.activeItem = menuItem
-        },
-        timeAgo(dateString) {
-            const date = new Date(dateString);
-            const DAY_IN_MS = 86400000; // 24 * 60 * 60 * 1000
-            const today = new Date();
-            const seconds = Math.round((today - date) / 1000);
-
-            if (seconds < 20) {
-                return 'Vừa xong';
-            }
-            else if (seconds < 60) {
-                return '1 phút trước';
-            }
-
-            const minutes = Math.round(seconds / 60);
-            if (minutes < 60) {
-                return `${minutes} phút trước`;
-            }
-
-            const isToday = today.toDateString() === date.toDateString();
-            if (isToday) {
-                return 'Hôm nay'
-            }
-
-            const yesterday = new Date(today - DAY_IN_MS);
-            const isYesterday = yesterday.toDateString() === date.toDateString();
-            if (isYesterday) {
-                return 'Hôm qua'
-            }
-
-            const daysDiff = Math.round((today - date) / (1000 * 60 * 60 * 24));
-            if (daysDiff < 30) {
-                return `${daysDiff} ngày trước`;
-            }
-
-            const monthsDiff = today.getMonth() - date.getMonth() + (12 * (today.getFullYear() - date.getFullYear()));
-            if (monthsDiff < 12) {
-                return `${monthsDiff} tháng trước`;
-            }
-
-            const yearsDiff = today.getYear() - date.getYear();
-            return `${yearsDiff} năm trước`;
         },
         updateTransaction(status) {
             let obj = this
@@ -454,17 +404,16 @@ export default {
             obj.loading_input = true
             let data = {
                 "url": url,
-                "type": 'post'
+                "type": 'user'
             }
             axios.post('/api/find-id', data).then(res => {
                 if (res.data.code != 400) {
                     this.isCheckID = true;
                     this.isResult = true
-                    this.post_id = res.data.id_post
-                    this.time = res.data.time
-                    this.picture = res.data.picture
+                    this.user_id = res.data.id
                     this.namefb = res.data.name
-                    this.content = res.data.content
+                    this.follow = res.data.follow
+                    this.avatar = res.data.avatar
                     toastr.success("Đã tìm thấy thông tin Facebook "+this.namefb);
                 } else {
                     this.isCheckID = false;

@@ -23,13 +23,7 @@
                             <!--begin::Controls-->
                             <div class="d-flex my-2">
                                 <!--begin::Search-->
-                                <div class="mr-3">
-                                    <i class="text-muted mr-2">{{ time_update }}</i>
-                                    <el-tooltip class="item" effect="light" content="Cập nhật trạng thái đơn của bạn" placement="top-start">
-                                        <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2" @click="updateTransaction(true)">
-                                            <i class="el-icon-refresh" v-bind:class="{ 'fa-spin': spinActive }"></i></button>
-                                    </el-tooltip>
-                                </div>
+                                <div class="mr-3"><button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2" v-on:click="updateTransaction" data-bs-toggle="tooltip" title="" data-bs-original-title="Cập nhật dữ liệu lịch sử"><i class="fas fa-sync" v-bind:class="{ 'fa-spin': spinActive }"></i></button></div>
                                 <div class="d-flex align-items-center position-relative me-4">
                                     <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
                                     <span class="svg-icon svg-icon-3 position-absolute ms-3">
@@ -38,10 +32,12 @@
 													<path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black" />
 												</svg>
 											</span>
+
                                     <!--end::Svg Icon-->
-                                    <input type="text" v-model="id_search" class="form-control form-control-sm w-150px ps-9" placeholder="Nhập ID bài viết" @input="fetchData(id_search)" />
+                                    <input type="text" @keyup="changeUp" class="form-control form-control-sm w-150px ps-9" placeholder="Nhập ID bài viết" />
                                 </div>
                                 <!--end::Search-->
+                                <a href="/" class="btn btn-primary btn-sm">Tìm Kiếm</a>
                             </div>
                             <!--end::Controls-->
                         </div>
@@ -49,80 +45,116 @@
                     <!--end::Toolbar-->
                 </div>
 
-                <LoadingPage v-if="loading"></LoadingPage>
-                <div v-else id="tab_content" class="tab-content">
+                <div id="tab_content" class="tab-content">
                     <!--begin::Tab create-->
                     <div class="tab-pane fade" :class="{ 'active show': isActive('create') }" id="create">
                         <div class="card-body">
-                            <form method="POST">
+
                                 <input type="hidden" name="warranty" value="7" id="warranty"/>
                                 <input type="hidden" value="post" id="type_check"/>
                                 <div class="form-group">
-                                    <label for="user_id">Nhập ID hoặc URL trang cá nhân <span
+                                    <label for="post_id">Nhập ID hoặc URL bài viết <span
                                         class="text-danger">*</span></label>
                                     <div v-bind:class="{'spinner spinner-success spinner-right': loading_input}">
                                         <input type="text" v-bind:class="[activeClass, errorClass]" class="form-control"
-                                               id="user_id" v-model="user_id" placeholder="Nhập URL hoặc ID bài viết"
-                                               @keyup="findID(user_id)" required>
+                                               id="post_id" v-model="post_id" placeholder="Nhập URL hoặc ID bài viết"
+                                               @change="findID(post_id)" required>
                                     </div>
                                 </div>
-                                <div v-if="isResult">
-                                    <div class="d-flex align-items-center rounded p-5 mb-7 alert-custom alert alert-success">
-                                        <!--begin::Icon-->
-                                        <div class="symbol symbol-50px me-5">
-                                            <img :src=avatar alt="">
-                                        </div>
-                                        <!--end::Icon-->
-                                        <!--begin::Title-->
-                                        <div class="flex-grow-1 me-2">
-                                            <span class="fw-bolder text-gray-800 text-hover-primary fs-6">{{ namefb }}</span>
-                                            <span class="text-muted fw-bold d-block">
-                                                Bạn có <b class="text-danger">{{ follow }} </b> người theo dõi
+                            <div v-if="isResult">
+                                <div class="d-flex align-items-center rounded p-5 mb-7 alert-custom alert alert-success">
+                                    <!--begin::Icon-->
+                                    <div class="svg-icon svg-icon-success me-5">
+                                        <img :src=picture alt="">
+                                    </div>
+                                    <!--end::Icon-->
+                                    <!--begin::Title-->
+                                    <div class="flex-grow-1 me-2">
+                                        <span class="fw-bolder text-gray-800 text-hover-primary fs-6">{{ namefb }}</span>
+                                        <span class="text-muted fw-bold d-block">
+                                                {{ timeAgo(time) }}
                                             </span>
-                                        </div>
-
-                                        <!--end::Title-->
+                                        <span class="content">{{ content }}</span>
                                     </div>
+
+                                    <!--end::Title-->
                                 </div>
-
-
-                                <div class="form-group">
-                                    <label for="number_seeding">Số lượng cần tăng <span
-                                        class="text-danger">*</span></label>
-                                    <input type="number" class="form-control form-control-solid" id="number_seeding"
-                                           name="number" min="20" value="20" v-model="number_seeding"
-                                           @keyup="changeTotal">
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6">
+                            </div>
+                                <div class="row align-items-center">
+                                    <div class="col-md-10">
                                         <div class="form-group">
-                                            <label for="sitePrice">Giá/1 lượt theo dõi (VNĐ) <span
-                                                class="text-danger">*</span></label>
-                                            <input type="number" class="form-control form-control-solid" id="sitePrice"
-                                                   name="sitePrice" value="60" v-model="sitePrice" disabled>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="sitePrice">Chọn tốc độ <span
+                                            <label>Chọn bộ comment <span
                                                 class="text-danger">*</span>
                                             </label>
-                                            <el-select v-model="speedServices" placeholder="Chọn tốc độ" style="display: block" @change="changeTotal">
+                                            <el-select v-model="id_comment" filterable placeholder="Chọn list bình luận" style="display: block;" @change="getTotalComment">
                                                 <el-option
-                                                    v-for="item in speedOption"
-                                                    :key="item.value"
-                                                    :label="item.label"
-                                                    :value="item.value">
+                                                    v-for="getAllComment in allcomment"
+                                                    :key="getAllComment.id"
+                                                    :label="getAllComment.name"
+                                                    :value="getAllComment.id_comment">
+                                                    <span style="float: left">{{ getAllComment.name }}</span>
+                                                    <span style="float: right; color: #8492a6; font-size: 13px">{{ getAllComment.total }} bình luận</span>
                                                 </el-option>
                                             </el-select>
                                         </div>
                                     </div>
+                                    <div class="col-md-2">
+                                        <el-button type="primary" @click="dialogVisible = true"><i class="el-icon-circle-plus-outline color-white"></i> Tạo List Comment</el-button>
+                                        <el-dialog
+                                            title="Tạo List Comment"
+                                            :visible.sync="dialogVisible"
+                                            width="30%">
+                                            <el-form :model="commentForm" :rules="rules" ref="ruleForm" class="commentForm">
+                                                <el-form-item label="Tên thể loại" prop="name_comment">
+                                                    <el-input placeholder="Mỹ phẩm, Đông y..." v-model="commentForm.name_comment"></el-input>
+                                                </el-form-item>
+                                                <el-form-item :label="totalcomment" prop="comment">
+                                                    <el-input :rows="5" placeholder="Nhập comment, mỗi dòng 1 nội dung được tính là 1 lần seeding" type="textarea" v-model="commentForm.comment" @input="changeUp"></el-input>
+                                                </el-form-item>
+                                                <div class="notice bg-light-warning rounded border-warning border border-dashed p-5 mt-7">
+                                                    <p><b class="text-danger">Lưu ý: </b><br>
+                                                    1. Cứ mỗi dòng tính là 1 comment<br>
+                                                    2. Yêu cầu tối thiểu 20 comment<br>
+                                                    3. Nghiêm cấm bình luận những nội có cử chỉ, lời nói thô bạo, khiêu khích, trêu ghẹo, xúc phạm nhân phẩm, danh dự của Cá nhân hoặc Tổ chức.<br>
+                                                    4. Hệ thống chỉ xét duyệt từ 8h sáng đến 12h đêm hằng ngày</p>
+                                                </div>
+                                                <div class="el-dialog__footer" style="padding: 10px 0px 20px;">
+                                                    <button type="button" @click="submitForm('ruleForm')" class="btn btn-primary"><i v-if="btnLoading" class="el-icon-loading"></i> Tạo Comment</button>
+                                                    <el-button @click="dialogVisible = false">Đóng</el-button>
+                                                </div>
+                                            </el-form>
+                                        </el-dialog>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="sitePrice">Giá/1 bình luận (VNĐ) <span
+                                                class="text-danger">*</span></label>
+                                            <input type="number" class="form-control form-control-solid" id="sitePrice"
+                                                   name="sitePrice" value="80" v-model="sitePrice" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="sitePrice">Chọn tốc độ <span class="text-danger">*</span>
+                                            </label>
+                                            <el-select v-model="speedServices" placeholder="Chọn tốc độ" style="display: block" @change="changeTotal">
+                                                <el-option label="Rất Chậm" value="low"></el-option>
+                                                <el-option label="Chậm" value="normal"></el-option>
+                                                <el-option label="Trung Bình" value="medium"></el-option>
+                                                <el-option label="Nhanh" value="high"></el-option>
+                                            </el-select>
+
+                                        </div>
+                                    </div>
                                 </div>
 
 
                                 <div class="form-group">
-                                    <label for="number_seeding">Ghi chú</label>
+                                    <label :for="note">Ghi chú</label>
                                     <input type="text" class="form-control form-control-solid" id="note" v-model="note" placeholder="Nhập ghi chú về tiến trình của bạn">
                                 </div>
 
@@ -134,14 +166,15 @@
                                             class="text-danger">{{ Number(totalPrice).toLocaleString() }} VNĐ</strong>
                                         </h2>
                                         <div>Bạn sẽ mua <strong
-                                            class="text-danger">{{ Number(number_seeding).toLocaleString() }} theo dõi</strong> với giá <strong class="text-danger">{{ sitePrice }}<sup>đ</sup>/1</strong>
-                                            <strong class="text-danger">theo dõi</strong> tốc độ <b class="text-success">{{ speed }}</b></div>
+                                            class="text-danger">{{ Number(total_comment).toLocaleString() }} bình luận</strong> với giá <strong class="text-danger">{{ sitePrice }}<sup>đ</sup>/1</strong>
+                                            <strong class="text-danger">bình luận</strong> với tốc độ <b class="text-success">{{ speed }}</b></div>
                                     </div>
                                 </div>
-                            </form>
+
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary btn-lg btn-block mr-2" :disabled="isDisabled" @click="createOrder"><i v-if="isLoading" class="el-icon-loading"></i> Tạo Tiến Trình
+                            <button type="submit" class="btn btn-primary  btn-lg btn-block mr-2" :disabled="isDisabled" @click="createOrder"><i
+                                v-if="isLoading" class="el-icon-loading"></i> Tạo Tiến Trình
                             </button>
                         </div>
 
@@ -191,13 +224,7 @@
                                             </td>
                                             <td>{{ timeAgo(historyData.created_at) }}</td>
                                             <td class="textend">
-                                                <el-button
-                                                    size="mini"
-                                                    @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
-                                                <el-button
-                                                    size="mini"
-                                                    type="danger"
-                                                    @click="handleDelete(scope.$index, scope.row)">Delete</el-button>
+
                                             </td>
                                         </tr>
                                         </tbody>
@@ -217,9 +244,7 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
-
                 </div>
             </div>
         </div>
@@ -230,60 +255,66 @@
 export default {
     data() {
         return {
+            commentForm: {
+                name_comment: '',
+                comment: '',
+            },
             loading: true,
             loading_input: false,
-            namefb: '',
-            avatar: '',
-            follow: 0,
-            note: '',
             isTable: false,
-            id_search: '',
-            speedServices: 'high',
             hideIcon: true,
+            btnLoading: false,
+            listcomment: [],
+            id_comment: '',
+            totalcomment: "Số lượng (0 bình luận)",
+            allcomment: Object,
+            post_comment: '',
+            speed: 'Nhanh',
             activeItem: 'create',
-            user_id: "",
+            post_id: "",
+            namefb: '',
+            picture: '',
+            content: '',
+            showModal: false,
+            note: '',
+            dialogVisible: false,
             activeClass: '',
             errorClass: '',
+            speedServices: 'high',
+            sv: 'sv_like',
             type_check: 'user',
-            speed: "Nhanh",
-            number_seeding: 20,
-            sitePrice: 60,
+            number_seeding: 0,
+            sitePrice: 500,
             isCheckID: false,
             isResult: false,
             totalPrice: 0,
             isLoading: false,
             isDisabled: false,
             historyServices: Object,
+            type: this.$route.params.type,
             services: [],
             loadingTable: false,
             spinActive: false,
             loading_t: false,
+            total_comment: 0,
             pagination: {
                 'current_page': 1
             },
             pagination_payout: {
                 'current_page': 1
             },
-            speedOption: [{
-                value: 'low',
-                label: 'Rất Chậm'
-            }, {
-                value: 'normal',
-                label: 'Chậm'
-            }, {
-                value: 'medium',
-                label: 'Trung Bình'
-            }, {
-                value: 'high',
-                label: 'Nhanh'
-            }],
-            value: ''
-
-        }
+            rules: {
+                name_comment: [
+                    { required: true, message: 'Vui lòng nhập tên thể loại', trigger: 'blur' },],
+                comment: [
+                    { required: true, message: 'Vui lòng nhập ít nhất 1 bình luận', trigger: 'change' }
+                ],
+            }
+        };
     },
     created() {
-        this.updateTransaction(false)
-        this.totalPrice = this.number_seeding * this.sitePrice
+        this.getListComment()
+        this.totalPrice = this.total_comment * this.sitePrice
     },
     methods: {
         isActive(menuItem) {
@@ -293,152 +324,122 @@ export default {
         setActive(menuItem) {
             if(menuItem == "history") {
                 this.isTable = true
+                this.updateTransaction()
                 this.fetchData()
-            }
-            else {
-                this.isTable = false
             }
             this.activeItem = menuItem
         },
-        timeAgo(dateString) {
-            const date = new Date(dateString);
-            const DAY_IN_MS = 86400000; // 24 * 60 * 60 * 1000
-            const today = new Date();
-            const seconds = Math.round((today - date) / 1000);
-
-            if (seconds < 20) {
-                return 'Vừa xong';
+        changeUp() {
+            if(this.commentForm.comment != "") {
+                this.listcomment = this.commentForm.comment.split('\n')
+                this.totalcomment = "Số lượng (" + this.listcomment.length + " bình luận)"
             }
-            else if (seconds < 60) {
-                return '1 phút trước';
+            else {
+                console.log(this.listcomment)
+                this.totalcomment = "Số lượng (0 bình luận)"
             }
-
-            const minutes = Math.round(seconds / 60);
-            if (minutes < 60) {
-                return `${minutes} phút trước`;
-            }
-
-            const isToday = today.toDateString() === date.toDateString();
-            if (isToday) {
-                return 'Hôm nay'
-            }
-
-            const yesterday = new Date(today - DAY_IN_MS);
-            const isYesterday = yesterday.toDateString() === date.toDateString();
-            if (isYesterday) {
-                return 'Hôm qua'
-            }
-
-            const daysDiff = Math.round((today - date) / (1000 * 60 * 60 * 24));
-            if (daysDiff < 30) {
-                return `${daysDiff} ngày trước`;
-            }
-
-            const monthsDiff = today.getMonth() - date.getMonth() + (12 * (today.getFullYear() - date.getFullYear()));
-            if (monthsDiff < 12) {
-                return `${monthsDiff} tháng trước`;
-            }
-
-            const yearsDiff = today.getYear() - date.getYear();
-            return `${yearsDiff} năm trước`;
         },
-        updateTransaction(status) {
+        createComment() {
+            this.btnLoading = true
+            this.listcomment = this.commentForm.comment.split('\n')
+            let data = {
+                "name": this.commentForm.name_comment,
+                "comment": this.listcomment
+            }
+            axios.post('/facebook/createListComment',data).then(res => {
+                this.btnLoading = false
+                if(res.data.code == 200) {
+                    Swal.fire('Thành Công', 'Tạo comment '+this.commentForm.name_comment+' thành công', 'success');
+                    this.dialogVisible = false
+                    this.getListComment()
+                }
+                else {
+                    this.$message({
+                        showClose: true,
+                        message: res.data.message,
+                        type: 'error'
+                    });
+                }
+
+            })
+        },
+        submitForm(formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    this.createComment()
+                } else {
+                    return false;
+                }
+            });
+        },
+
+        getTotalComment() {
+            axios.post('/facebook/'+this.id_comment, {id_comment: this.id_comment}).then(res => {
+                this.total_comment = res.data.total
+                this.post_comment = res.data.comment
+                this.totalPrice = this.total_comment * this.sitePrice
+            })
+        },
+
+        getListComment() {
+            axios.get('/facebook/listcomment').then(res => {
+                this.allcomment = res.data
+            })
+        },
+        updateTransaction() {
             let obj = this
-            obj.loading = true
+            obj.loadingTable = true
             obj.spinActive = true
-            if(status === false) {
-                obj.time_update = "Không có ID nào cần cập nhật"
-                axios.post('/updateTransaction/sub', {type: 'like'}).then(res => {
-                    obj.services = res.data
-                    if(res.data.length > 0) {
-                        obj.time_update = this.timeAgo(res.data.time_update)
-                    }
-                    obj.loading = false
-                    obj.spinActive = false
-                })
-            }
-            else {
-                axios.post('/updateTransaction/sub', {type: 'like', status: 'updated'}).then(res => {
-                    obj.services = res.data
-                    if(res.data.length > 0) {
-                        obj.time_update = this.timeAgo(res.data.time_update)
-                    }
-                    else {
-                        obj.time_update = "Đã cập nhật"
-                    }
-                    obj.loading = false
-                    obj.spinActive = false
-                })
-            }
-
+            axios.post('/updateTransaction/sub').then(res => {
+                obj.services = res.data
+                obj.loadingTable = false
+                obj.spinActive = false
+            })
         },
-        fetchData(search) {
-            search = this.id_search
-            this.loading = true
-            if(search !== "") {
-                axios.post('/facebook/history/sub', {id_post: search}).then(res => {
-                    this.loading = false
-                    this.historyServices = res.data.data
-                })
-            }
-            else {
-                axios.post('/facebook/history/sub?page=' + this.pagination.current_page).then(res => {
-                    this.loading = false
-                    this.historyServices = res.data.fetchDataTransactions.data.data
-                    this.pagination = res.data.fetchDataTransactions.pagination;
-                })
-            }
+        fetchData() {
+            let obj = this
+            obj.loadingTable = true
+            axios.post('/facebook/history/sub?page=' + obj.pagination.current_page).then(res => {
+                obj.loadingTable = false
+                obj.historyServices = res.data.fetchDataTransactions.data.data
+                obj.pagination = res.data.fetchDataTransactions.pagination;
+            })
         },
         isValidate() {
-            if(this.user_id === '') {
+            if(this.post_id === '') {
                 return false
             }
-            else if(this.sitePrice < 20 || this.sitePrice == null) {
+            else if(this.total_comment <= 0) {
                 return false
             }
-            else if(this.server == null) {
-                return false
-            }
-            else if(this.speedServices == null) {
-                return false
-            }
-            else if(this.sitePrice == null) {
-                return false
-            }
-            else if(this.number_seeding == null || this.number_seeding < 20) {
-                return false
-            }
-                // else if(this.isCheckID === false) {
-                //     return false
-            // }
             else {
                 return true
             }
         },
-
         changeTotal() {
-            switch (this.speedServices) {
+            let obj = this
+            switch (obj.speedServices) {
                 case "low":
-                    this.sitePrice = 20
-                    this.speed = "Rất Chậm"
+                    obj.speed = "Rất Chậm"
+                    obj.sitePrice = 150
                     break
                 case "normal":
-                    this.sitePrice = 40
-                    this.speed = "Chậm"
+                    obj.speed = "Chậm"
+                    obj.sitePrice = 300
                     break
                 case "medium":
-                    this.sitePrice = 50
-                    this.speed = "Bình Thường"
+                    obj.speed = "Bình Thường"
+                    obj.sitePrice = 400
                     break
                 case "high":
-                    this.sitePrice = 60
-                    this.speed = "Nhanh"
+                    obj.speed = "Nhanh"
+                    obj.sitePrice = 500
                     break
                 default:
-                    this.sitePrice = 60
-                    this.speed = "Nhanh"
+                    obj.speed = "Nhanh"
+                    obj.sitePrice = 500
             }
-            this.totalPrice = this.number_seeding * this.sitePrice
+            obj.totalPrice = obj.total_comment * obj.sitePrice
         },
 
         findID(url) {
@@ -446,19 +447,26 @@ export default {
             obj.loading_input = true
             let data = {
                 "url": url,
-                "type": 'user'
+                "type": 'post'
             }
             axios.post('/api/find-id', data).then(res => {
                 if (res.data.code != 400) {
-                    this.isCheckID = true;
+                    this.isCheckID = true
                     this.isResult = true
-                    this.user_id = res.data.id
+                    this.post_id = res.data.id_post
+                    this.time = res.data.time
+                    this.picture = res.data.picture
                     this.namefb = res.data.name
-                    this.follow = res.data.follow
-                    this.avatar = res.data.avatar
-                    toastr.success("Đã tìm thấy thông tin Facebook "+this.namefb);
+                    this.content = res.data.content
+                    this.activeClass = 'is-valid'
+                    this.errorClass = ''
+                    toastr.success("Đã tìm thấy thông tin ID bài viết");
                 } else {
                     this.isCheckID = false;
+                    this.isResult = false
+                    this.errorClass = 'is-invalid'
+                    this.activeClass = ''
+                    this.result_id = false
                     toastr.error(res.data.message);
                 }
                 obj.loading_input = false
@@ -473,20 +481,21 @@ export default {
         },
         createOrder() {
             let validate = this.isValidate()
+            console.log(validate)
             if(validate != false) {
                 let obj = this
                 obj.isLoading = true
                 obj.isDisabled = true
                 let data = {
-                    user_id: obj.user_id,
-                    type_check: obj.type_check,
-                    number_seeding: obj.number_seeding,
+                    post_id: obj.post_id,
+                    number_seeding: obj.total_comment,
+                    id_comment: obj.id_comment,
                     sitePrice: obj.sitePrice,
                     warranty: 7,
                     speed: obj.speedServices,
 
                 }
-                axios.post('/facebook/buff-follow', data).then(res => {
+                axios.post('/facebook/buff-comment', data).then(res => {
                     if (res.data.code != 400) {
                         Swal.fire("Thành công!", res.data.messages, res.data.status);
                     } else {
@@ -497,18 +506,16 @@ export default {
                 }).catch(e => {
                     obj.isLoading = false
                     obj.isDisabled = false
-                    var response = JSON.parse(xhr.responseText);
                     Swal.fire(
                         'Có lỗi xảy ra!',
-                        response.messages,
+                        'Không thể tạo mới giao dịch này',
                         'error'
                     )
                 })
             }
             else {
-                Swal.fire('Lỗi','Vui lòng kiểm tra các trường trống hoặc ID bài viết không tồn tại!', 'error')
+                Swal.fire('Thông Báo','Vui lòng kiểm tra các trường nhập vào trống hoặc ID Post không hợp lệ!','error')
             }
-
 
         }
 

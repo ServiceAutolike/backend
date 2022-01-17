@@ -1,5 +1,5 @@
 @extends('layout.index')
-@section('title', 'Buff Like Instagram')
+@section('title', 'Buff Share Tiktok')
 @section('content')
     <router-view></router-view>
 @endsection
