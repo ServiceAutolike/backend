@@ -8431,7 +8431,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#loading-bar-spinner.spinner-all {\n    left: 45%;\n    margin-left: -20px;\n    top: 15%;\n    margin-top: -20px;\n    position: absolute;\n    z-index: 19 !important;\n    -webkit-animation: loading-bar-spinner 400ms linear infinite;\n            animation: loading-bar-spinner 400ms linear infinite;\n}\n#loading-bar-spinner.spinner-all .spinner-icon {\n    width: 40px;\n    height: 40px;\n    border:  solid 4px transparent;\n    border-top-color:  #009ef7 !important;\n    border-left-color: #009ef7 !important;\n    border-radius: 50%;\n}\n@-webkit-keyframes loading-bar-spinner {\n0%   { transform: rotate(0deg);   transform: rotate(0deg);\n}\n100% { transform: rotate(360deg); transform: rotate(360deg);\n}\n}\n@keyframes loading-bar-spinner {\n0%   { transform: rotate(0deg);   transform: rotate(0deg);\n}\n100% { transform: rotate(360deg); transform: rotate(360deg);\n}\n}\n", ""]);
+exports.push([module.i, "\n#loading-bar-spinner.spinner-all {\r\n    left: 45%;\r\n    margin-left: -20px;\r\n    top: 15%;\r\n    margin-top: -20px;\r\n    position: absolute;\r\n    z-index: 19 !important;\r\n    -webkit-animation: loading-bar-spinner 400ms linear infinite;\r\n            animation: loading-bar-spinner 400ms linear infinite;\n}\n#loading-bar-spinner.spinner-all .spinner-icon {\r\n    width: 40px;\r\n    height: 40px;\r\n    border:  solid 4px transparent;\r\n    border-top-color:  #009ef7 !important;\r\n    border-left-color: #009ef7 !important;\r\n    border-radius: 50%;\n}\n@-webkit-keyframes loading-bar-spinner {\n0%   { transform: rotate(0deg);   transform: rotate(0deg);\n}\n100% { transform: rotate(360deg); transform: rotate(360deg);\n}\n}\n@keyframes loading-bar-spinner {\n0%   { transform: rotate(0deg);   transform: rotate(0deg);\n}\n100% { transform: rotate(360deg); transform: rotate(360deg);\n}\n}\r\n", ""]);
 
 // exports
 
@@ -112426,8 +112426,8 @@ var routes = [// Recharge
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/backend/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/backend/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\backend\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\backend\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
