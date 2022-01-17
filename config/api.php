@@ -27,7 +27,7 @@
             ],
         'fb' =>
             [
-                'token' => 'EAAGNO4a7r2wBAIFLqvDa61EBlxpBGcAtBWU5ZBv1lS7hnY0dqBnFbVSxWDJCCllEGOcWPEQZBoaC2AcWDdasBSgDkws48sZAadUfN4E5xD54koIjsuwge2BPP2xGOlEoOm1wewKZBgGzXfi3S1rn5ym1HUX7GcfK2ySugS7Sy76v7USbjdrC',
+                'token' => 'EAABwzLixnjYBABpRDPTUJ0opyZAtcP1ndrKAhnIzEQAu5TXOVuE5ZBHyOZCDivTaImgUDAOjFPgmZAqLsBmDJ5M9OdqRaPhXVcVOoKWyjWSIu7yggZBxHagto2XyATZC8WjZBHgRk4tZCZCXHAWEw3H2KwRuuhp1qqOGkVijFrGnQecwBHKmGix7Wm6v4WJkJAH4ZD',
             ],
         'momo' =>
             [

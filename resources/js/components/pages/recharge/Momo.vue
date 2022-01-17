@@ -93,7 +93,7 @@
                         <div v-else>
                             <p><small><i><span class="text-danger">*</span> Bạn có thể xác nhận "<b class="text-danger">Tôi Đã Chuyển Tiền</b>" để hệ thống kiểm tra thủ công hoặc bạn có thể đợi 5-10 phút để hệ thống tự cập nhật số dư cho bạn.
                             </i></small></p>
-                            <button class="btn btn-sm btn-primary" @click="scanMomo" :disabled="isDisabled"><i class="el-icon-check" v-if="isStatic"></i><i class="el-icon-loading" v-if="isClick"></i> {{ txtBtn }}</button>
+                            <button class="btn btn-sm btn-primary" @click="scanRechargeMomo" :disabled="isDisabled"><i class="el-icon-check" v-if="isStatic"></i><i class="el-icon-loading" v-if="isClick"></i> {{ txtBtn }}</button>
                         </div>
                     </div>
                 </div>
@@ -228,16 +228,6 @@ export default {
         this.loadMe()
         this.loadTransaction()
     },
-    watch: {
-        $route: {
-            immediate: true,
-            handler(to, from) {
-                document.title = 'Dashboard | Neex Capital';
-            }
-        },
-        // '$route': 'fetchData'
-    },
-
     methods: {
         formatNumber(number) {
             return Intl.NumberFormat().format(number);
@@ -295,7 +285,13 @@ export default {
             })
         },
         updatedStatus() {
-            axios.post('/recharge/scan/updated').then(res => {
+            axios.post('/recharge/scan/updated',
+                {
+                    params: {
+                        type: 'momo'
+                    }
+                }
+            ).then(res => {
                 this.loading = false
                 if(res.data.code) {
                     return true
@@ -306,32 +302,39 @@ export default {
                 }
             })
         },
-        scanMomo() {
+        async scanRechargeMomo() {
+            toastr.success('Bắt đầu chạy tiến trình, vui lòng không thoát trang....')
             this.txtBtn = 'Đang kiểm tra...'
             this.isDisabled = true
             this.isStatic = false
             this.isClick = true
+            while (true) {
+                try {
+                    let response = await axios.post('/recharge/scan/momo');
+                    this.dataScan = response.data
+                    if (response.data.code != 400) {
+                        this.txtBtn = 'Tôi Đã Chuyển Tiền'
+                        this.isDisabled = false
+                        this.isStatic = true
+                        this.isClick = false
+                        this.loadMe()
+                        this.updatedStatus()
+                        Swal.fire('Thông Báo', 'Bạn đã nạp thành công '+this.formatNumber(response.data.total)+ ' VND qua cổng thanh toán Momo','success');
+                        break
 
-            axios.post('/recharge/scan/momo').then(res => {
-                this.loading = false
-                if(res.data.code == 200) {
-                    this.txtBtn = 'Tôi đã chuyển tiền'
+                    } else {
+                        toastr.info('Đang tìm kiếm thông tin chuyển khoản MOMO của bạn....')
+                        continue
+                    }
+                }
+                catch (e) {
+                    toastr.error('Đã có lỗi xảy ra, tiến trình đã dừng....')
                     this.isDisabled = false
                     this.isStatic = true
                     this.isClick = false
-                    Swal.fire('Thông báo', 'Bạn vừa nạp thành công '+this.formatNumber(res.data.total_recharge_new)+' VND qua cổng thanh toán Momo', 'success')
-                    this.loadMe()
-                    this.updatedStatus()
-                    this.loadTransaction()
+                    break
                 }
-                else {
-                    Swal.fire('Thông báo', 'Chúng tôi không tìm thấy giao dịch nạp mới nào của bạn!', 'error')
-                    this.txtBtn = 'Tôi đã chuyển tiền'
-                    this.isDisabled = false
-                    this.isStatic = true
-                    this.isClick = false
-                }
-            })
+            }
         },
         async copyURL(text) {
             text = this.desc

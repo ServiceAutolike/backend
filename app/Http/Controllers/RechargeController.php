@@ -58,7 +58,7 @@ class RechargeController extends Controller
         $date = date('d/m/Y', time());
         $data = [
             'begin' => '06/01/2022',
-            'end' => '10/01/2022',
+            'end' => '13/01/2022',
             'username' => '0974137996',
             'password' => 'Khanhduy3110@123',
             'accountNumber' => '0491000095630',
@@ -106,41 +106,47 @@ class RechargeController extends Controller
                             $recharge->fee = 0;
                             $recharge->amount_end = $formatAmount;
                             $recharge->discount = 0;
-                            $recharge->memo = "Bạn nạp thành công ".$formatAmount. "qua cổng Vietcombank";
+                            $recharge->memo = "Bạn nạp thành công ".$formatAmount. " qua cổng thanh toán Vietcombank";
                             $recharge->status = "New";
                             $recharge->transaction_code = $transaction_code;
                             $recharge->save();
-                            $data = [
-                                'status' => 'success',
-                                'amount' => $formatAmount,
-                                'type' => 'vcb'
-                            ];
                         }
                         catch (\Exception $e) {
                             \Log::info($e);
                             DB::rollBack();
-                            $data = [
+                            $err = [
                                 'status' => 'error',
                             ];
                         }
                         DB::commit();
-                        return \response()->json($data);
                     } else {
-                        $data = [
+                        $err = [
                             'status' => 'error',
                             'message' => 'ID nạp đã có rồi'
                         ];
                     }
                 }
                 else {
-                    $data = [
+                    $err = [
                         'status' => 'error',
                         'message' => 'Không tìm thấy ID'
                     ];
                 }
             }
         }
-        return \response()->json($data);
+        $total_recharge_new = Recharge::where('id_user',Auth::user()->id)->where('type', 'vcb')->where('status', 'New')->sum('amount_end');
+        if($total_recharge_new > 0) {
+            $data = [
+                'status' => 'success',
+                'type' => 'vcb',
+                'total' => $total_recharge_new
+            ];
+            return \response()->json($data);
+        }
+        else {
+            return \response()->json($err);
+        }
+
     }
 
 
@@ -198,9 +204,9 @@ class RechargeController extends Controller
 
     //update Status Momo Recharge
 
-    public function updateStatusMomo() {
+    public function updateStatusMomo(Request $request) {
         $code = 200;
-        $getAllRechargeNew = Recharge::where('id_user',Auth::user()->id)->where('type', 'momo')->where('status', 'New')->get();
+        $getAllRechargeNew = Recharge::where('id_user',Auth::user()->id)->where('type', $request->params['type'])->where('status', 'New')->get();
         foreach ($getAllRechargeNew as $item) {
             try {
                 Recharge::where('id',$item->id)->update(array(
@@ -248,7 +254,7 @@ class RechargeController extends Controller
                                 $recharge->fee = 0;
                                 $recharge->amount_end = $data_json['amount'];
                                 $recharge->discount = 0;
-                                $recharge->memo = "Bạn nạp thành công ".$data_json['amount']. "qua cổng Momo";
+                                $recharge->memo = "Bạn nạp thành công ".$data_json['amount']." qua cổng thanh toán Momo";
                                 $recharge->status = "New";
                                 $recharge->transaction_code = (string) $data_json['tranId'];
                                 $recharge->save();
@@ -290,15 +296,16 @@ class RechargeController extends Controller
 
         }
         $total_recharge_new = Recharge::where('id_user',Auth::user()->id)->where('type', 'momo')->where('status', 'New')->sum('amount_end');
-        $success = [
-            'code'=> 200,
-            'total_recharge_new' => $total_recharge_new
-        ];
         if($total_recharge_new > 0) {
-            return response()->json($success);
+            $data = [
+                'code' => 200,
+                'type' => 'vcb',
+                'total' => $total_recharge_new
+            ];
+            return \response()->json($data);
         }
         else {
-            return response()->json($error);
+            return \response()->json($error);
         }
 
     }

@@ -73,184 +73,240 @@ class HomeController extends Controller
         return view('page.app.dash.findid');
     }
 
+    /// check ID Post Facebook with ID
+    public function checkIDPostFB($id) {
+        $p_id = '$2';
+        $u_id = '$3';
+        $tokenFB = Config::get('api.fb.token');
+        $Facebook = new Facebook();
+        $cawFB = $Facebook->login($id);;
+        $re = '/^.*(story_fbid=(\d+)&id=(\d+)).+/s';
+        $re2 = '/^.*(fbid=(\d+)&id=(\d+)).+/s';
+        if (isset($cawFB['location'][1])) {
+            $str = $cawFB['location'][1];
+            if (strpos($str, 'photo.php?fbid') != false) {
+                $post_id = preg_replace($re2, $p_id, $str, 1);
+                $user_id = preg_replace($re2, $u_id, $str, 1);
+            }
+            else {
+                $post_id = preg_replace($re, $p_id, $str, 1);
+                $user_id = preg_replace($re, $u_id, $str, 1);
+            }
+            $id_post_final = $user_id . "_" . $post_id;
+            try {
+                $requestName = json_decode(file_get_contents('https://graph.facebook.com/' . $id_post_final . '?access_token=' . $tokenFB . ''), true);
+                $time = $Facebook->GetLocalDateStringFromUTCString($requestName['created_time']);
+                if(isset($requestName['message'])) {
+                    $picture = $requestName['picture'];
+                }
+                else {
+                    $picture = $requestName['icon'];
+                }
+                if(isset($requestName['message'])) {
+                    $content = $requestName['message'];
+                }
+                else if(isset($requestName['description'])) {
+                    $content = $requestName['description'];
+                }
+                else {
+                    $content = "Không tìm thấy nội dung bài viết hoặc nội dung bài viết trống";
+                }
+                $data = [
+                    'code' => 200,
+                    'status' => 'success',
+                    'time' => $time,
+                    'id_post' => $post_id,
+                    'id_user' => $user_id,
+                    'content' => $content,
+                    'picture' => $picture,
+                    'name' => $requestName['from']['name']
+                ];
+                return $data;
+
+            }
+            catch (\Exception $e) {
+                return response(['code' => 400, 'status' => 'error','message' => 'Không tìm thấy thông tin bài viết của ID này!']);
+            }
+
+        }
+        else {
+            return response(['code' => 400, 'status' => 'error','message' => 'Không tìm thấy thông tin bài viết của ID này!']);
+        }
+
+    }
+
+    public function get_valueFromStringUrl($url , $parameter_name)
+    {
+        $parts = parse_url($url);
+        if(isset($parts['query']))
+        {
+            parse_str($parts['query'], $query);
+            if(isset($query[$parameter_name]))
+            {
+                return $query[$parameter_name];
+            }
+            else
+            {
+                return null;
+            }
+        }
+        else
+        {
+            return null;
+        }
+    }
+    public function showInformationFacebook($id) {
+        $tokenFB = Config::get('api.fb.token');
+        $requestName = json_decode(file_get_contents('https://graph.facebook.com/' . $id . '?access_token=' . $tokenFB . ''), true);
+        if(isset($requestName['id'])) {
+            $follow = json_decode(file_get_contents('https://graph.facebook.com/' . $requestName['id']. '/subscribers?access_token=' . $tokenFB . '&method=get'), true);
+            if(isset($follow['summary']['total_count'])) {
+                $number_follow = $follow['summary']['total_count'];
+            }
+            else {
+                $number_follow = false;
+            }
+            $data = [
+                'code' => 200,
+                'id' => $requestName['id'],
+                'name' => $requestName['name'],
+                'avatar' => 'https://graph.facebook.com/'.$id.'/picture?access_token='.$tokenFB,
+                'follow' => $number_follow
+            ];
+        }
+        else {
+            $data = [
+                'code' => 400
+            ];
+        }
+        return $data;
+    }
+
     public function checkid(Request $request)
     {
         $url = (string) $request->url;
         $type = (string) $request->type;
         $tokenFB = Config::get('api.fb.token');
-        $p_id = '$2';
-        $u_id = '$3';
-        try {
-            if ($type == "post") {
-                $Facebook = new Facebook();
-                if (is_numeric($url)) {
-                    try {
-                        $cawFB = $Facebook->login($url);
-                        $re = '/^.*(story_fbid=(\d+)&id=(\d+)).+/s';
-                        if (isset($cawFB['location'][1])) {
-                            $str = $cawFB['location'][1];
-                            $post_id = preg_replace($re, $p_id, $str, 1);
-                            $user_id = preg_replace($re, $u_id, $str, 1);
-                            $id_post_final = $user_id . "_" . $post_id;
-                            $requestName = json_decode(file_get_contents('https://graph.facebook.com/' . $id_post_final . '/?access_token=' . $tokenFB . ''), true);
-                            $time = $Facebook->GetLocalDateStringFromUTCString($requestName['created_time']);
-                            $result = [
-                                'code' => 200,
-                                'status' => 'success',
-                                'id' => $post_id,
-                            ];
-                        } else {
-                            $result = [
-                                'code' => 400,
-                                'status' => 'error',
-                                'message' => "Không tìm thấy thông tin bài viết của ID này tên Facebook!",
-                            ];
-                        }
-                    } catch (Exception $exception) {
-                        $result = [
-                            'code' => 400,
-                            'status' => 'error',
-                            'message' => "Không tìm thấy thông tin bài viết của ID này tên Facebook!",
-                        ];
-                    }
-                } else {
-                    if (strpos($url, 'permalink.php?story_fbid=') !== false) {
-                        $parts = parse_url($url);
-                        parse_str($parts['query'], $query);
-                        $idParmalink = $query['story_fbid'];
-                        $result = [
-                            'code' => 200,
-                            'status' => 'success',
-                            'id' => $idParmalink,
-                        ];
-                    } elseif (strpos($url, 'photos/a.') !== false) {
-                        $idPhotos = explode("/", $url);
-                        $result = [
-                            'code' => 200,
-                            'status' => 'success',
-                            'id' => $idPhotos[6],
-                        ];
-                    } elseif (strpos($url, 'posts') !== false) {
-                        $idPost = preg_replace('/[^0-9]/', '', $url);
-                        $result = [
-                            'code' => 200,
-                            'status' => 'success',
-                            'id' => $idPost,
-                        ];
-                    } else {
-                        $result = [
-                            'code' => 400,
-                            'status' => 'error',
-                            'id' => "null",
-                            'message' => "URL hoặc ID này không tồn tại, vui lòng kiểm tra lại!",
-                        ];
-                    }
-                }
+        $Facebook = new Facebook();
+        if ($type == "post") {
+            if (is_numeric($url)) {
+                return $this->checkIDPostFB($url);
             }
-
             else {
-                if (is_numeric($url)) {
-                    $requestName = json_decode(file_get_contents('https://graph.facebook.com/' . $url . '?access_token=' . $tokenFB . ''), true);
-                    if (isset($requestName['error'])) {
-                        $result = [
-                            'code' => 400,
-                            'status' => 'error',
-                        ];
-                    }
-                    else if (isset($requestName['name'])) {
-                        $result = [
-                            'code' => 200,
-                            'status' => 'success',
-                            'id' => $requestName['id'],
-                            'name' => $requestName['name']
-                        ];
-                    }
+                if (strpos($url, 'story_fbid') != false && strpos($url, 'id') != false) {
+                    $id_post = $this->get_valueFromStringUrl($url , "story_fbid");
+                    $id_user = $this->get_valueFromStringUrl($url , "id");
+                    $id_post_final = $id_user . "_" . $id_post;
 
-                    else if (isset($requestName['from']['name'])) {
-                        $result = [
+                    try {
+                        $requestName = json_decode(file_get_contents('https://graph.facebook.com/' . $id_post_final . '?access_token=' . $tokenFB . ''), true);
+                        if(isset($requestName['picture'])) {
+                            $picture = $requestName['picture'];
+                        }
+                        else if(isset($requestName['icon'])) {
+                            $picture = $requestName['icon'];
+                        }
+                        else {
+                            $picture = "";
+                        }
+                        if(isset($requestName['story'])) {
+                            $content = $requestName['story'];
+                        }
+                        else if(isset($requestName['message'])) {
+                            $content = $requestName['message'];
+                        }
+                        else if(isset($requestName['description'])) {
+                            $content = $requestName['description'];
+                        }
+                        else {
+                            $content = "Không tìm thấy nội dung bài viết hoặc nội dung bài viết trống";
+                        }
+                        $data = [
                             'code' => 200,
                             'status' => 'success',
-                            'id' => $requestName['from']['id'],
+                            'time' => $requestName['created_time'],
+                            'id_post' => $id_post,
+                            'content' => $content,
+                            'picture' => $picture,
                             'name' => $requestName['from']['name']
                         ];
+                       return $data;
                     }
-                    else {
-                        $result = [
-                            'code' => 400,
-                            'status' => 'error',
-                        ];
-                    }
-
-                } elseif (strpos($url, 'profile.php?id=') !== false) {
-                    $correctURLPattern = '/^https?:\/\/(?:www|m)\.facebook.com\/(?:profile\.php\?id=)?([a-zA-Z0-9\.]+)$/';
-                    if (!preg_match($correctURLPattern, $url, $matchesProfileID)) {
-                        $result = [
-                            'code' => 400,
-                            'status' => 'error',
-                        ];
-                    } else {
-                        $id = $matchesProfileID[1];
-                        $requestName = json_decode(file_get_contents('https://graph.facebook.com/' . $id . '/?fields=name&access_token=' . $tokenFB . ''), true);
-                        if (isset($requestName['name'])) {
-                            $result = [
-                                'code' => 200,
-                                'status' => 'error',
-                                'id' => $requestName['id'],
-                                'name' => $requestName['name'],
-                            ];
-                        } else {
-                            $result = [
-                                'code' => 400,
-                                'status' => 'error',
-                            ];
-                        }
-                    }
-                } else {
-                    $options = [
-                        'http' => [
-                            'method' => "GET",
-                            'header' => "Accept-language: en\r\n" . "Cookie: ffr=1SFmWnQdXWYMA9TZa..BfQlvy.lp.AAA.0.0.BfQlv8.AWX5oTkt; dpr=2\r\n",
-                            'user_agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36',
-                        ],
-                    ];
-                    $context = stream_context_create($options);
-                    $fbsite = file_get_contents($url, false, $context);
-                    // Find entity class
-                    $fbIDPattern = '/\"entity_id\":\"(\d+)\"/';
-                    if (!preg_match($fbIDPattern, $fbsite, $matchesbyUsername)) {
-                        $result = [
-                            'code' => 400,
-                            'status' => 'error',
-                        ];
-                    } else {
-                        $id = $matchesbyUsername[1];
-                        $requestName = json_decode(file_get_contents('https://graph.facebook.com/' . $id . '/?fields=name&access_token=' . $tokenFB . ''), true);
-                        if (isset($requestName['name'])) {
-                            $name = $requestName['name'];
-                            $result = [
-                                'code' => 200,
-                                'status' => 'success',
-                                'id' => $id,
-                                'name' => $name,
-                            ];
-                        } else {
-                            $result = [
-                                'code' => 200,
-                                'status' => 'success',
-                                'id' => $id,
-                                'name' => "null",
-                            ];
-                        }
+                    catch (\Exception $e) {
+                        return response(['code' => 400, 'status' => 'error','message' => 'Không tìm thấy thông tin bài viết của ID này! (code=500)']);
                     }
                 }
+                elseif (strpos($url, 'posts') != false) {
+                    if(strpos($url, '?') != false) {
+                        $str = explode('?', $url);
+                        $urlPost= $str[0];
+                        $id_post = preg_replace('/[^0-9]/', '', $urlPost);
+                    }
+                    else {
+                        $str = explode('/', $url);
+                        $id_post = $str[5];
+                    }
+                    return $this->checkIDPostFB($id_post);
+                }
+                elseif (strpos($url, 'photo?fbid') != false) {
+                    $id = $this->get_valueFromStringUrl($url , "fbid");
+                    return $this->checkIDPostFB($id);
+                }
+                elseif (strpos($url, 'photo/?fbid') != false) {
+                    $id = $this->get_valueFromStringUrl($url , "fbid");
+                    return $this->checkIDPostFB($id);
+                }
+                elseif (strpos($url, 'photos/a.') != false) {
+                    $idPhotos = explode("/", $url);
+                    return $this->checkIDPostFB($idPhotos[6]);
+                }
+                else {
+                    return $this->checkIDPostFB($url);
+                }
             }
-        } catch (Exception $e) {
-            $result = [
-                'status' => "error",
-                'code' => 500,
-            ];
         }
-        return response()->json($result);
+
+        else {
+            if (is_numeric($url)) {
+                return $this->showInformationFacebook($url);
+            }
+            elseif (strpos($url, 'profile.php?id=') !== false) {
+                $correctURLPattern = '/^https?:\/\/(?:www|m)\.facebook.com\/(?:profile\.php\?id=)?([a-zA-Z0-9\.]+)$/';
+                if (!preg_match($correctURLPattern, $url, $matchesProfileID)) {
+                    return response()->json(['code' => 400, 'status' => 'error','message' => 'Không tìm thấy thông tin của ID này']);
+                } else {
+                    $id = $matchesProfileID[1];
+                    return $this->showInformationFacebook($id);
+                }
+            }
+            else {
+                $url = str_replace('m.facebook.com', 'www.facebook.com', $url);
+                $url = str_replace('https://facebook.com', 'https://www.facebook.com', $url);
+                if (filter_var($url, FILTER_VALIDATE_URL) === FALSE) {
+                    return response()->json(['code' => 400, 'status' => 'error','message' => 'Đường dẫn URL không đúng định dạng!']);
+                }
+                else {
+                    $url = $url;
+                }
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $url);
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_HEADER, 0);
+                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148");
+                curl_setopt($ch, CURLOPT_REFERER, "http://www.facebook.com");
+                $page = curl_exec($ch) or die(curl_error($ch));
+                $fbIDPattern = '/\"entity_id\":\"(\d+)\"/';
+                if (!preg_match($fbIDPattern, $page, $matchesbyUsername)) {
+                    return response()->json(['code' => 400, 'status' => 'error','message' => 'Không tìm thấy ID']);
+                }
+                else {
+                    $id = $matchesbyUsername[1];
+                    return $this->showInformationFacebook($id);
+                }
+            }
+        }
     }
 
     public function getlike(Request $request)

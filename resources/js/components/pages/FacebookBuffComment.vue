@@ -64,32 +64,39 @@
                                                @change="findID(post_id)" required>
                                     </div>
                                 </div>
-                                <div role="alert" class="alert alert-custom fade show mt-4 bg-green-3">
-                                    <div v-if="isResult">
-                                        <div class="cl-green mb-0">
-                                            <i>Kết quả tìm kiếm:</i><br>
-                                            ID của bạn là: <b class="text-danger">{{ idFB }}</b><br>
-                                            Tên Facebook: <b class="text-danger">{{ name }}</b>
-                                        </div>
+                            <div v-if="isResult">
+                                <div class="d-flex align-items-center rounded p-5 mb-7 alert-custom alert alert-success">
+                                    <!--begin::Icon-->
+                                    <div class="svg-icon svg-icon-success me-5">
+                                        <img :src=picture alt="">
+                                    </div>
+                                    <!--end::Icon-->
+                                    <!--begin::Title-->
+                                    <div class="flex-grow-1 me-2">
+                                        <span class="fw-bolder text-gray-800 text-hover-primary fs-6">{{ namefb }}</span>
+                                        <span class="text-muted fw-bold d-block">
+                                                {{ timeAgo(time) }}
+                                            </span>
+                                        <span class="content">{{ content }}</span>
+                                    </div>
 
-                                    </div>
-                                    <div v-else class="cl-green mb-0">
-                                        Get ID Facebook từ Link nhanh <a href="https://fb-search.com/find-my-facebook-id" target="_blank" class="font-bold cl-green">tại đây</a><br />
-                                        Vui lòng công khai Theo dõi để Buff theo hướng dẫn dưới đây trước khi Order <a href="http://www.dungqb.com/2019/07/huong-dan-cong-khai-cac-thong-tin.html" target="_blank" class="font-bold cl-green">Click Tại Đây Để Xem Hướng Dẫn</a>
-                                    </div>
+                                    <!--end::Title-->
                                 </div>
+                            </div>
                                 <div class="row align-items-center">
                                     <div class="col-md-10">
                                         <div class="form-group">
                                             <label>Chọn bộ comment <span
                                                 class="text-danger">*</span>
                                             </label>
-                                            <el-select v-model="id_comment" filterable placeholder="Chọn list bình luận" style="display: block;">
+                                            <el-select v-model="id_comment" filterable placeholder="Chọn list bình luận" style="display: block;" @change="getTotalComment">
                                                 <el-option
                                                     v-for="getAllComment in allcomment"
                                                     :key="getAllComment.id"
                                                     :label="getAllComment.name"
                                                     :value="getAllComment.id_comment">
+                                                    <span style="float: left">{{ getAllComment.name }}</span>
+                                                    <span style="float: right; color: #8492a6; font-size: 13px">{{ getAllComment.total }} bình luận</span>
                                                 </el-option>
                                             </el-select>
                                         </div>
@@ -162,7 +169,7 @@
                                             class="text-danger">{{ Number(totalPrice).toLocaleString() }} VNĐ</strong>
                                         </h2>
                                         <div>Bạn sẽ mua <strong
-                                            class="text-danger">{{ Number(number_seeding).toLocaleString() }} comment</strong> với giá <strong class="text-danger">{{ sitePrice }}<sup>đ</sup>/1</strong>
+                                            class="text-danger">{{ Number(total_comment).toLocaleString() }} comment</strong> với giá <strong class="text-danger">{{ sitePrice }}<sup>đ</sup>/1</strong>
                                             <strong class="text-danger">comment</strong></div>
                                     </div>
                                 </div>
@@ -267,21 +274,22 @@ export default {
             speed: 'low',
             activeItem: 'create',
             post_id: "",
+            namefb: '',
+            picture: '',
+            content: '',
             showModal: false,
             note: '',
             dialogVisible: false,
             activeClass: '',
             errorClass: '',
-            speedServices: '',
+            speedServices: 'high',
             sv: 'sv_like',
             type_check: 'user',
-            number_seeding: 100,
-            sitePrice: 50,
+            number_seeding: 0,
+            sitePrice: 500,
             isCheckID: false,
             isResult: false,
-            name: '',
-            idFB: '',
-            totalPrice: 5000,
+            totalPrice: 0,
             isLoading: false,
             isDisabled: false,
             historyServices: Object,
@@ -290,6 +298,7 @@ export default {
             loadingTable: false,
             spinActive: false,
             loading_t: false,
+            total_comment: 0,
             pagination: {
                 'current_page': 1
             },
@@ -307,6 +316,7 @@ export default {
     },
     created() {
         this.getListComment()
+        this.totalPrice = this.total_comment * this.sitePrice
     },
     methods: {
         isActive(menuItem) {
@@ -407,6 +417,14 @@ export default {
             });
         },
 
+        getTotalComment() {
+            axios.post('/facebook/'+this.id_comment, {id_comment: this.id_comment}).then(res => {
+                this.total_comment = res.data.total
+                this.totalPrice = this.total_comment * this.sitePrice
+
+            })
+        },
+
         getListComment() {
             axios.get('/facebook/listcomment').then(res => {
                 this.allcomment = res.data
@@ -442,30 +460,25 @@ export default {
             }
             return false
         },
-        redirectHistory() {
-            let obj = this
-            obj.$router.push('/facebook/history/sub')
-        },
-
         changeTotal() {
             let obj = this
             switch (obj.speedServices) {
                 case "low":
-                    obj.sitePrice = 50
+                    obj.sitePrice = 150
                     break
                 case "normal":
-                    obj.sitePrice = 60
+                    obj.sitePrice = 300
                     break
                 case "medium":
-                    obj.sitePrice = 80
+                    obj.sitePrice = 400
                     break
                 case "high":
-                    obj.sitePrice = 100
+                    obj.sitePrice = 500
                     break
                 default:
-                    obj.sitePrice = 50
+                    obj.sitePrice = 500
             }
-            obj.totalPrice = obj.number_seeding * obj.sitePrice
+            obj.totalPrice = obj.total_comment * obj.sitePrice
         },
 
         findID(url) {
@@ -473,18 +486,26 @@ export default {
             obj.loading_input = true
             let data = {
                 "url": url,
-                "type": 'user'
+                "type": 'post'
             }
             axios.post('/api/find-id', data).then(res => {
                 if (res.data.code != 400) {
-                    this.isCheckID = true;
-                    this.post_id = res.data.id
+                    this.isCheckID = true
                     this.isResult = true
-                    this.name = res.data.name
-                    this.idFB = res.data.id
-                    toastr.success("Đã tìm thấy thông tin ID: "+res.data.name);
+                    this.post_id = res.data.id_post
+                    this.time = res.data.time
+                    this.picture = res.data.picture
+                    this.namefb = res.data.name
+                    this.content = res.data.content
+                    this.activeClass = 'is-valid'
+                    this.errorClass = ''
+                    toastr.success("Đã tìm thấy thông tin ID bài viết");
                 } else {
                     this.isCheckID = false;
+                    this.isResult = false
+                    this.errorClass = 'is-invalid'
+                    this.activeClass = ''
+                    this.result_id = false
                     toastr.error(res.data.message);
                 }
                 obj.loading_input = false
