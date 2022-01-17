@@ -57,6 +57,8 @@ Route::group(['middleware' => 'login'], function () {
         Route::post('/createListComment', 'FacebookController@createListComment')->name('faceUser.createListComment');
         Route::get('/listcomment', 'FacebookController@getListComment')->name('faceUser.getListcomment');
         Route::post('/{id}', 'FacebookController@getTotalComment')->name('faceUser.getTotalComment');
+        Route::post('/createListComment', 'FacebookController@createListComment')->name('faceUser.createListComment');
+
 
         Route::get('/test', 'FacebookController@test')->name('faceUser.test');
 

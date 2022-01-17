@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ApiServices;
 use App\ListComment;
 use App\RatePrice;
 use App\Services;
@@ -17,6 +18,86 @@ use Illuminate\Support\Facades\DB;
 
 class FacebookController extends Controller
 {
+
+
+    public function postbuffComment(Request $request) {
+        $getPriceFollow = RatePrice::where('type_services', 'facebook_comment')->value('price');
+        $getBalance = Auth::user()->point;
+        $total_price = $request->number_seeding * $request->sitePrice;
+        $updateBalance = $getBalance - $total_price;
+        if($total_price <= $getBalance) {
+            if($request->sitePrice < $getPriceFollow) {
+                return response()->json(['code'=>400, 'status' => 'error', 'messages'=>'Giá nhập vào không thể nhỏ hơn giá gốc!']);
+            }
+            else if($request->number_seeding <20) {
+                return response()->json(['code'=>400, 'status' => 'error', 'messages'=>'Số lượng tăng tối thiểu là 20!']);
+            }
+            else if($request->number_seeding >200000) {
+                return response()->json(['code'=>400, 'status' => 'error', 'messages'=>'Số lượng tăng đa thiểu là 200,000!']);
+            }
+            else {
+                $apiServices = new ApiServices();
+                $data = [
+                    'url_service' => $request->post_id,
+                    'comment_id' => $request->id_comment,
+                    'speed' => $request->speed,
+                    'number' => (int) $request->number_seeding,
+                    'type' => 'facebook_buffcomment'
+                ];
+                $dataCreate = $apiServices->postServices(Config::get('api.urlRequest.create'), $data);
+                if($dataCreate['code'] == 200) {
+                    $services_code = $dataCreate['data']['service_codes'][0];
+                    $transaction_code = $dataCreate["data"]["transaction_code"];
+                    $dataConfirm = ['transaction_code' => $transaction_code];
+                    $confirm = $apiServices->postServices(Config::get('api.urlRequest.confirm'), $dataConfirm);
+                    if ($confirm['code'] == 200) {
+                        DB::beginTransaction();
+                        try {
+                            $services = new Services();
+                            $services->user_id = Auth::user()->id;
+                            $services->url_services = $request->user_id;
+                            $services->speed = $request->speed;
+                            $services->type_services = "facebook_comment";
+                            $services->warranty = 7;
+                            $services->price = $request->sitePrice;
+                            $services->total_price = $total_price;
+                            $services->total_warranty = 0;
+                            $services->checkpoint = 0;
+                            $services->service_code = $services_code;
+                            $services->transaction_code = $transaction_code;
+                            $services->number = $request->number_seeding;
+                            $services->number_success = 0;
+                            $services->status = "Active";
+                            $services->reactions = json_encode($request->reaction, true);
+                            $services->created_at = Carbon::now()->toDateTimeString();
+                            $services->save();
+
+                        } catch (\Exception $e) {
+                            \Log::info($e);
+                            DB::rollBack();
+                            return response()->json(['code' => 400, 'status' => 'error', 'messages' => 'Có lỗi xảy ra!']);
+
+                        }
+                        DB::table('users')->where('id', Auth::user()->id)->update( array('point'=>$updateBalance) );
+                        DB::commit();
+
+                        return response()->json(['code' => 200, 'status' => 'success', 'messages' => 'Tạo đơn mới thành công!']);
+                    } else {
+                        return response()->json(['code' => 400, 'status' => 'error', 'messages' => 'Có lỗi xảy ra! Vui lòng thử lại.']);
+                    }
+                }
+                else if($dataCreate['code'] == 400) {
+                    return response()->json(['code' => 400, 'status' => 'error', 'messages' => $dataCreate['message']]);
+                }
+                else {
+                    return response()->json(['code' => 400, 'status' => 'error', 'messages' => 'Có lỗi xảy ra với sever API, vui lòng liên hệ admin!']);
+                }
+            }
+        }
+        else {
+            return response()->json(['code'=>400, 'status' => 'error', 'messages'=>'Tài khoản của bạn không đủ tiền!']);
+        }
+    }
     public function get_web_page( $url )
     {
         $user_agent='Mozilla/5.0 (Windows NT 6.1; rv:8.0) Gecko/20100101 Firefox/8.0';

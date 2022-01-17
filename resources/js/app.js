@@ -31,5 +31,5 @@ const app = new Vue({
     el: '#app',
     router,
     linkActiveClass: "active",
-    fullscreenLoading: true
+    fullscreenLoading: true,
 });

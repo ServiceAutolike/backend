@@ -169,15 +169,15 @@
                                             class="text-danger">{{ Number(totalPrice).toLocaleString() }} VNĐ</strong>
                                         </h2>
                                         <div>Bạn sẽ mua <strong
-                                            class="text-danger">{{ Number(total_comment).toLocaleString() }} comment</strong> với giá <strong class="text-danger">{{ sitePrice }}<sup>đ</sup>/1</strong>
-                                            <strong class="text-danger">comment</strong></div>
+                                            class="text-danger">{{ Number(total_comment).toLocaleString() }} bình luận</strong> với giá <strong class="text-danger">{{ sitePrice }}<sup>đ</sup>/1</strong>
+                                            <strong class="text-danger">bình luận</strong> với tốc độ <b class="text-success">{{ speed }}</b></div>
                                     </div>
                                 </div>
 
                         </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-primary  btn-lg btn-block mr-2" :disabled="isDisabled" @click="createOrder"><i
-                                v-if="isLoading" class="fas fa-circle-notch fa-spin"></i> Tạo Tiến Trình
+                                v-if="isLoading" class="el-icon-loading"></i> Tạo Tiến Trình
                             </button>
                         </div>
 
@@ -271,7 +271,8 @@ export default {
             id_comment: '',
             totalcomment: "Số lượng (0 bình luận)",
             allcomment: Object,
-            speed: 'low',
+            post_comment: '',
+            speed: 'Nhanh',
             activeItem: 'create',
             post_id: "",
             namefb: '',
@@ -420,8 +421,8 @@ export default {
         getTotalComment() {
             axios.post('/facebook/'+this.id_comment, {id_comment: this.id_comment}).then(res => {
                 this.total_comment = res.data.total
+                this.post_comment = res.data.comment
                 this.totalPrice = this.total_comment * this.sitePrice
-
             })
         },
 
@@ -450,32 +451,37 @@ export default {
             })
         },
         isValidate() {
-            if (this.post_id == '') {
-                this.errorClass = 'is-invalid'
+            if(this.post_id === '') {
                 return false
-
-            } else {
-                this.activeClass = 'is-valid'
+            }
+            else if(this.total_comment <= 0) {
+                return false
+            }
+            else {
                 return true
             }
-            return false
         },
         changeTotal() {
             let obj = this
             switch (obj.speedServices) {
                 case "low":
+                    obj.speed = "Rất Chậm"
                     obj.sitePrice = 150
                     break
                 case "normal":
+                    obj.speed = "Chậm"
                     obj.sitePrice = 300
                     break
                 case "medium":
+                    obj.speed = "Bình Thường"
                     obj.sitePrice = 400
                     break
                 case "high":
+                    obj.speed = "Nhanh"
                     obj.sitePrice = 500
                     break
                 default:
+                    obj.speed = "Nhanh"
                     obj.sitePrice = 500
             }
             obj.totalPrice = obj.total_comment * obj.sitePrice
@@ -519,38 +525,42 @@ export default {
             })
         },
         createOrder() {
-            this.isValidate()
-            let obj = this
-            obj.isLoading = true
-            obj.isDisabled = true
-            let data = {
-                post_id: obj.post_id,
-                type_check: obj.type_check,
-                number_seeding: obj.number_seeding,
-                sitePrice: obj.sitePrice,
-                warranty: 7,
-                speed: obj.speedServices,
+            let validate = this.isValidate()
+            console.log(validate)
+            if(validate != false) {
+                let obj = this
+                obj.isLoading = true
+                obj.isDisabled = true
+                let data = {
+                    post_id: obj.post_id,
+                    number_seeding: obj.total_comment,
+                    id_comment: obj.id_comment,
+                    sitePrice: obj.sitePrice,
+                    warranty: 7,
+                    speed: obj.speedServices,
 
-            }
-            axios.post('/facebook/buff-follow', data).then(res => {
-                if (res.data.code != 400) {
-                    Swal.fire("Thành công!", res.data.messages, res.data.status);
-                } else {
-                    Swal.fire("Có lỗi xảy ra!", res.data.messages, res.data.status);
                 }
-                obj.isLoading = false
-                obj.isDisabled = false
-            }).catch(e => {
-                obj.isLoading = false
-                obj.isDisabled = false
-                var response = JSON.parse(xhr.responseText);
-                Swal.fire(
-                    'Có lỗi xảy ra!',
-                    response.messages,
-                    'error'
-                )
-            })
-
+                axios.post('/facebook/buff-comment', data).then(res => {
+                    if (res.data.code != 400) {
+                        Swal.fire("Thành công!", res.data.messages, res.data.status);
+                    } else {
+                        Swal.fire("Có lỗi xảy ra!", res.data.messages, res.data.status);
+                    }
+                    obj.isLoading = false
+                    obj.isDisabled = false
+                }).catch(e => {
+                    obj.isLoading = false
+                    obj.isDisabled = false
+                    Swal.fire(
+                        'Có lỗi xảy ra!',
+                        'Không thể tạo mới giao dịch này',
+                        'error'
+                    )
+                })
+            }
+            else {
+                Swal.fire('Thông Báo','Vui lòng kiểm tra các trường nhập vào trống hoặc ID Post không hợp lệ!','error')
+            }
 
         }
 
