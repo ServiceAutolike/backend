@@ -1,5 +1,8 @@
 <template>
+
     <div class="row">
+        <Modal v-if="showModal"></Modal>
+
         <div class="col-12 col-xl-12">
             <div class="card mb-5 mb-xl-10">
                 <div class="card-header card-header-stretch pb-0">
@@ -34,7 +37,7 @@
 											</span>
 
                                     <!--end::Svg Icon-->
-                                    <input type="text" id="kt_filter_search" class="form-control form-control-sm w-150px ps-9" placeholder="Nhập ID bài viết" />
+                                    <input type="text" @keyup="changeUp" class="form-control form-control-sm w-150px ps-9" placeholder="Nhập ID bài viết" />
                                 </div>
                                 <!--end::Search-->
                                 <a href="/" class="btn btn-primary btn-sm">Tìm Kiếm</a>
@@ -61,28 +64,40 @@
                                                @change="findID(post_id)" required>
                                     </div>
                                 </div>
-                                <div role="alert" class="alert alert-custom fade show mt-4 bg-green-3">
-                                    <div v-if="isResult">
-                                        <div class="cl-green mb-0">
-                                            <i>Kết quả tìm kiếm:</i><br>
-                                            ID của bạn là: <b class="text-danger">{{ idFB }}</b><br>
-                                            Tên Facebook: <b class="text-danger">{{ name }}</b>
-                                        </div>
+                            <div v-if="isResult">
+                                <div class="d-flex align-items-center rounded p-5 mb-7 alert-custom alert alert-success">
+                                    <!--begin::Icon-->
+                                    <div class="svg-icon svg-icon-success me-5">
+                                        <img :src=picture alt="">
+                                    </div>
+                                    <!--end::Icon-->
+                                    <!--begin::Title-->
+                                    <div class="flex-grow-1 me-2">
+                                        <span class="fw-bolder text-gray-800 text-hover-primary fs-6">{{ namefb }}</span>
+                                        <span class="text-muted fw-bold d-block">
+                                                {{ timeAgo(time) }}
+                                            </span>
+                                        <span class="content">{{ content }}</span>
+                                    </div>
 
-                                    </div>
-                                    <div v-else class="cl-green mb-0">
-                                        Get ID Facebook từ Link nhanh <a href="https://fb-search.com/find-my-facebook-id" target="_blank" class="font-bold cl-green">tại đây</a><br />
-                                        Vui lòng công khai Theo dõi để Buff theo hướng dẫn dưới đây trước khi Order <a href="http://www.dungqb.com/2019/07/huong-dan-cong-khai-cac-thong-tin.html" target="_blank" class="font-bold cl-green">Click Tại Đây Để Xem Hướng Dẫn</a>
-                                    </div>
+                                    <!--end::Title-->
                                 </div>
+                            </div>
                                 <div class="row align-items-center">
                                     <div class="col-md-10">
                                         <div class="form-group">
                                             <label>Chọn bộ comment <span
-                                                class="text-danger">*</span></label>
-                                            <el-select v-model="listcomment" placeholder="Chọn list bình luận" style="display: block">
-                                                <el-option label="Zone one" value="shanghai"></el-option>
-                                                <el-option label="Zone two" value="beijing"></el-option>
+                                                class="text-danger">*</span>
+                                            </label>
+                                            <el-select v-model="id_comment" filterable placeholder="Chọn list bình luận" style="display: block;" @change="getTotalComment">
+                                                <el-option
+                                                    v-for="getAllComment in allcomment"
+                                                    :key="getAllComment.id"
+                                                    :label="getAllComment.name"
+                                                    :value="getAllComment.id_comment">
+                                                    <span style="float: left">{{ getAllComment.name }}</span>
+                                                    <span style="float: right; color: #8492a6; font-size: 13px">{{ getAllComment.total }} bình luận</span>
+                                                </el-option>
                                             </el-select>
                                         </div>
                                     </div>
@@ -92,22 +107,25 @@
                                             title="Tạo List Comment"
                                             :visible.sync="dialogVisible"
                                             width="30%">
-                                            <label class="mb-2">Tên thể loại: </label>
-                                            <el-input placeholder="Mỹ phẩm, Đông y..." v-model="name_comment"></el-input>
-                                            <label class="mb-2 mt-3">Nhập bình luận: <span class="badge badge-success">1</span></label>
-                                            <el-input :rows="5" placeholder="Nhập comment, mỗi dòng 1 nội dung được tính là 1 lần seeding" type="textarea" v-model="comment" v-bind:class="{ errorform: hasError }" ></el-input>
-                                            <span class="isError">{{ isError }}</span>
-                                            <div class="notice bg-light-danger rounded border-danger border border-dashed p-5 mt-2">
-                                                <p><b class="text-danger">Lưu ý: </b><br>
-                                                1. Cứ mỗi dòng tính là 1 comment<br>
-                                                2. Yêu cầu tối thiểu 20 comment<br>
-                                                3. Nghiêm cấm bình luận những nội có cử chỉ, lời nói thô bạo, khiêu khích, trêu ghẹo, xúc phạm nhân phẩm, danh dự của Cá nhân hoặc Tổ chức.<br>
-                                                4. Hệ thống chỉ xét duyệt từ 8h sáng đến 12h đêm hằng ngày</p>
-                                            </div>
-                                            <span slot="footer" class="dialog-footer">
-                                            <el-button @click="dialogVisible = false">Hủy</el-button>
-                                            <el-button type="primary" @click="createComment">Tạo</el-button>
-                                          </span>
+                                            <el-form :model="commentForm" :rules="rules" ref="ruleForm" class="commentForm">
+                                                <el-form-item label="Tên thể loại" prop="name_comment">
+                                                    <el-input placeholder="Mỹ phẩm, Đông y..." v-model="commentForm.name_comment"></el-input>
+                                                </el-form-item>
+                                                <el-form-item :label="totalcomment" prop="comment">
+                                                    <el-input :rows="5" placeholder="Nhập comment, mỗi dòng 1 nội dung được tính là 1 lần seeding" type="textarea" v-model="commentForm.comment" @input="changeUp"></el-input>
+                                                </el-form-item>
+                                                <div class="notice bg-light-warning rounded border-warning border border-dashed p-5 mt-7">
+                                                    <p><b class="text-danger">Lưu ý: </b><br>
+                                                    1. Cứ mỗi dòng tính là 1 comment<br>
+                                                    2. Yêu cầu tối thiểu 20 comment<br>
+                                                    3. Nghiêm cấm bình luận những nội có cử chỉ, lời nói thô bạo, khiêu khích, trêu ghẹo, xúc phạm nhân phẩm, danh dự của Cá nhân hoặc Tổ chức.<br>
+                                                    4. Hệ thống chỉ xét duyệt từ 8h sáng đến 12h đêm hằng ngày</p>
+                                                </div>
+                                                <div class="el-dialog__footer" style="padding: 10px 0px 20px;">
+                                                    <button type="button" @click="submitForm('ruleForm')" class="btn btn-primary"><i v-if="btnLoading" class="el-icon-loading"></i> Tạo Comment</button>
+                                                    <el-button @click="dialogVisible = false">Đóng</el-button>
+                                                </div>
+                                            </el-form>
                                         </el-dialog>
                                     </div>
                                 </div>
@@ -151,15 +169,15 @@
                                             class="text-danger">{{ Number(totalPrice).toLocaleString() }} VNĐ</strong>
                                         </h2>
                                         <div>Bạn sẽ mua <strong
-                                            class="text-danger">{{ Number(number_seeding).toLocaleString() }} comment</strong> với giá <strong class="text-danger">{{ sitePrice }}<sup>đ</sup>/1</strong>
-                                            <strong class="text-danger">comment</strong></div>
+                                            class="text-danger">{{ Number(total_comment).toLocaleString() }} bình luận</strong> với giá <strong class="text-danger">{{ sitePrice }}<sup>đ</sup>/1</strong>
+                                            <strong class="text-danger">bình luận</strong> với tốc độ <b class="text-success">{{ speed }}</b></div>
                                     </div>
                                 </div>
 
                         </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-primary  btn-lg btn-block mr-2" :disabled="isDisabled" @click="createOrder"><i
-                                v-if="isLoading" class="fas fa-circle-notch fa-spin"></i> Tạo Tiến Trình
+                                v-if="isLoading" class="el-icon-loading"></i> Tạo Tiến Trình
                             </button>
                         </div>
 
@@ -209,17 +227,7 @@
                                             </td>
                                             <td>{{ timeAgo(historyData.created_at) }}</td>
                                             <td class="textend">
-                                                <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
-                                                    <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
-                                                    <span class="svg-icon svg-icon-3">
-																	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																		<path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="black"></path>
-																		<path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="black"></path>
-																		<path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="black"></path>
-																	</svg>
-																</span>
-                                                    <!--end::Svg Icon-->
-                                                </a>
+
                                             </td>
                                         </tr>
                                         </tbody>
@@ -239,10 +247,7 @@
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
-
                 </div>
             </div>
         </div>
@@ -253,32 +258,39 @@
 export default {
     data() {
         return {
+            commentForm: {
+                name_comment: '',
+                comment: '',
+            },
             loading: true,
             loading_input: false,
             isTable: false,
             hideIcon: true,
-            isError: '',
-            name_comment: '',
-            comment: '',
-            hasError: false,
+            btnLoading: false,
             listcomment: [],
-            speed: 'low',
+            id_comment: '',
+            totalcomment: "Số lượng (0 bình luận)",
+            allcomment: Object,
+            post_comment: '',
+            speed: 'Nhanh',
             activeItem: 'create',
             post_id: "",
+            namefb: '',
+            picture: '',
+            content: '',
+            showModal: false,
             note: '',
             dialogVisible: false,
             activeClass: '',
             errorClass: '',
-            speedServices: '',
+            speedServices: 'high',
             sv: 'sv_like',
             type_check: 'user',
-            number_seeding: 100,
-            sitePrice: 50,
+            number_seeding: 0,
+            sitePrice: 500,
             isCheckID: false,
             isResult: false,
-            name: '',
-            idFB: '',
-            totalPrice: 5000,
+            totalPrice: 0,
             isLoading: false,
             isDisabled: false,
             historyServices: Object,
@@ -287,6 +299,7 @@ export default {
             loadingTable: false,
             spinActive: false,
             loading_t: false,
+            total_comment: 0,
             pagination: {
                 'current_page': 1
             },
@@ -294,9 +307,17 @@ export default {
                 'current_page': 1
             },
             rules: {
-
+                name_comment: [
+                    { required: true, message: 'Vui lòng nhập tên thể loại', trigger: 'blur' },],
+                comment: [
+                    { required: true, message: 'Vui lòng nhập ít nhất 1 bình luận', trigger: 'change' }
+                ],
             }
         };
+    },
+    created() {
+        this.getListComment()
+        this.totalPrice = this.total_comment * this.sitePrice
     },
     methods: {
         isActive(menuItem) {
@@ -353,25 +374,62 @@ export default {
             const yearsDiff = today.getYear() - date.getYear();
             return `${yearsDiff} năm trước`;
         },
+        changeUp() {
+            if(this.commentForm.comment != "") {
+                this.listcomment = this.commentForm.comment.split('\n')
+                this.totalcomment = "Số lượng (" + this.listcomment.length + " bình luận)"
+            }
+            else {
+                console.log(this.listcomment)
+                this.totalcomment = "Số lượng (0 bình luận)"
+            }
+        },
         createComment() {
-            this.listcomment = this.comment.split('\n')
+            this.btnLoading = true
+            this.listcomment = this.commentForm.comment.split('\n')
             let data = {
-                "name": this.name_comment,
+                "name": this.commentForm.name_comment,
                 "comment": this.listcomment
             }
             axios.post('/facebook/createListComment',data).then(res => {
-                if(res.data.status == 200) {
-                    Swal.fire('Thành Công', 'Tạo comment '+this.name_comment+' thành công', 'success');
+                this.btnLoading = false
+                if(res.data.code == 200) {
+                    Swal.fire('Thành Công', 'Tạo comment '+this.commentForm.name_comment+' thành công', 'success');
                     this.dialogVisible = false
+                    this.getListComment()
                 }
                 else {
-                    toastr.error(res.data.message)
+                    this.$message({
+                        showClose: true,
+                        message: res.data.message,
+                        type: 'error'
+                    });
                 }
 
             })
         },
-        getListComment() {
+        submitForm(formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    this.createComment()
+                } else {
+                    return false;
+                }
+            });
+        },
 
+        getTotalComment() {
+            axios.post('/facebook/'+this.id_comment, {id_comment: this.id_comment}).then(res => {
+                this.total_comment = res.data.total
+                this.post_comment = res.data.comment
+                this.totalPrice = this.total_comment * this.sitePrice
+            })
+        },
+
+        getListComment() {
+            axios.get('/facebook/listcomment').then(res => {
+                this.allcomment = res.data
+            })
         },
         updateTransaction() {
             let obj = this
@@ -393,40 +451,40 @@ export default {
             })
         },
         isValidate() {
-            if (this.post_id == '') {
-                this.errorClass = 'is-invalid'
+            if(this.post_id === '') {
                 return false
-
-            } else {
-                this.activeClass = 'is-valid'
+            }
+            else if(this.total_comment <= 0) {
+                return false
+            }
+            else {
                 return true
             }
-            return false
         },
-        redirectHistory() {
-            let obj = this
-            obj.$router.push('/facebook/history/sub')
-        },
-
         changeTotal() {
             let obj = this
             switch (obj.speedServices) {
                 case "low":
-                    obj.sitePrice = 50
+                    obj.speed = "Rất Chậm"
+                    obj.sitePrice = 150
                     break
                 case "normal":
-                    obj.sitePrice = 60
+                    obj.speed = "Chậm"
+                    obj.sitePrice = 300
                     break
                 case "medium":
-                    obj.sitePrice = 80
+                    obj.speed = "Bình Thường"
+                    obj.sitePrice = 400
                     break
                 case "high":
-                    obj.sitePrice = 100
+                    obj.speed = "Nhanh"
+                    obj.sitePrice = 500
                     break
                 default:
-                    obj.sitePrice = 50
+                    obj.speed = "Nhanh"
+                    obj.sitePrice = 500
             }
-            obj.totalPrice = obj.number_seeding * obj.sitePrice
+            obj.totalPrice = obj.total_comment * obj.sitePrice
         },
 
         findID(url) {
@@ -434,18 +492,26 @@ export default {
             obj.loading_input = true
             let data = {
                 "url": url,
-                "type": 'user'
+                "type": 'post'
             }
             axios.post('/api/find-id', data).then(res => {
                 if (res.data.code != 400) {
-                    this.isCheckID = true;
-                    this.post_id = res.data.id
+                    this.isCheckID = true
                     this.isResult = true
-                    this.name = res.data.name
-                    this.idFB = res.data.id
-                    toastr.success("Đã tìm thấy thông tin ID: "+res.data.name);
+                    this.post_id = res.data.id_post
+                    this.time = res.data.time
+                    this.picture = res.data.picture
+                    this.namefb = res.data.name
+                    this.content = res.data.content
+                    this.activeClass = 'is-valid'
+                    this.errorClass = ''
+                    toastr.success("Đã tìm thấy thông tin ID bài viết");
                 } else {
                     this.isCheckID = false;
+                    this.isResult = false
+                    this.errorClass = 'is-invalid'
+                    this.activeClass = ''
+                    this.result_id = false
                     toastr.error(res.data.message);
                 }
                 obj.loading_input = false
@@ -459,38 +525,42 @@ export default {
             })
         },
         createOrder() {
-            this.isValidate()
-            let obj = this
-            obj.isLoading = true
-            obj.isDisabled = true
-            let data = {
-                post_id: obj.post_id,
-                type_check: obj.type_check,
-                number_seeding: obj.number_seeding,
-                sitePrice: obj.sitePrice,
-                warranty: 7,
-                speed: obj.speedServices,
+            let validate = this.isValidate()
+            console.log(validate)
+            if(validate != false) {
+                let obj = this
+                obj.isLoading = true
+                obj.isDisabled = true
+                let data = {
+                    post_id: obj.post_id,
+                    number_seeding: obj.total_comment,
+                    id_comment: obj.id_comment,
+                    sitePrice: obj.sitePrice,
+                    warranty: 7,
+                    speed: obj.speedServices,
 
-            }
-            axios.post('/facebook/buff-follow', data).then(res => {
-                if (res.data.code != 400) {
-                    Swal.fire("Thành công!", res.data.messages, res.data.status);
-                } else {
-                    Swal.fire("Có lỗi xảy ra!", res.data.messages, res.data.status);
                 }
-                obj.isLoading = false
-                obj.isDisabled = false
-            }).catch(e => {
-                obj.isLoading = false
-                obj.isDisabled = false
-                var response = JSON.parse(xhr.responseText);
-                Swal.fire(
-                    'Có lỗi xảy ra!',
-                    response.messages,
-                    'error'
-                )
-            })
-
+                axios.post('/facebook/buff-comment', data).then(res => {
+                    if (res.data.code != 400) {
+                        Swal.fire("Thành công!", res.data.messages, res.data.status);
+                    } else {
+                        Swal.fire("Có lỗi xảy ra!", res.data.messages, res.data.status);
+                    }
+                    obj.isLoading = false
+                    obj.isDisabled = false
+                }).catch(e => {
+                    obj.isLoading = false
+                    obj.isDisabled = false
+                    Swal.fire(
+                        'Có lỗi xảy ra!',
+                        'Không thể tạo mới giao dịch này',
+                        'error'
+                    )
+                })
+            }
+            else {
+                Swal.fire('Thông Báo','Vui lòng kiểm tra các trường nhập vào trống hoặc ID Post không hợp lệ!','error')
+            }
 
         }
 

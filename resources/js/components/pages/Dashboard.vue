@@ -383,8 +383,8 @@ export default {
         this.loadNotification()
     },
     methods: {
-        formatNumber(num) {
-            return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+        formatNumber(number) {
+            return Intl.NumberFormat().format(number);
         },
         timeAgo(dateString) {
             const date = new Date(dateString);
@@ -438,6 +438,7 @@ export default {
             })
         },
         handleLoadMore($state) {
+            this.loading = true
             axios.post('/loadPost', {'page': this.page})
                 .then(res => {
                     return res.data;
@@ -455,6 +456,7 @@ export default {
                 }).catch(e => {
                 console.log("Load")
             })
+            this.loading = false
             this.page = this.page + 1;
         },
 

@@ -67,7 +67,7 @@
 
                                 <td v-if="historyData.type == 'vcb'">Ngân Hàng</td>
                                 <td v-if="historyData.type == 'momo'">Ví Momo</td>
-                                <td v-if="historyData.type == 'momo'">Thẻ Điện Thoại</td>
+                                <td v-if="historyData.type == 'card'">Thẻ Điện Thoại</td>
                                 <td><span class="badge badge-success">Thành công</span> </td>
                                 <td>{{ timeAgo(historyData.created_at) }}</td>
                             </tr>
