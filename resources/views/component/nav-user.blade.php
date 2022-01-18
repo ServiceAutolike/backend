@@ -452,7 +452,7 @@
             <!--- begin Tiket -->
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion mb-1">
                 <div class="menu-item">
-                    <a class="menu-link {{activeMenu('user.support.list')}}" href="{{route('user.support.list')}}">
+                    <router-link class="menu-link" to="/support/user">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
                            <span class="svg-icon svg-icon-2">
@@ -468,7 +468,7 @@
                             <span class="badge badge-light-danger badge-circle fw-bolder fs-7">3</span>
                         </span>
                     </span>
-                    </a>
+                    </router-link>
                 </div>
 
 

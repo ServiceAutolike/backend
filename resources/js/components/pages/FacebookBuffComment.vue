@@ -80,16 +80,35 @@
                                         <div class="form-group">
                                             <label>Chọn bộ comment <span
                                                 class="text-danger">*</span></label>
-                                            <select class="form-control">
-                                                <option>Mỹ Phầm</option>
-                                            </select>
+                                            <el-select v-model="listcomment" placeholder="Chọn list bình luận" style="display: block">
+                                                <el-option label="Zone one" value="shanghai"></el-option>
+                                                <el-option label="Zone two" value="beijing"></el-option>
+                                            </el-select>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
-                                        <button class="btn btn-sm btn-primary" @click="showModal">
-                                            <i class="fas fa-plus-circle"></i> Tạo List Comment
-                                        </button>
-                                        <Modal ref="modal"></Modal>
+                                        <el-button type="primary" @click="dialogVisible = true"><i class="el-icon-circle-plus-outline color-white"></i> Tạo List Comment</el-button>
+                                        <el-dialog
+                                            title="Tạo List Comment"
+                                            :visible.sync="dialogVisible"
+                                            width="30%">
+                                            <label class="mb-2">Tên thể loại: </label>
+                                            <el-input placeholder="Mỹ phẩm, Đông y..." v-model="name_comment"></el-input>
+                                            <label class="mb-2 mt-3">Nhập bình luận: <span class="badge badge-success">1</span></label>
+                                            <el-input :rows="5" placeholder="Nhập comment, mỗi dòng 1 nội dung được tính là 1 lần seeding" type="textarea" v-model="comment" v-bind:class="{ errorform: hasError }" ></el-input>
+                                            <span class="isError">{{ isError }}</span>
+                                            <div class="notice bg-light-danger rounded border-danger border border-dashed p-5 mt-2">
+                                                <p><b class="text-danger">Lưu ý: </b><br>
+                                                1. Cứ mỗi dòng tính là 1 comment<br>
+                                                2. Yêu cầu tối thiểu 20 comment<br>
+                                                3. Nghiêm cấm bình luận những nội có cử chỉ, lời nói thô bạo, khiêu khích, trêu ghẹo, xúc phạm nhân phẩm, danh dự của Cá nhân hoặc Tổ chức.<br>
+                                                4. Hệ thống chỉ xét duyệt từ 8h sáng đến 12h đêm hằng ngày</p>
+                                            </div>
+                                            <span slot="footer" class="dialog-footer">
+                                            <el-button @click="dialogVisible = false">Hủy</el-button>
+                                            <el-button type="primary" @click="createComment">Tạo</el-button>
+                                          </span>
+                                        </el-dialog>
                                     </div>
                                 </div>
 
@@ -105,14 +124,15 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="sitePrice">Chọn tốc độ <span
-                                                class="text-danger">*</span></label>
-                                            <select class="form-select form-select-sm bg-body border-body" v-model="speedServices" @change="changeTotal">
-                                                <option value="low" selected="selected">Rất Chậm</option>
-                                                <option value="normal">Chậm</option>
-                                                <option value="medium">Trung Bình</option>
-                                                <option value="high">Nhanh</option>
-                                            </select>
+                                            <label for="sitePrice">Chọn tốc độ <span class="text-danger">*</span>
+                                            </label>
+                                            <el-select v-model="speedServices" placeholder="Chọn tốc độ" style="display: block" @change="changeTotal">
+                                                <el-option label="Rất Chậm" value="low"></el-option>
+                                                <el-option label="Chậm" value="normal"></el-option>
+                                                <el-option label="Trung Bình" value="medium"></el-option>
+                                                <el-option label="Nhanh" value="high"></el-option>
+                                            </el-select>
+
                                         </div>
                                     </div>
                                 </div>
@@ -237,9 +257,16 @@ export default {
             loading_input: false,
             isTable: false,
             hideIcon: true,
+            isError: '',
+            name_comment: '',
+            comment: '',
+            hasError: false,
+            listcomment: [],
+            speed: 'low',
             activeItem: 'create',
             post_id: "",
             note: '',
+            dialogVisible: false,
             activeClass: '',
             errorClass: '',
             speedServices: '',
@@ -266,14 +293,12 @@ export default {
             pagination_payout: {
                 'current_page': 1
             },
+            rules: {
 
-        }
+            }
+        };
     },
     methods: {
-        showModal() {
-            let element = this.$refs.modal.$el
-            $(element).modal('show')
-        },
         isActive(menuItem) {
             return this.activeItem === menuItem
 
@@ -327,6 +352,26 @@ export default {
 
             const yearsDiff = today.getYear() - date.getYear();
             return `${yearsDiff} năm trước`;
+        },
+        createComment() {
+            this.listcomment = this.comment.split('\n')
+            let data = {
+                "name": this.name_comment,
+                "comment": this.listcomment
+            }
+            axios.post('/facebook/createListComment',data).then(res => {
+                if(res.data.status == 200) {
+                    Swal.fire('Thành Công', 'Tạo comment '+this.name_comment+' thành công', 'success');
+                    this.dialogVisible = false
+                }
+                else {
+                    toastr.error(res.data.message)
+                }
+
+            })
+        },
+        getListComment() {
+
         },
         updateTransaction() {
             let obj = this

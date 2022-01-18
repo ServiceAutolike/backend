@@ -9,7 +9,7 @@
                 </div>
             </div>
             <div class="menu-item">
-                <a class="menu-link {{activeMenu('home.dash')}}" href="/">
+                <router-link to="/home" class="menu-link">
                     <span class="menu-icon">
                         <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
                         <span class="svg-icon svg-icon-2">
@@ -23,7 +23,7 @@
                         <!--end::Svg Icon-->
                     </span>
                     <span class="menu-title">Trang Chủ</span>
-                </a>
+                </router-link>
             </div>
 
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
@@ -86,7 +86,7 @@
 
             <!--- begin service -->
             <div class="menu-item">
-                <a class="menu-link {{activeMenu('service.admin.index')}}" href="{{route('service.admin.index')}}">
+                <router-link to="/admin/service" class="menu-link">
                     <span class="menu-icon">
                         <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
                         <span class="svg-icon svg-icon-2">
@@ -100,13 +100,13 @@
                         <!--end::Svg Icon-->
                     </span>
                     <span class="menu-title">Dịch vụ</span>
-                </a>
+                </router-link>
             </div>
             <!--- end service -->
 
             <!--- begin Post -->
             <div class="menu-item">
-                <a class="menu-link {{activeMenu('post.index')}}" href="{{route('post.index')}}">
+                <router-link to="/admin/post" class="menu-link">
                     <span class="menu-icon">
                         <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
                         <span class="svg-icon svg-icon-2">
@@ -120,12 +120,31 @@
                         <!--end::Svg Icon-->
                     </span>
                     <span class="menu-title">Bài viết</span>
-                </a>
+                </router-link>
             </div>
             <!--- end Post -->
             <!--- begin Post -->
             <div class="menu-item">
-                <a class="menu-link {{activeMenu('support.index')}}" href="{{route('support.index')}}">
+                <router-link to="/admin/user" class="menu-link">
+                    <span class="menu-icon">
+                        <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
+                        <span class="svg-icon svg-icon-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect x="2" y="2" width="9" height="9" rx="2" fill="black" />
+                                <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="black" />
+                                <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="black" />
+                                <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="black" />
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                    </span>
+                    <span class="menu-title">Tài khoản</span>
+                </router-link>
+            </div>
+            <!--- end Post -->
+            <!--- begin Post -->
+            <div class="menu-item">
+                <router-link to="/admin/support" class="menu-link">
                     <span class="menu-icon">
                         <!--begin::Svg Icon | path: icons/duotune/graphs/gra006.svg-->
                         <span class="svg-icon svg-icon-2">
@@ -137,7 +156,7 @@
                         <!--end::Svg Icon-->
                     </span>
                     <span class="menu-title">Trung Tâm Hỗ Trợ</span>
-                </a>
+                </router-link>
             </div>
             <!--- end Post -->
 

@@ -21,7 +21,7 @@ class CheckRole
         if($user->isAdmin()) {
             return $next($request);
         }else{
-            return redirect()->back();
+            return redirect()->route('home.dash');
         }
 
     }

@@ -37,5 +37,17 @@ return [
         1 => "Đang hỗ trợ",
         2 => "Đã hỗ trợ",
     ],
+    'level' => [
+        1 => "Thành viên",
+        2 => "Đại lý",
+        3 => "Đại lý vip 1",
+        4 => "Đại lý vip 2",
+    ],
+    'class_level' => [
+        1 => "badge-secondary",
+        2 => "badge-success",
+        3 => "badge-info",
+        4 => "badge-danger",
+    ],
 ]
 ?>

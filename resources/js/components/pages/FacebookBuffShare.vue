@@ -53,12 +53,12 @@
                                 <input type="hidden" name="warranty" value="7" id="warranty"/>
                                 <input type="hidden" value="post" id="type_check"/>
                                 <div class="form-group">
-                                    <label for="user_id">Nhập ID hoặc URL trang cá nhân <span
+                                    <label for="user_id">Nhập ID hoặc URL bài viết <span
                                         class="text-danger">*</span></label>
                                     <div v-bind:class="{'spinner spinner-success spinner-right': loading_input}">
                                         <input type="text" v-bind:class="[activeClass, errorClass]" class="form-control"
-                                               id="user_id" v-model="user_id" placeholder="Nhập URL hoặc ID bài viết"
-                                               @change="findID(user_id)" required>
+                                               id="user_id" v-model="post_id" placeholder="Nhập URL hoặc ID bài viết"
+                                               @change="findID(post_id)" required>
                                     </div>
                                 </div>
                                 <div role="alert" class="alert alert-custom fade show mt-4 bg-green-3">
@@ -88,7 +88,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="sitePrice">Giá/1 lượt theo dõi (VNĐ) <span
+                                            <label for="sitePrice">Giá/1 lượt chia sẻ (VNĐ) <span
                                                 class="text-danger">*</span></label>
                                             <input type="number" class="form-control form-control-solid" id="sitePrice"
                                                    name="sitePrice" value="80" v-model="sitePrice" disabled>
@@ -181,13 +181,17 @@
                                             </td>
                                             <td>{{ timeAgo(historyData.created_at) }}</td>
                                             <td class="textend">
-                                                <el-button
-                                                    size="mini"
-                                                    @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
-                                                <el-button
-                                                    size="mini"
-                                                    type="danger"
-                                                    @click="handleDelete(scope.$index, scope.row)">Delete</el-button>
+                                                <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                                                    <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
+                                                    <span class="svg-icon svg-icon-3">
+																	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																		<path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="black"></path>
+																		<path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="black"></path>
+																		<path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="black"></path>
+																	</svg>
+																</span>
+                                                    <!--end::Svg Icon-->
+                                                </a>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -225,7 +229,7 @@ export default {
             isTable: false,
             hideIcon: true,
             activeItem: 'create',
-            user_id: "",
+            post_id: "",
             note: '',
             activeClass: '',
             errorClass: '',
@@ -377,7 +381,7 @@ export default {
             axios.post('/api/find-id', data).then(res => {
                 if (res.data.code != 400) {
                     this.isCheckID = true;
-                    this.user_id = res.data.id
+                    this.post_id = res.data.id
                     this.isResult = true
                     this.name = res.data.name
                     this.idFB = res.data.id
@@ -402,7 +406,7 @@ export default {
             obj.isLoading = true
             obj.isDisabled = true
             let data = {
-                user_id: obj.user_id,
+                post_id: obj.post_id,
                 type_check: obj.type_check,
                 number_seeding: obj.number_seeding,
                 sitePrice: obj.sitePrice,

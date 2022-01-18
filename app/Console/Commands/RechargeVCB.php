@@ -47,8 +47,8 @@ class RechargeVCB extends Command
     {
         $date = date('d/m/Y', time());
         $data = [
-            'begin' => '07/01/2022',
-            'end' => '08/01/2022',
+            'begin' => '08/01/2022',
+            'end' => '10/01/2022',
             'username' => '0974137996',
             'password' => 'Khanhduy3110@123',
             'accountNumber' => '0491000095630',
