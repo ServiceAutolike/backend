@@ -6088,7 +6088,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -119286,18 +119285,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_pages_FacebookBuffSub__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/pages/FacebookBuffSub */ "./resources/js/components/pages/FacebookBuffSub.vue");
 /* harmony import */ var _components_pages_FacebookBuffComment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/pages/FacebookBuffComment */ "./resources/js/components/pages/FacebookBuffComment.vue");
 /* harmony import */ var _components_pages_FacebookBuffShare__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/pages/FacebookBuffShare */ "./resources/js/components/pages/FacebookBuffShare.vue");
-/* harmony import */ var _components_pages_acounts_Dashboard__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/pages/acounts/Dashboard */ "./resources/js/components/pages/acounts/Dashboard.vue");
-/* harmony import */ var _components_pages_recharge_Bank__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/pages/recharge/Bank */ "./resources/js/components/pages/recharge/Bank.vue");
-/* harmony import */ var _components_pages_recharge_Momo__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/pages/recharge/Momo */ "./resources/js/components/pages/recharge/Momo.vue");
-/* harmony import */ var _components_pages_recharge_Card__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/pages/recharge/Card */ "./resources/js/components/pages/recharge/Card.vue");
-/* harmony import */ var _components_pages_recharge_History__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/pages/recharge/History */ "./resources/js/components/pages/recharge/History.vue");
-/* harmony import */ var _components_pages_auth_Posts__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/pages/auth/Posts */ "./resources/js/components/pages/auth/Posts.vue");
-/* harmony import */ var _components_pages_auth_Service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/pages/auth/Service */ "./resources/js/components/pages/auth/Service.vue");
-/* harmony import */ var _components_pages_auth_Support__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/pages/auth/Support */ "./resources/js/components/pages/auth/Support.vue");
-/* harmony import */ var _components_pages_app_Support__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/pages/app/Support */ "./resources/js/components/pages/app/Support.vue");
-/* harmony import */ var _components_pages_auth_Chat__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/pages/auth/Chat */ "./resources/js/components/pages/auth/Chat.vue");
-/* harmony import */ var _components_pages_auth_User__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/pages/auth/User */ "./resources/js/components/pages/auth/User.vue");
-/* harmony import */ var _components_pages_auth_ChangeUser__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/pages/auth/ChangeUser */ "./resources/js/components/pages/auth/ChangeUser.vue");
+/* harmony import */ var _components_pages_recharge_Bank__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/pages/recharge/Bank */ "./resources/js/components/pages/recharge/Bank.vue");
+/* harmony import */ var _components_pages_recharge_Momo__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/pages/recharge/Momo */ "./resources/js/components/pages/recharge/Momo.vue");
+/* harmony import */ var _components_pages_recharge_Card__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/pages/recharge/Card */ "./resources/js/components/pages/recharge/Card.vue");
+/* harmony import */ var _components_pages_recharge_History__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/pages/recharge/History */ "./resources/js/components/pages/recharge/History.vue");
+/* harmony import */ var _components_pages_auth_Posts__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/pages/auth/Posts */ "./resources/js/components/pages/auth/Posts.vue");
+/* harmony import */ var _components_pages_auth_Service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/pages/auth/Service */ "./resources/js/components/pages/auth/Service.vue");
+/* harmony import */ var _components_pages_auth_Support__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/pages/auth/Support */ "./resources/js/components/pages/auth/Support.vue");
+/* harmony import */ var _components_pages_app_Support__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/pages/app/Support */ "./resources/js/components/pages/app/Support.vue");
+/* harmony import */ var _components_pages_auth_Chat__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/pages/auth/Chat */ "./resources/js/components/pages/auth/Chat.vue");
+/* harmony import */ var _components_pages_auth_User__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/pages/auth/User */ "./resources/js/components/pages/auth/User.vue");
+/* harmony import */ var _components_pages_auth_ChangeUser__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/pages/auth/ChangeUser */ "./resources/js/components/pages/auth/ChangeUser.vue");
+/* harmony import */ var _components_pages_acounts_Dashboard__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/pages/acounts/Dashboard */ "./resources/js/components/pages/acounts/Dashboard.vue");
 // Account Page Views
 
 
@@ -119314,30 +119313,31 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+ /// Acount
 
 
 var routes = [// Recharge
 {
   path: '/recharge/bank',
   name: 'RechargeBank',
-  component: _components_pages_recharge_Bank__WEBPACK_IMPORTED_MODULE_6__["default"]
+  component: _components_pages_recharge_Bank__WEBPACK_IMPORTED_MODULE_5__["default"]
 }, {
   path: '/recharge/momo',
   name: 'RechargeMomo',
-  component: _components_pages_recharge_Momo__WEBPACK_IMPORTED_MODULE_7__["default"]
+  component: _components_pages_recharge_Momo__WEBPACK_IMPORTED_MODULE_6__["default"]
 }, {
   path: '/recharge/card',
   name: 'RechargeCard',
-  component: _components_pages_recharge_Card__WEBPACK_IMPORTED_MODULE_8__["default"]
+  component: _components_pages_recharge_Card__WEBPACK_IMPORTED_MODULE_7__["default"]
 }, {
   path: '/recharge/history',
   name: 'RechargeHistory',
-  component: _components_pages_recharge_History__WEBPACK_IMPORTED_MODULE_9__["default"]
+  component: _components_pages_recharge_History__WEBPACK_IMPORTED_MODULE_8__["default"]
 }, // Account Page
 {
   path: '/home',
   name: 'Dashboard',
-  component: _components_pages_acounts_Dashboard__WEBPACK_IMPORTED_MODULE_5__["default"]
+  component: _components_pages_acounts_Dashboard__WEBPACK_IMPORTED_MODULE_16__["default"]
 }, {
   path: '/facebook/history/:type',
   name: 'Transaction History',
@@ -119371,31 +119371,31 @@ var routes = [// Recharge
 }, {
   path: '/admin/post',
   name: 'Post',
-  component: _components_pages_auth_Posts__WEBPACK_IMPORTED_MODULE_10__["default"]
+  component: _components_pages_auth_Posts__WEBPACK_IMPORTED_MODULE_9__["default"]
 }, {
   path: '/admin/service',
   name: 'Service',
-  component: _components_pages_auth_Service__WEBPACK_IMPORTED_MODULE_11__["default"]
+  component: _components_pages_auth_Service__WEBPACK_IMPORTED_MODULE_10__["default"]
 }, {
   path: '/admin/support',
   name: 'SupportAuth',
-  component: _components_pages_auth_Support__WEBPACK_IMPORTED_MODULE_12__["default"]
+  component: _components_pages_auth_Support__WEBPACK_IMPORTED_MODULE_11__["default"]
 }, {
   path: '/support/user',
   name: 'SupportApp',
-  component: _components_pages_app_Support__WEBPACK_IMPORTED_MODULE_13__["default"]
+  component: _components_pages_app_Support__WEBPACK_IMPORTED_MODULE_12__["default"]
 }, {
   path: '/support/chat/:code',
   name: 'Chat',
-  component: _components_pages_auth_Chat__WEBPACK_IMPORTED_MODULE_14__["default"]
+  component: _components_pages_auth_Chat__WEBPACK_IMPORTED_MODULE_13__["default"]
 }, {
   path: '/admin/user',
   name: 'User',
-  component: _components_pages_auth_User__WEBPACK_IMPORTED_MODULE_15__["default"]
+  component: _components_pages_auth_User__WEBPACK_IMPORTED_MODULE_14__["default"]
 }, {
   path: '/admin/user/change/:id',
   name: 'ChangeUser',
-  component: _components_pages_auth_ChangeUser__WEBPACK_IMPORTED_MODULE_16__["default"]
+  component: _components_pages_auth_ChangeUser__WEBPACK_IMPORTED_MODULE_15__["default"]
 }];
 
 /***/ }),

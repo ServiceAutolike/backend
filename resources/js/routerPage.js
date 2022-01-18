@@ -4,7 +4,6 @@ import CategoryFacebookLike from './components/pages/FacebookBuffLike'
 import CategoryFacebookSub from './components/pages/FacebookBuffSub'
 import CategoryFacebookComment from './components/pages/FacebookBuffComment'
 import CategoryFacebookShare from './components/pages/FacebookBuffShare'
-import CategoryDashboard from './components/pages/acounts/Dashboard'
 import CategoryRechargeBank from './components/pages/recharge/Bank'
 import CategoryRechargeMomo from './components/pages/recharge/Momo'
 import CategoryRechargeCard from './components/pages/recharge/Card'
@@ -16,6 +15,8 @@ import SupportApp from './components/pages/app/Support'
 import Chat from './components/pages/auth/Chat'
 import UserAuth from './components/pages/auth/User'
 import UserChangeAuth from './components/pages/auth/ChangeUser'
+/// Acount
+import CategoryDashboard from './components/pages/acounts/Dashboard'
 
 export const routes = [
     // Recharge
@@ -25,6 +26,7 @@ export const routes = [
     { path: '/recharge/history', name: 'RechargeHistory', component: CategoryRechargeHistory},
     // Account Page
     { path: '/home', name: 'Dashboard', component: CategoryDashboard},
+
     { path: '/facebook/history/:type', name: 'Transaction History',params: { type: "like"}, component: CategoryTransactionHistory},
     { path: '/facebook/history/:type', name: 'Transaction History Sub',params: { type: "sub"}, component: CategoryTransactionHistory},
     { path: '/facebook/buff-like', name: 'FacebookBuffLike', component: CategoryFacebookLike},
