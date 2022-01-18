@@ -19,6 +19,7 @@ Route::group(['prefix' => 'account'], function (){
     Route::post('/login', 'AccountController@login');
     Route::get('/register', 'AccountController@formRegister')->name('account.register');
     Route::post('/register', 'AccountController@register');
+
 });
 Route::group(['middleware' => 'login'], function () {
     Route::get('/home', 'HomeController@dash')->name('home.dash');
@@ -33,7 +34,13 @@ Route::group(['middleware' => 'login'], function () {
         Route::get('/card', 'RechargeController@rechargeCard')->name('recharge.card');
         Route::get('/history', 'RechargeController@history')->name('recharge.history');
         Route::post('/history', 'RechargeController@getHistory')->name('recharge.phistory');
+        Route::post('/transaction', 'RechargeController@getHistorywithtype')->name('recharge.transaction');
         Route::post('/scan', 'RechargeController@checkRechargeVCB')->name('recharge.scan');
+        Route::get('/getmomo', 'RechargeController@getTransactionMomo')->name('recharge.getmomo');
+        Route::post('/scan/momo', 'RechargeController@checkTransactionMomo')->name('recharge.scanmomo');
+        Route::post('/scan/updated', 'RechargeController@updateStatusMomo')->name('recharge.updated');
+
+
     });
 
     Route::post('/updateTransaction/{type}', 'FacebookController@updateTransaction')->name('faceUser.updateTransaction');
@@ -48,11 +55,17 @@ Route::group(['middleware' => 'login'], function () {
         Route::get('/buff-comment', 'FacebookController@buffCommentUser')->name('faceUser.cmt');
         Route::post('/buff-comment', 'FacebookController@postbuffComment')->name('faceUser.postComment');
         Route::post('/createListComment', 'FacebookController@createListComment')->name('faceUser.createListComment');
-
+        Route::get('/listcomment', 'FacebookController@getListComment')->name('faceUser.getListcomment');
+        Route::post('/{id}', 'FacebookController@getTotalComment')->name('faceUser.getTotalComment');
+        Route::post('/createListComment', 'FacebookController@createListComment')->name('faceUser.createListComment');
+        Route::get('/test', 'FacebookController@test')->name('faceUser.test');
         Route::get('/history/{type}', 'FacebookController@transaction_history')->name('faceUser.history');
         Route::post('/history/{type}', 'FacebookController@postHistory')->name('faceUser.phistory');
-
         Route::get('/buff-share', 'FacebookController@buffShareUser')->name('faceUser.share');
+        Route::get('/buff-livestream', 'FacebookController@buffLivestream')->name('faceUser.livestream');
+        Route::get('/buff-member-group', 'FacebookController@addMemberGroup')->name('faceUser.addmembergroup');
+
+
     });
     Route::group(['prefix' => 'facebook-fan-group'], function (){
         Route::get('/buff-like-page', 'FacebookController@buffLikePage')->name('face.pagelike');

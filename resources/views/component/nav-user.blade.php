@@ -139,41 +139,41 @@
 
 
                     <div class="menu-item">
-                        <a class="menu-link" href="../">
+                        <router-link to="/facebook/buff-livestream" class="menu-link">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Tăng Mắt Livestream</span>
-                        </a>
+                        </router-link>
                     </div>
 
                     <div class="menu-item">
-                        <a class="menu-link" href="../">
+                        <router-link to="/facebook/buff-member-group" class="menu-link">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Tăng Member Group</span>
-                        </a>
+                        </router-link>
                     </div>
 
 
                     <div class="menu-item">
-                        <a class="menu-link" href="../">
+                        <router-link to="/facebook/buff-review-fanpage" class="menu-link">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Đánh Giá Fanpage</span>
-                        </a>
+                        </router-link>
                     </div>
 
 
                     <div class="menu-item">
-                        <a class="menu-link" href="../">
+                        <router-link to="/facebook/buff-view-video" class="menu-link">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Tăng View Video</span>
-                        </a>
+                        </router-link>
                     </div>
 
                 </div>
@@ -199,20 +199,20 @@
                 </span>
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
                     <div class="menu-item">
-                        <a class="menu-link" href="../">
+                        <router-link to="/facebook/vip-like" class="menu-link">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">VIP Like</span>
-                        </a>
+                        </router-link>
                     </div>
                     <div class="menu-item">
-                        <a class="menu-link" href="../">
+                        <router-link to="/facebook/vip-livestream" class="menu-link">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Vip Mắt Livestream</span>
-                        </a>
+                        </router-link>
                     </div>
                 </div>
             </div>
@@ -238,36 +238,36 @@
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
 
                     <div class="menu-item">
-                        <a class="menu-link" href="../">
+                        <router-link to="/instagram/buff-like" class="menu-link">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Tăng Like</span>
-                        </a>
+                        </router-link>
                     </div>
                     <div class="menu-item">
-                        <a class="menu-link" href="../">
+                        <router-link to="/instagram/buff-follow" class="menu-link">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Tăng Follow</span>
-                        </a>
+                        </router-link>
                     </div>
                     <div class="menu-item">
-                        <a class="menu-link" href="../">
+                        <router-link to="/instagram/buff-comment" class="menu-link">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Tăng Comment</span>
-                        </a>
+                        </router-link>
                     </div>
                     <div class="menu-item">
-                        <a class="menu-link" href="../">
+                        <router-link to="/instagram/buff-view" class="menu-link">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Tăng View Ảnh</span>
-                        </a>
+                        </router-link>
                     </div>
 
                 </div>
@@ -294,45 +294,45 @@
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
 
                     <div class="menu-item">
-                        <a class="menu-link" href="../">
+                        <router-link to="/tiktok/buff-like" class="menu-link">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Tăng Tim</span>
-                        </a>
+                            <span class="menu-title">Tăng Like</span>
+                        </router-link>
                     </div>
                     <div class="menu-item">
-                        <a class="menu-link" href="../">
+                        <router-link to="/tiktok/buff-follow" class="menu-link">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Tăng Follow</span>
-                        </a>
+                        </router-link>
                     </div>
                     <div class="menu-item">
-                        <a class="menu-link" href="../">
+                        <router-link to="/tiktok/buff-comment" class="menu-link">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Tăng Comment</span>
-                        </a>
+                        </router-link>
                     </div>
                     <div class="menu-item">
-                        <a class="menu-link" href="../">
+                        <router-link to="/tiktok/buff-share" class="menu-link">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Tăng Share</span>
-                        </a>
+                        </router-link>
                     </div>
 
                     <div class="menu-item">
-                        <a class="menu-link" href="../">
+                        <router-link to="/tiktok/buff-livestream" class="menu-link">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Tăng Mắt Livestream</span>
-                        </a>
+                        </router-link>
                     </div>
 
                 </div>
@@ -359,36 +359,36 @@
                 </span>
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
                     <div class="menu-item">
-                        <a class="menu-link" href="../">
+                        <router-link to="/youtube/buff-view" class="menu-link">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Tăng View</span>
-                        </a>
+                        </router-link>
                     </div>
                     <div class="menu-item">
-                        <a class="menu-link" href="../">
+                        <router-link to="/youtube/buff-like" class="menu-link">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Tăng Like</span>
-                        </a>
+                        </router-link>
                     </div>
                     <div class="menu-item">
-                        <a class="menu-link" href="../">
+                        <router-link to="/youtube/buff-follow" class="menu-link">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Tăng Sub/Follow</span>
-                        </a>
+                        </router-link>
                     </div>
                     <div class="menu-item">
-                        <a class="menu-link" href="../">
+                        <router-link to="/youtube/buff-view-4h" class="menu-link">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Tăng View 4000h</span>
-                        </a>
+                        </router-link>
                     </div>
                 </div>
             </div>
@@ -413,36 +413,20 @@
                 </span>
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
                     <div class="menu-item">
-                        <a class="menu-link" href="../">
-                            <span class="menu-bullet">
-                                <span class="bullet bullet-dot"></span>
-                            </span>
-                            <span class="menu-title">Tăng View</span>
-                        </a>
-                    </div>
-                    <div class="menu-item">
-                        <a class="menu-link" href="../">
+                        <router-link to="/shopee/buff-like" class="menu-link">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Tăng Like</span>
-                        </a>
+                        </router-link>
                     </div>
                     <div class="menu-item">
-                        <a class="menu-link" href="../">
+                        <router-link to="/shopee/buff-follow" class="menu-link">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Tăng Sub/Follow</span>
-                        </a>
-                    </div>
-                    <div class="menu-item">
-                        <a class="menu-link" href="../">
-                            <span class="menu-bullet">
-                                <span class="bullet bullet-dot"></span>
-                            </span>
-                            <span class="menu-title">Tăng View 4000h</span>
-                        </a>
+                            <span class="menu-title">Tăng Follow</span>
+                        </router-link>
                     </div>
                 </div>
             </div>
@@ -474,7 +458,7 @@
 
                 <!-- begin History -->
                 <div class="menu-item">
-                    <a class="menu-link" href="/">
+                    <router-link to="/history" class="menu-link">
                         <span class="menu-icon">
                             <span class="svg-icon svg-icon-primary svg-icon-2x">
                                 <!--begin::Svg Icon -->
@@ -490,16 +474,16 @@
 
                         </span>
                         <span class="menu-title">Lịch Sử Đơn Hàng</span>
-                    </a>
+                    </router-link>
                 </div>
                 <!-- //end History -->
 
                 <!-- begin Price Table  -->
                 <div class="menu-item">
-                    <a class="menu-link" href="/">
+                    <router-link to="/price-table" class="menu-link">
                         <span class="menu-icon">
                             <span class="svg-icon svg-icon-primary svg-icon-2x">
-                                <!--begin::Svg Icon--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                         <polygon points="0 0 24 0 24 24 0 24" />
                                         <path d="M3.52270623,14.028695 C2.82576459,13.3275941 2.82576459,12.19529 3.52270623,11.4941891 L11.6127629,3.54050571 C11.9489429,3.20999263 12.401513,3.0247814 12.8729533,3.0247814 L19.3274172,3.0247814 C20.3201611,3.0247814 21.124939,3.82955935 21.124939,4.82230326 L21.124939,11.2583059 C21.124939,11.7406659 20.9310733,12.2027862 20.5869271,12.5407722 L12.5103155,20.4728108 C12.1731575,20.8103442 11.7156477,21 11.2385688,21 C10.7614899,21 10.3039801,20.8103442 9.9668221,20.4728108 L3.52270623,14.028695 Z M16.9307214,9.01652093 C17.9234653,9.01652093 18.7282432,8.21174298 18.7282432,7.21899907 C18.7282432,6.22625516 17.9234653,5.42147721 16.9307214,5.42147721 C15.9379775,5.42147721 15.1331995,6.22625516 15.1331995,7.21899907 C15.1331995,8.21174298 15.9379775,9.01652093 16.9307214,9.01652093 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" />
@@ -509,7 +493,7 @@
                             </span>
                         </span>
                         <span class="menu-title">Bảng Giá Dịch Vụ</span>
-                    </a>
+                    </router-link>
                 </div>
                 <!--- //end Price table -->
             </div>
