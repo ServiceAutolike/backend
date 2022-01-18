@@ -5717,6 +5717,507 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/acounts/Dashboard.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/acounts/Dashboard.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      hasImage: false,
+      content: '',
+      loading: false,
+      dataToShow: {},
+      dataPost: [],
+      page: 1,
+      hide: true,
+      dataUser: Object,
+      total_recharge: 0,
+      total_recharge_month: 0,
+      total_recharge_year: 0
+    };
+  },
+  created: function created() {
+    this.loadMe();
+    this.loadNotification();
+  },
+  methods: {
+    formatNumber: function formatNumber(number) {
+      return Intl.NumberFormat().format(number);
+    },
+    timeAgo: function timeAgo(dateString) {
+      var date = new Date(dateString);
+      var DAY_IN_MS = 86400000; // 24 * 60 * 60 * 1000
+
+      var today = new Date();
+      var seconds = Math.round((today - date) / 1000);
+
+      if (seconds < 20) {
+        return 'Vừa xong';
+      } else if (seconds < 60) {
+        return '1 phút trước';
+      }
+
+      var minutes = Math.round(seconds / 60);
+
+      if (minutes < 60) {
+        return "".concat(minutes, " ph\xFAt tr\u01B0\u1EDBc");
+      }
+
+      var isToday = today.toDateString() === date.toDateString();
+
+      if (isToday) {
+        return 'Hôm nay';
+      }
+
+      var yesterday = new Date(today - DAY_IN_MS);
+      var isYesterday = yesterday.toDateString() === date.toDateString();
+
+      if (isYesterday) {
+        return 'Hôm qua';
+      }
+
+      var daysDiff = Math.round((today - date) / (1000 * 60 * 60 * 24));
+
+      if (daysDiff < 30) {
+        return "".concat(daysDiff, " ng\xE0y tr\u01B0\u1EDBc");
+      }
+
+      var monthsDiff = today.getMonth() - date.getMonth() + 12 * (today.getFullYear() - date.getFullYear());
+
+      if (monthsDiff < 12) {
+        return "".concat(monthsDiff, " th\xE1ng tr\u01B0\u1EDBc");
+      }
+
+      var yearsDiff = today.getYear() - date.getYear();
+      return "".concat(yearsDiff, " n\u0103m tr\u01B0\u1EDBc");
+    },
+    loadMe: function loadMe() {
+      var _this = this;
+
+      axios.post('/me').then(function (res) {
+        _this.dataUser = res.data.data;
+        _this.desc = "nap " + res.data.data.name;
+        _this.total_recharge = res.data.total_recharge;
+      })["catch"](function (e) {
+        console.log("Error Get Me");
+      });
+    },
+    handleLoadMore: function handleLoadMore($state) {
+      var _this2 = this;
+
+      this.loading = true;
+      axios.post('/loadPost', {
+        'page': this.page
+      }).then(function (res) {
+        return res.data;
+      }).then(function (res) {
+        $.each(res.data, function (key, value) {
+          _this2.dataPost.push(value);
+        });
+
+        if (res.data.length > 0) {
+          $state.loaded();
+        } else {
+          _this2.hide = false;
+        }
+      })["catch"](function (e) {
+        console.log("Load");
+      });
+      this.loading = false;
+      this.page = this.page + 1;
+    },
+    loadNotification: function loadNotification() {
+      axios.post('/loadNotification', {
+        'status': 'seen'
+      }).then(function (res) {
+        $.each(res.data, function (key, value) {
+          Swal.fire('Thông Báo', 'Bạn vừa nạp thành công ' + value.amount_end + " VNĐ qua Vietcombank", 'success');
+          axios.post('/updateNofitication', {
+            'id': value.id
+          }).then(function (res) {
+            console.log(res);
+          })["catch"](function (e) {
+            console.log("err");
+          });
+        });
+      })["catch"](function (e) {
+        console.log("err");
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/app/Support.vue?vue&type=script&lang=js&":
 /*!****************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/app/Support.vue?vue&type=script&lang=js& ***!
@@ -95634,6 +96135,1006 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/acounts/Dashboard.vue?vue&type=template&id=e9d75778&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/acounts/Dashboard.vue?vue&type=template&id=e9d75778& ***!
+  \**************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row g-5 g-xl-8" }, [
+    _c("div", { staticClass: "col-xl-7" }, [
+      _c(
+        "div",
+        { attrs: { id: "post" } },
+        [
+          _vm._l(_vm.dataPost, function (getpostData) {
+            return _c(
+              "div",
+              { key: getpostData.id, staticClass: "card mb-5 mb-xl-8" },
+              [
+                _vm.loading
+                  ? _c("LoadingPage")
+                  : _c("div", { staticClass: "card-body pb-0" }, [
+                      _c(
+                        "div",
+                        { staticClass: "d-flex align-items-center mb-5" },
+                        [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "d-flex align-items-center flex-grow-1",
+                            },
+                            [
+                              _c(
+                                "div",
+                                { staticClass: "symbol symbol-45px me-5" },
+                                [
+                                  _c("img", {
+                                    attrs: {
+                                      src: "/avatar/img_avatar.png",
+                                      alt: "",
+                                    },
+                                  }),
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "d-flex flex-column" }, [
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass:
+                                      "text-gray-900 text-hover-primary fs-6 fw-bolder",
+                                  },
+                                  [_vm._v("Quản Trị Viên")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "span",
+                                  { staticClass: "text-gray-400 fw-bold" },
+                                  [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.timeAgo(getpostData.created_at)
+                                      )
+                                    ),
+                                  ]
+                                ),
+                              ]),
+                            ]
+                          ),
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "mb-5" }, [
+                        _c(
+                          "p",
+                          {
+                            staticClass: "text-gray-800 fw-normal mb-5",
+                            domProps: {
+                              innerHTML: _vm._s(getpostData.content),
+                            },
+                          },
+                          [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(getpostData.content) +
+                                "\n                        "
+                            ),
+                          ]
+                        ),
+                      ]),
+                    ]),
+              ],
+              1
+            )
+          }),
+          _vm._v(" "),
+          _vm.hide
+            ? _c(
+                "div",
+                { staticClass: "loadmore" },
+                [
+                  _c("infinite-loading", {
+                    on: {
+                      distance: function ($event) {
+                        1
+                      },
+                      infinite: _vm.handleLoadMore,
+                    },
+                  }),
+                ],
+                1
+              )
+            : _vm._e(),
+        ],
+        2
+      ),
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-xl-5" }, [
+      _c(
+        "div",
+        { staticClass: "card mb-5 mb-xl-8" },
+        [
+          _vm.loading
+            ? _c("LoadingPage")
+            : _c("div", { staticClass: "card-body p-0" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "px-9 pt-7 card-rounded h-275px w-100 bg-success",
+                  },
+                  [
+                    _c("div", { staticClass: "d-flex flex-stack" }, [
+                      _c(
+                        "h3",
+                        { staticClass: "m-0 text-white fw-bolder fs-3" },
+                        [_vm._v("Tài Khoản")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "ms-1" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "btn btn-sm btn-icon btn-color-white btn-active-white btn-active-color-success border-0 me-n3",
+                            attrs: {
+                              type: "button",
+                              "data-kt-menu-trigger": "click",
+                              "data-kt-menu-placement": "bottom-end",
+                            },
+                          },
+                          [
+                            _c("span", { staticClass: "svg-icon svg-icon-2" }, [
+                              _c(
+                                "svg",
+                                {
+                                  attrs: {
+                                    xmlns: "http://www.w3.org/2000/svg",
+                                    width: "24px",
+                                    height: "24px",
+                                    viewBox: "0 0 24 24",
+                                  },
+                                },
+                                [
+                                  _c(
+                                    "g",
+                                    {
+                                      attrs: {
+                                        stroke: "none",
+                                        "stroke-width": "1",
+                                        fill: "none",
+                                        "fill-rule": "evenodd",
+                                      },
+                                    },
+                                    [
+                                      _c("rect", {
+                                        attrs: {
+                                          x: "5",
+                                          y: "5",
+                                          width: "5",
+                                          height: "5",
+                                          rx: "1",
+                                          fill: "#000000",
+                                        },
+                                      }),
+                                      _vm._v(" "),
+                                      _c("rect", {
+                                        attrs: {
+                                          x: "14",
+                                          y: "5",
+                                          width: "5",
+                                          height: "5",
+                                          rx: "1",
+                                          fill: "#000000",
+                                          opacity: "0.3",
+                                        },
+                                      }),
+                                      _vm._v(" "),
+                                      _c("rect", {
+                                        attrs: {
+                                          x: "5",
+                                          y: "14",
+                                          width: "5",
+                                          height: "5",
+                                          rx: "1",
+                                          fill: "#000000",
+                                          opacity: "0.3",
+                                        },
+                                      }),
+                                      _vm._v(" "),
+                                      _c("rect", {
+                                        attrs: {
+                                          x: "14",
+                                          y: "14",
+                                          width: "5",
+                                          height: "5",
+                                          rx: "1",
+                                          fill: "#000000",
+                                          opacity: "0.3",
+                                        },
+                                      }),
+                                    ]
+                                  ),
+                                ]
+                              ),
+                            ]),
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-bold w-200px py-3",
+                            attrs: { "data-kt-menu": "true" },
+                          },
+                          [
+                            _c("div", { staticClass: "menu-item px-3" }, [
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "menu-content text-muted pb-2 px-3 fs-7 text-uppercase",
+                                },
+                                [_vm._v("Nạp Tiền")]
+                              ),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "menu-item px-3" }, [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "menu-link px-3",
+                                  attrs: { href: "#" },
+                                },
+                                [_vm._v("Thẻ Ngân Hàng")]
+                              ),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "menu-item px-3" }, [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "menu-link flex-stack px-3",
+                                  attrs: { href: "#" },
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                        Nạp Ví Momo\n                                    "
+                                  ),
+                                ]
+                              ),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "menu-item px-3" }, [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "menu-link px-3",
+                                  attrs: { href: "#" },
+                                },
+                                [_vm._v("Thẻ Cào Điện Thoại")]
+                              ),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "menu-item px-3 my-1" }, [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "menu-link px-3",
+                                  attrs: { href: "#" },
+                                },
+                                [_vm._v("Lịch Sử Nạp Tiền")]
+                              ),
+                            ]),
+                          ]
+                        ),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "d-flex text-center flex-column text-white pt-8",
+                      },
+                      [
+                        _c("span", { staticClass: "fw-bold fs-7" }, [
+                          _vm._v("Số Dư Hiện Tại"),
+                        ]),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "fw-bolder fs-2x pt-1" }, [
+                          _vm._v(
+                            _vm._s(_vm.formatNumber(_vm.dataUser.point)) +
+                              " VNĐ"
+                          ),
+                        ]),
+                      ]
+                    ),
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "bg-body shadow-sm card-rounded mx-9 mb-9 px-6 py-9 position-relative z-index-1",
+                    staticStyle: { "margin-top": "-100px" },
+                  },
+                  [
+                    _c(
+                      "div",
+                      { staticClass: "d-flex align-items-center mb-6" },
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "symbol symbol-45px w-40px me-5" },
+                          [
+                            _c(
+                              "span",
+                              { staticClass: "symbol-label bg-lighten" },
+                              [
+                                _c(
+                                  "span",
+                                  { staticClass: "svg-icon svg-icon-1" },
+                                  [
+                                    _c(
+                                      "svg",
+                                      {
+                                        attrs: {
+                                          xmlns: "http://www.w3.org/2000/svg",
+                                          width: "24",
+                                          height: "24",
+                                          viewBox: "0 0 24 24",
+                                          fill: "none",
+                                        },
+                                      },
+                                      [
+                                        _c("path", {
+                                          attrs: {
+                                            opacity: "0.3",
+                                            d: "M18.4 5.59998C21.9 9.09998 21.9 14.8 18.4 18.3C14.9 21.8 9.2 21.8 5.7 18.3L18.4 5.59998Z",
+                                            fill: "black",
+                                          },
+                                        }),
+                                        _vm._v(" "),
+                                        _c("path", {
+                                          attrs: {
+                                            d: "M12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2ZM19.9 11H13V8.8999C14.9 8.6999 16.7 8.00005 18.1 6.80005C19.1 8.00005 19.7 9.4 19.9 11ZM11 19.8999C9.7 19.6999 8.39999 19.2 7.39999 18.5C8.49999 17.7 9.7 17.2001 11 17.1001V19.8999ZM5.89999 6.90002C7.39999 8.10002 9.2 8.8 11 9V11.1001H4.10001C4.30001 9.4001 4.89999 8.00002 5.89999 6.90002ZM7.39999 5.5C8.49999 4.7 9.7 4.19998 11 4.09998V7C9.7 6.8 8.39999 6.3 7.39999 5.5ZM13 17.1001C14.3 17.3001 15.6 17.8 16.6 18.5C15.5 19.3 14.3 19.7999 13 19.8999V17.1001ZM13 4.09998C14.3 4.29998 15.6 4.8 16.6 5.5C15.5 6.3 14.3 6.80002 13 6.90002V4.09998ZM4.10001 13H11V15.1001C9.1 15.3001 7.29999 16 5.89999 17.2C4.89999 16 4.30001 14.6 4.10001 13ZM18.1 17.1001C16.6 15.9001 14.8 15.2 13 15V12.8999H19.9C19.7 14.5999 19.1 16.0001 18.1 17.1001Z",
+                                            fill: "black",
+                                          },
+                                        }),
+                                      ]
+                                    ),
+                                  ]
+                                ),
+                              ]
+                            ),
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "d-flex align-items-center flex-wrap w-100",
+                          },
+                          [
+                            _c(
+                              "div",
+                              { staticClass: "mb-1 pe-3 flex-grow-1" },
+                              [
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "fs-5 text-gray-800 text-hover-primary fw-bolder",
+                                  },
+                                  [_vm._v("Tổng Nạp")]
+                                ),
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "d-flex align-items-center" },
+                              [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "fw-bolder fs-5 text-gray-800 pe-1",
+                                  },
+                                  [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.formatNumber(_vm.total_recharge)
+                                      ) + " VNĐ"
+                                    ),
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "svg-icon svg-icon-5 svg-icon-success ms-1",
+                                  },
+                                  [
+                                    _c(
+                                      "svg",
+                                      {
+                                        attrs: {
+                                          xmlns: "http://www.w3.org/2000/svg",
+                                          width: "24",
+                                          height: "24",
+                                          viewBox: "0 0 24 24",
+                                          fill: "none",
+                                        },
+                                      },
+                                      [
+                                        _c("rect", {
+                                          attrs: {
+                                            opacity: "0.5",
+                                            x: "13",
+                                            y: "6",
+                                            width: "13",
+                                            height: "2",
+                                            rx: "1",
+                                            transform: "rotate(90 13 6)",
+                                            fill: "black",
+                                          },
+                                        }),
+                                        _vm._v(" "),
+                                        _c("path", {
+                                          attrs: {
+                                            d: "M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z",
+                                            fill: "black",
+                                          },
+                                        }),
+                                      ]
+                                    ),
+                                  ]
+                                ),
+                              ]
+                            ),
+                          ]
+                        ),
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "d-flex align-items-center mb-6" },
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "symbol symbol-45px w-40px me-5" },
+                          [
+                            _c(
+                              "span",
+                              { staticClass: "symbol-label bg-lighten" },
+                              [
+                                _c(
+                                  "span",
+                                  { staticClass: "svg-icon svg-icon-1" },
+                                  [
+                                    _c(
+                                      "svg",
+                                      {
+                                        attrs: {
+                                          xmlns: "http://www.w3.org/2000/svg",
+                                          width: "24",
+                                          height: "24",
+                                          viewBox: "0 0 24 24",
+                                          fill: "none",
+                                        },
+                                      },
+                                      [
+                                        _c("rect", {
+                                          attrs: {
+                                            x: "2",
+                                            y: "2",
+                                            width: "9",
+                                            height: "9",
+                                            rx: "2",
+                                            fill: "black",
+                                          },
+                                        }),
+                                        _vm._v(" "),
+                                        _c("rect", {
+                                          attrs: {
+                                            opacity: "0.3",
+                                            x: "13",
+                                            y: "2",
+                                            width: "9",
+                                            height: "9",
+                                            rx: "2",
+                                            fill: "black",
+                                          },
+                                        }),
+                                        _vm._v(" "),
+                                        _c("rect", {
+                                          attrs: {
+                                            opacity: "0.3",
+                                            x: "13",
+                                            y: "13",
+                                            width: "9",
+                                            height: "9",
+                                            rx: "2",
+                                            fill: "black",
+                                          },
+                                        }),
+                                        _vm._v(" "),
+                                        _c("rect", {
+                                          attrs: {
+                                            opacity: "0.3",
+                                            x: "2",
+                                            y: "13",
+                                            width: "9",
+                                            height: "9",
+                                            rx: "2",
+                                            fill: "black",
+                                          },
+                                        }),
+                                      ]
+                                    ),
+                                  ]
+                                ),
+                              ]
+                            ),
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "d-flex align-items-center flex-wrap w-100",
+                          },
+                          [
+                            _c(
+                              "div",
+                              { staticClass: "mb-1 pe-3 flex-grow-1" },
+                              [
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "fs-5 text-gray-800 text-hover-primary fw-bolder",
+                                  },
+                                  [_vm._v("Tháng Này")]
+                                ),
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "d-flex align-items-center" },
+                              [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "fw-bolder fs-5 text-gray-800 pe-1",
+                                  },
+                                  [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.formatNumber(
+                                          _vm.total_recharge_month
+                                        )
+                                      ) + " VNĐ"
+                                    ),
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "svg-icon svg-icon-5 svg-icon-danger ms-1",
+                                  },
+                                  [
+                                    _c(
+                                      "svg",
+                                      {
+                                        attrs: {
+                                          xmlns: "http://www.w3.org/2000/svg",
+                                          width: "24",
+                                          height: "24",
+                                          viewBox: "0 0 24 24",
+                                          fill: "none",
+                                        },
+                                      },
+                                      [
+                                        _c("rect", {
+                                          attrs: {
+                                            opacity: "0.5",
+                                            x: "11",
+                                            y: "18",
+                                            width: "13",
+                                            height: "2",
+                                            rx: "1",
+                                            transform: "rotate(-90 11 18)",
+                                            fill: "black",
+                                          },
+                                        }),
+                                        _vm._v(" "),
+                                        _c("path", {
+                                          attrs: {
+                                            d: "M11.4343 15.4343L7.25 11.25C6.83579 10.8358 6.16421 10.8358 5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75L11.2929 18.2929C11.6834 18.6834 12.3166 18.6834 12.7071 18.2929L18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25C17.8358 10.8358 17.1642 10.8358 16.75 11.25L12.5657 15.4343C12.2533 15.7467 11.7467 15.7467 11.4343 15.4343Z",
+                                            fill: "black",
+                                          },
+                                        }),
+                                      ]
+                                    ),
+                                  ]
+                                ),
+                              ]
+                            ),
+                          ]
+                        ),
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "d-flex align-items-center mb-6" },
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "symbol symbol-45px w-40px me-5" },
+                          [
+                            _c(
+                              "span",
+                              { staticClass: "symbol-label bg-lighten" },
+                              [
+                                _c(
+                                  "span",
+                                  { staticClass: "svg-icon svg-icon-1" },
+                                  [
+                                    _c(
+                                      "svg",
+                                      {
+                                        attrs: {
+                                          xmlns: "http://www.w3.org/2000/svg",
+                                          width: "24",
+                                          height: "24",
+                                          viewBox: "0 0 24 24",
+                                          fill: "none",
+                                        },
+                                      },
+                                      [
+                                        _c("path", {
+                                          attrs: {
+                                            opacity: "0.3",
+                                            d: "M15 19H7C5.9 19 5 18.1 5 17V7C5 5.9 5.9 5 7 5H15C16.1 5 17 5.9 17 7V17C17 18.1 16.1 19 15 19Z",
+                                            fill: "black",
+                                          },
+                                        }),
+                                        _vm._v(" "),
+                                        _c("path", {
+                                          attrs: {
+                                            d: "M8.5 2H13.4C14 2 14.5 2.4 14.6 3L14.9 5H6.89999L7.2 3C7.4 2.4 7.9 2 8.5 2ZM7.3 21C7.4 21.6 7.9 22 8.5 22H13.4C14 22 14.5 21.6 14.6 21L14.9 19H6.89999L7.3 21ZM18.3 10.2C18.5 9.39995 18.5 8.49995 18.3 7.69995C18.2 7.29995 17.8 6.90002 17.3 6.90002H17V10.9H17.3C17.8 11 18.2 10.7 18.3 10.2Z",
+                                            fill: "black",
+                                          },
+                                        }),
+                                      ]
+                                    ),
+                                  ]
+                                ),
+                              ]
+                            ),
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "d-flex align-items-center flex-wrap w-100",
+                          },
+                          [
+                            _c(
+                              "div",
+                              { staticClass: "mb-1 pe-3 flex-grow-1" },
+                              [
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "fs-5 text-gray-800 text-hover-primary fw-bolder",
+                                  },
+                                  [_vm._v("Đã Chi Tiêu")]
+                                ),
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "d-flex align-items-center" },
+                              [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "fw-bolder fs-5 text-gray-800 pe-1",
+                                  },
+                                  [_vm._v("0 VNĐ")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "svg-icon svg-icon-5 svg-icon-success ms-1",
+                                  },
+                                  [
+                                    _c(
+                                      "svg",
+                                      {
+                                        attrs: {
+                                          xmlns: "http://www.w3.org/2000/svg",
+                                          width: "24",
+                                          height: "24",
+                                          viewBox: "0 0 24 24",
+                                          fill: "none",
+                                        },
+                                      },
+                                      [
+                                        _c("rect", {
+                                          attrs: {
+                                            opacity: "0.5",
+                                            x: "13",
+                                            y: "6",
+                                            width: "13",
+                                            height: "2",
+                                            rx: "1",
+                                            transform: "rotate(90 13 6)",
+                                            fill: "black",
+                                          },
+                                        }),
+                                        _vm._v(" "),
+                                        _c("path", {
+                                          attrs: {
+                                            d: "M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z",
+                                            fill: "black",
+                                          },
+                                        }),
+                                      ]
+                                    ),
+                                  ]
+                                ),
+                              ]
+                            ),
+                          ]
+                        ),
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "d-flex align-items-center" }, [
+                      _c(
+                        "div",
+                        { staticClass: "symbol symbol-45px w-40px me-5" },
+                        [
+                          _c(
+                            "span",
+                            { staticClass: "symbol-label bg-lighten" },
+                            [
+                              _c(
+                                "span",
+                                { staticClass: "svg-icon svg-icon-1" },
+                                [
+                                  _c(
+                                    "svg",
+                                    {
+                                      attrs: {
+                                        xmlns: "http://www.w3.org/2000/svg",
+                                        width: "24",
+                                        height: "24",
+                                        viewBox: "0 0 24 24",
+                                        fill: "none",
+                                      },
+                                    },
+                                    [
+                                      _c("path", {
+                                        attrs: {
+                                          opacity: "0.3",
+                                          d: "M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22ZM12.5 18C12.5 17.4 12.6 17.5 12 17.5H8.5C7.9 17.5 8 17.4 8 18C8 18.6 7.9 18.5 8.5 18.5L12 18C12.6 18 12.5 18.6 12.5 18ZM16.5 13C16.5 12.4 16.6 12.5 16 12.5H8.5C7.9 12.5 8 12.4 8 13C8 13.6 7.9 13.5 8.5 13.5H15.5C16.1 13.5 16.5 13.6 16.5 13ZM12.5 8C12.5 7.4 12.6 7.5 12 7.5H8C7.4 7.5 7.5 7.4 7.5 8C7.5 8.6 7.4 8.5 8 8.5H12C12.6 8.5 12.5 8.6 12.5 8Z",
+                                          fill: "black",
+                                        },
+                                      }),
+                                      _vm._v(" "),
+                                      _c("rect", {
+                                        attrs: {
+                                          x: "7",
+                                          y: "17",
+                                          width: "6",
+                                          height: "2",
+                                          rx: "1",
+                                          fill: "black",
+                                        },
+                                      }),
+                                      _vm._v(" "),
+                                      _c("rect", {
+                                        attrs: {
+                                          x: "7",
+                                          y: "12",
+                                          width: "10",
+                                          height: "2",
+                                          rx: "1",
+                                          fill: "black",
+                                        },
+                                      }),
+                                      _vm._v(" "),
+                                      _c("rect", {
+                                        attrs: {
+                                          x: "7",
+                                          y: "7",
+                                          width: "6",
+                                          height: "2",
+                                          rx: "1",
+                                          fill: "black",
+                                        },
+                                      }),
+                                      _vm._v(" "),
+                                      _c("path", {
+                                        attrs: {
+                                          d: "M15 8H20L14 2V7C14 7.6 14.4 8 15 8Z",
+                                          fill: "black",
+                                        },
+                                      }),
+                                    ]
+                                  ),
+                                ]
+                              ),
+                            ]
+                          ),
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "d-flex align-items-center flex-wrap w-100",
+                        },
+                        [
+                          _c("div", { staticClass: "mb-1 pe-3 flex-grow-1" }, [
+                            _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "fs-5 text-gray-800 text-hover-primary fw-bolder",
+                              },
+                              [_vm._v("Cấp Độ")]
+                            ),
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "d-flex align-items-center" },
+                            [
+                              _c(
+                                "span",
+                                {
+                                  staticClass:
+                                    "fw-bolder fs-5 pe-1 text-warning",
+                                },
+                                [_vm._v("Thành Viên")]
+                              ),
+                            ]
+                          ),
+                        ]
+                      ),
+                    ]),
+                  ]
+                ),
+              ]),
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "card bgi-no-repeat mb-xl-8",
+          staticStyle: {
+            height: "300px",
+            "background-position": "right top",
+            "background-size": "30% auto",
+            "background-image":
+              "url('/Backend-Assets/media/svg/shapes//abstract-2.svg')",
+          },
+        },
+        [
+          _vm._m(0),
+          _vm._v(" "),
+          _vm.loading
+            ? _c("LoadingPage")
+            : _c("div", { staticClass: "card-body overflow-scroll" }, [
+                _c("div", { staticClass: "postNoti" }, [
+                  _c("div", { staticClass: "fw-bolder text-primary" }, [
+                    _vm._v("03 May 2020"),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-gray-800 fw-normal mb-5" }, [
+                    _vm._v(
+                      "Bạn vừa nạp 50,000 VNĐ qua cổng thanh toán Vietcombank"
+                    ),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "postNoti" }, [
+                  _c("div", { staticClass: "fw-bolder text-primary" }, [
+                    _vm._v("03 Jul 2021"),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-gray-800 fw-normal mb-5" }, [
+                    _vm._v(
+                      "Bạn vừa tạo dịch vụ Tăng Like Bài Viết với giá 12,000 VNĐ"
+                    ),
+                  ]),
+                ]),
+              ]),
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _vm._m(1),
+    ]),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Thông Báo")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card mb-5 mb-xl-8" }, [
+      _c("div", { staticClass: "card-header border-0 pt-5" }, [
+        _c("h3", { staticClass: "card-title align-items-start flex-column" }, [
+          _c("span", { staticClass: "card-label fw-bolder fs-3 mb-1" }, [
+            _vm._v("Thống Kê"),
+          ]),
+        ]),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [
+        _c("div", {
+          staticStyle: { height: "300px" },
+          attrs: { id: "kt_charts_widget_2_chart" },
+        }),
+      ]),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/app/Support.vue?vue&type=template&id=4640763b&":
 /*!********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/app/Support.vue?vue&type=template&id=4640763b& ***!
@@ -116839,17 +118340,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/pages/Dashboard.vue":
-/*!*****************************************************!*\
-  !*** ./resources/js/components/pages/Dashboard.vue ***!
-  \*****************************************************/
-/*! exports provided: default */
-/***/ (function(module, exports) {
-
-throw new Error("Module build failed (from ./node_modules/vue-loader/lib/index.js):\nError: ENOENT: no such file or directory, open '/Applications/XAMPP/xamppfiles/htdocs/backend/resources/js/components/pages/Dashboard.vue'");
-
-/***/ }),
-
 /***/ "./resources/js/components/pages/FacebookBuffComment.vue":
 /*!***************************************************************!*\
   !*** ./resources/js/components/pages/FacebookBuffComment.vue ***!
@@ -117190,6 +118680,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TransactionHistory_vue_vue_type_template_id_e4ee5228___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TransactionHistory_vue_vue_type_template_id_e4ee5228___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/acounts/Dashboard.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/pages/acounts/Dashboard.vue ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Dashboard_vue_vue_type_template_id_e9d75778___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Dashboard.vue?vue&type=template&id=e9d75778& */ "./resources/js/components/pages/acounts/Dashboard.vue?vue&type=template&id=e9d75778&");
+/* harmony import */ var _Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Dashboard.vue?vue&type=script&lang=js& */ "./resources/js/components/pages/acounts/Dashboard.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Dashboard_vue_vue_type_template_id_e9d75778___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Dashboard_vue_vue_type_template_id_e9d75778___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/pages/acounts/Dashboard.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/acounts/Dashboard.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/pages/acounts/Dashboard.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Dashboard.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/acounts/Dashboard.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/acounts/Dashboard.vue?vue&type=template&id=e9d75778&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/pages/acounts/Dashboard.vue?vue&type=template&id=e9d75778& ***!
+  \********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_e9d75778___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Dashboard.vue?vue&type=template&id=e9d75778& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/acounts/Dashboard.vue?vue&type=template&id=e9d75778&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_e9d75778___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_e9d75778___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -117953,7 +119512,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_pages_FacebookBuffSub__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/pages/FacebookBuffSub */ "./resources/js/components/pages/FacebookBuffSub.vue");
 /* harmony import */ var _components_pages_FacebookBuffComment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/pages/FacebookBuffComment */ "./resources/js/components/pages/FacebookBuffComment.vue");
 /* harmony import */ var _components_pages_FacebookBuffShare__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/pages/FacebookBuffShare */ "./resources/js/components/pages/FacebookBuffShare.vue");
-/* harmony import */ var _components_pages_Dashboard__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/pages/Dashboard */ "./resources/js/components/pages/Dashboard.vue");
+/* harmony import */ var _components_pages_acounts_Dashboard__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/pages/acounts/Dashboard */ "./resources/js/components/pages/acounts/Dashboard.vue");
 /* harmony import */ var _components_pages_recharge_Bank__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/pages/recharge/Bank */ "./resources/js/components/pages/recharge/Bank.vue");
 /* harmony import */ var _components_pages_recharge_Momo__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/pages/recharge/Momo */ "./resources/js/components/pages/recharge/Momo.vue");
 /* harmony import */ var _components_pages_recharge_Card__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/pages/recharge/Card */ "./resources/js/components/pages/recharge/Card.vue");
@@ -118004,7 +119563,7 @@ var routes = [// Recharge
 {
   path: '/home',
   name: 'Dashboard',
-  component: _components_pages_Dashboard__WEBPACK_IMPORTED_MODULE_5__["default"]
+  component: _components_pages_acounts_Dashboard__WEBPACK_IMPORTED_MODULE_5__["default"]
 }, {
   path: '/facebook/history/:type',
   name: 'Transaction History',
