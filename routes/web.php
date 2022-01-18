@@ -22,7 +22,7 @@ Route::group(['prefix' => 'account'], function (){
 
 });
 Route::group(['middleware' => 'login'], function () {
-    Route::get('/home', 'HomeController@dash')->name('home.dashboard');
+    Route::get('/home', 'HomeController@dash')->name('home.dash');
     Route::post('/loadNotification', 'HomeController@loadNotification')->name('home.test');
     Route::post('/updateNofitication', 'HomeController@updateNotification')->name('home.updated');
     Route::post('/me', 'HomeController@loadMe')->name('home.me');
