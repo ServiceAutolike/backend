@@ -61,38 +61,7 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="notice d-flex bg-light-warning rounded border-warning border border-dashed p-6">
-                            <!--begin::Icon-->
-                            <!--begin::Svg Icon | path: icons/duotune/general/gen044.svg-->
-                            <span class="svg-icon svg-icon-2tx svg-icon-warning me-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                     fill="none">
-                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black"></rect>
-                                    <rect x="11" y="14" width="7" height="2" rx="1" transform="rotate(-90 11 14)"
-                                          fill="black"></rect>
-                                    <rect x="11" y="17" width="2" height="2" rx="1" transform="rotate(-90 11 17)"
-                                          fill="black"></rect>
-                                </svg>
-                            </span>
-                            <!--end::Svg Icon-->
-                            <!--end::Icon-->
-                            <!--begin::Wrapper-->
-                            <div class="d-flex flex-stack flex-grow-1">
-                                <!--begin::Content-->
-                                <div class="fw-bold">
-                                    <h4 class="text-gray-900 fw-bolder">Lưu ý!</h4>
-                                    <div class="fs-6 text-gray-700">
-                                        <p>Nạp sai cú pháp hoặc sai số tài khoản sẽ bị trừ 10% phí giao dịch, tối đa trừ 50.000 VNĐ. Ví dụ nạp sai 100.000 trừ 10.000, 200.000 trừ 20.000 , 500.000 trừ 50.000, 1 triệu trừ 50.000, 10 triệu trừ 50.000...</p>
-                                    </div>
-                                </div>
-                                <!--end::Content-->
-                            </div>
-                            <!--end::Wrapper-->
-                        </div>
-
                     </div>
-
                     <div class="card-footer">
                         <p><small><i><span class="text-danger">*</span> Bạn có thể xác nhận "<b class="text-danger">Tôi Đã Chuyển Tiền</b>" để hệ thống kiểm tra thủ công hoặc bạn có thể đợi 5-10 phút để hệ thống tự cập nhật số dư cho bạn.
                         </i></small></p>
@@ -144,63 +113,36 @@
                 <!--end::Body-->
             </div>
 
-            <div class="card mt-4">
-                <div class="card-header collapsible cursor-pointer rotate" data-bs-toggle="collapse"
-                     data-bs-target="#history">
-                    <h3 class="card-title">Lịch Sử Nạp Tiền</h3>
-                    <div class="card-toolbar rotate-180">
-                        <span class="svg-icon svg-icon-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                 fill="none">
-                                <rect opacity="0.5" x="11" y="18" width="13" height="2" rx="1"
-                                      transform="rotate(-90 11 18)" fill="black"></rect>
-                                <path
-                                    d="M11.4343 15.4343L7.25 11.25C6.83579 10.8358 6.16421 10.8358 5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75L11.2929 18.2929C11.6834 18.6834 12.3166 18.6834 12.7071 18.2929L18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25C17.8358 10.8358 17.1642 10.8358 16.75 11.25L12.5657 15.4343C12.2533 15.7467 11.7467 15.7467 11.4343 15.4343Z"
-                                    fill="black"></path>
-                            </svg>
-                        </span>
+            <div class="notice d-flex bg-light-warning rounded border-warning border border-dashed p-6">
+                <!--begin::Icon-->
+                <!--begin::Svg Icon | path: icons/duotune/general/gen044.svg-->
+                <span class="svg-icon svg-icon-2tx svg-icon-warning me-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                     fill="none">
+                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black"></rect>
+                                    <rect x="11" y="14" width="7" height="2" rx="1" transform="rotate(-90 11 14)"
+                                          fill="black"></rect>
+                                    <rect x="11" y="17" width="2" height="2" rx="1" transform="rotate(-90 11 17)"
+                                          fill="black"></rect>
+                                </svg>
+                            </span>
+                <!--end::Svg Icon-->
+                <!--end::Icon-->
+                <!--begin::Wrapper-->
+                <div class="d-flex flex-stack flex-grow-1">
+                    <!--begin::Content-->
+                    <div class="fw-bold">
+                        <h4 class="text-gray-900 fw-bolder">Lưu ý!</h4>
+                        <div class="fs-6 text-gray-700">
+                            <p>- Nạp sai cú pháp hoặc sai số tài khoản sẽ bị trừ 10% phí giao dịch, tối đa trừ 50.000 VNĐ. Ví dụ nạp sai 100.000 trừ 10.000, 200.000 trừ 20.000 , 500.000 trừ 50.000, 1 triệu trừ 50.000, 10 triệu trừ 50.000...</p>
+                        </div>
                     </div>
+                    <!--end::Content-->
                 </div>
-
-                <div class="card-body py-3">
-                    <LoadingPage v-if="loading"></LoadingPage>
-                    <!--begin::Table container-->
-                    <div v-else class="table-responsive">
-                        <!--begin::Table-->
-                        <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
-                            <!--begin::Table head-->
-                            <thead>
-                            <tr class="fw-bolder text-muted">
-                                <th>Thời gian</th>
-                                <th>Số tiền</th>
-                                <th>Trạng thái</th>
-                            </tr>
-                            </thead>
-                            <!--end::Table head-->
-                            <!--begin::Table body-->
-                            <tbody>
-                            <tr v-for="item in dataTransaction">
-                                <td>
-                                    <span class="time text-muted">{{ timeAgo(item.created_at) }}</span>
-                                </td>
-                                <td>
-                                    <span class="fw-bold d-block fs-7">+{{ formatNumber(item.amount_end) }} VNĐ</span>
-                                </td>
-                                <td>
-                                    <span class="badge badge-light-success" v-if="item.status == 'Updated'">Thành công</span>
-                                    <span class="badge badge-light-success" v-if="item.status == 'New'">Thành công</span>
-
-                                </td>
-                            </tr>
-
-                            </tbody>
-                            <!--end::Table body-->
-                        </table>
-                        <!--end::Table-->
-                    </div>
-                    <!--end::Table container-->
-                </div>
+                <!--end::Wrapper-->
             </div>
+
+
         </div>
     </div>
 </template>
@@ -210,7 +152,6 @@ export default {
         return {
             dataUser: Object,
             dataScan: Object,
-            dataTransaction: Object,
             txtBtn: 'Tôi Đã Chuyển Tiền',
             loading: true,
             total: '',
@@ -223,37 +164,12 @@ export default {
             total_recharge_year: 0,
         }
     },
-    created() {
+    mounted() {
         this.loadMe()
-        this.loadTransaction()
     },
     methods: {
-        loadTransaction() {
-            axios.post('/recharge/transaction', {
-                params: {
-                    type: 'vcb'
-                }
-            }).then(res => {
-                this.loading = false
-                this.dataTransaction = res.data
-            })
-        },
-        updatedStatus() {
-            axios.post('/recharge/scan/updated',
-                {
-                    params: {
-                        type: 'vcb'
-                    }})
-                .then(res => {
-                    this.loading = false
-                    if(res.data.code) {
-                        return true
-                    }
-                    else {
-                        Swal.fire('Lỗi', 'Không thể cập nhật dữ liệu', 'error')
-                        return false
-                    }
-                })
+        formatNumber(num) {
+            return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
         },
         async scanRecharge() {
             toastr.success('Bắt đầu chạy tiến trình, vui lòng không thoát trang....')
@@ -271,12 +187,9 @@ export default {
                         this.isStatic = true
                         this.isClick = false
                         this.loadMe()
-                        this.updatedStatus()
-                        Swal.fire('Thông Báo', 'Bạn đã nạp thành công '+this.formatNumber(response.data.total)+ ' VND qua cổng thanh toán Vietcombank','success');
-                        break
-
+                        Swal.fire('Thông Báo', 'Bạn đã nạp thành công '+this.formatNumber(response.data.amount)+ ' VND','success');
                     } else {
-                        toastr.info('Đang kiểm tra thông tin chuyển khoản Ngân Hàng của bạn....')
+                        toastr.info('Đang kiểm tra thông tin chuyển khoản của bạn....')
                         continue
                     }
                 }
@@ -304,6 +217,7 @@ export default {
                 this.dataUser = res.data.data
                 this.desc = "nap "+res.data.data.name
                 this.total_recharge = res.data.total_recharge
+                setTimeout(() => this.loading = false, 400);
             }).catch(e => {
                 console.log("Error Get Me")
             })

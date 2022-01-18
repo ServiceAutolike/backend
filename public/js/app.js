@@ -8204,70 +8204,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       dataUser: Object,
       dataScan: Object,
-      dataTransaction: Object,
       txtBtn: 'Tôi Đã Chuyển Tiền',
       loading: true,
       total: '',
@@ -8280,43 +8221,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       total_recharge_year: 0
     };
   },
-  created: function created() {
+  mounted: function mounted() {
     this.loadMe();
-    this.loadTransaction();
   },
   methods: {
-    loadTransaction: function loadTransaction() {
-      var _this = this;
-
-      axios.post('/recharge/transaction', {
-        params: {
-          type: 'vcb'
-        }
-      }).then(function (res) {
-        _this.loading = false;
-        _this.dataTransaction = res.data;
-      });
-    },
-    updatedStatus: function updatedStatus() {
-      var _this2 = this;
-
-      axios.post('/recharge/scan/updated', {
-        params: {
-          type: 'vcb'
-        }
-      }).then(function (res) {
-        _this2.loading = false;
-
-        if (res.data.code) {
-          return true;
-        } else {
-          Swal.fire('Lỗi', 'Không thể cập nhật dữ liệu', 'error');
-          return false;
-        }
-      });
+    formatNumber: function formatNumber(num) {
+      return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     },
     scanRecharge: function scanRecharge() {
-      var _this3 = this;
+      var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var response;
@@ -8325,10 +8238,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 toastr.success('Bắt đầu chạy tiến trình, vui lòng không thoát trang....');
-                _this3.txtBtn = 'Đang kiểm tra...';
-                _this3.isDisabled = true;
-                _this3.isStatic = false;
-                _this3.isClick = true;
+                _this.txtBtn = 'Đang kiểm tra...';
+                _this.isDisabled = true;
+                _this.isStatic = false;
+                _this.isClick = true;
 
               case 5:
                 if (false) {}
@@ -8339,66 +8252,65 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 9:
                 response = _context.sent;
-                _this3.dataScan = response.data;
+                _this.dataScan = response.data;
 
                 if (!(response.data.status != 'error')) {
-                  _context.next = 22;
+                  _context.next = 20;
                   break;
                 }
 
-                _this3.txtBtn = 'Tôi Đã Chuyển Tiền';
-                _this3.isDisabled = false;
-                _this3.isStatic = true;
-                _this3.isClick = false;
+                _this.txtBtn = 'Tôi Đã Chuyển Tiền';
+                _this.isDisabled = false;
+                _this.isStatic = true;
+                _this.isClick = false;
 
-                _this3.loadMe();
+                _this.loadMe();
 
-                _this3.updatedStatus();
-
-                Swal.fire('Thông Báo', 'Bạn đã nạp thành công ' + _this3.formatNumber(response.data.total) + ' VND qua cổng thanh toán Vietcombank', 'success');
-                return _context.abrupt("break", 35);
-
-              case 22:
-                toastr.info('Đang kiểm tra thông tin chuyển khoản Ngân Hàng của bạn....');
-                return _context.abrupt("continue", 5);
-
-              case 24:
-                _context.next = 33;
+                Swal.fire('Thông Báo', 'Bạn đã nạp thành công ' + _this.formatNumber(response.data.amount) + ' VND', 'success');
+                _context.next = 22;
                 break;
 
-              case 26:
-                _context.prev = 26;
+              case 20:
+                toastr.info('Đang kiểm tra thông tin chuyển khoản của bạn....');
+                return _context.abrupt("continue", 5);
+
+              case 22:
+                _context.next = 31;
+                break;
+
+              case 24:
+                _context.prev = 24;
                 _context.t0 = _context["catch"](6);
                 toastr.error('Đã có lỗi xảy ra, tiến trình đã dừng....');
-                _this3.isDisabled = false;
-                _this3.isStatic = true;
-                _this3.isClick = false;
-                return _context.abrupt("break", 35);
+                _this.isDisabled = false;
+                _this.isStatic = true;
+                _this.isClick = false;
+                return _context.abrupt("break", 33);
 
-              case 33:
+              case 31:
                 _context.next = 5;
                 break;
 
-              case 35:
+              case 33:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[6, 26]]);
+        }, _callee, null, [[6, 24]]);
       }))();
     },
     copyURL: function copyURL(text) {
-      var _this4 = this;
+      var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                text = _this4.desc;
+                text = _this2.desc;
 
                 try {
-                  _this4.$refs.desc.select();
+                  _this2.$refs.desc.select();
 
                   document.execCommand('copy');
                   Swal.fire('Thông Báo', 'Đã sao chép thành công!', 'success');
@@ -8415,12 +8327,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     loadMe: function loadMe() {
-      var _this5 = this;
+      var _this3 = this;
 
       axios.post('/me').then(function (res) {
-        _this5.dataUser = res.data.data;
-        _this5.desc = "nap " + res.data.data.name;
-        _this5.total_recharge = res.data.total_recharge;
+        _this3.dataUser = res.data.data;
+        _this3.desc = "nap " + res.data.data.name;
+        _this3.total_recharge = res.data.total_recharge;
+        setTimeout(function () {
+          return _this3.loading = false;
+        }, 400);
       })["catch"](function (e) {
         console.log("Error Get Me");
       });
@@ -100533,96 +100448,6 @@ var render = function () {
                       ]),
                     ]),
                   ]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "notice d-flex bg-light-warning rounded border-warning border border-dashed p-6",
-                    },
-                    [
-                      _c(
-                        "span",
-                        {
-                          staticClass:
-                            "svg-icon svg-icon-2tx svg-icon-warning me-4",
-                        },
-                        [
-                          _c(
-                            "svg",
-                            {
-                              attrs: {
-                                xmlns: "http://www.w3.org/2000/svg",
-                                width: "24",
-                                height: "24",
-                                viewBox: "0 0 24 24",
-                                fill: "none",
-                              },
-                            },
-                            [
-                              _c("rect", {
-                                attrs: {
-                                  opacity: "0.3",
-                                  x: "2",
-                                  y: "2",
-                                  width: "20",
-                                  height: "20",
-                                  rx: "10",
-                                  fill: "black",
-                                },
-                              }),
-                              _vm._v(" "),
-                              _c("rect", {
-                                attrs: {
-                                  x: "11",
-                                  y: "14",
-                                  width: "7",
-                                  height: "2",
-                                  rx: "1",
-                                  transform: "rotate(-90 11 14)",
-                                  fill: "black",
-                                },
-                              }),
-                              _vm._v(" "),
-                              _c("rect", {
-                                attrs: {
-                                  x: "11",
-                                  y: "17",
-                                  width: "2",
-                                  height: "2",
-                                  rx: "1",
-                                  transform: "rotate(-90 11 17)",
-                                  fill: "black",
-                                },
-                              }),
-                            ]
-                          ),
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "d-flex flex-stack flex-grow-1" },
-                        [
-                          _c("div", { staticClass: "fw-bold" }, [
-                            _c(
-                              "h4",
-                              { staticClass: "text-gray-900 fw-bolder" },
-                              [_vm._v("Lưu ý!")]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "fs-6 text-gray-700" }, [
-                              _c("p", [
-                                _vm._v(
-                                  "Nạp sai cú pháp hoặc sai số tài khoản sẽ bị trừ 10% phí giao dịch, tối đa trừ 50.000 VNĐ. Ví dụ nạp sai 100.000 trừ 10.000, 200.000 trừ 20.000 , 500.000 trừ 50.000, 1 triệu trừ 50.000, 10 triệu trừ 50.000..."
-                                ),
-                              ]),
-                            ]),
-                          ]),
-                        ]
-                      ),
-                    ]
-                  ),
                 ]),
             _vm._v(" "),
             _c("div", { staticClass: "card-footer" }, [
@@ -100786,143 +100611,72 @@ var render = function () {
         1
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "card mt-4" }, [
-        _c(
-          "div",
-          {
-            staticClass: "card-header collapsible cursor-pointer rotate",
-            attrs: {
-              "data-bs-toggle": "collapse",
-              "data-bs-target": "#history",
-            },
-          },
-          [
-            _c("h3", { staticClass: "card-title" }, [
-              _vm._v("Lịch Sử Nạp Tiền"),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-toolbar rotate-180" }, [
-              _c("span", { staticClass: "svg-icon svg-icon-1" }, [
-                _c(
-                  "svg",
-                  {
-                    attrs: {
-                      xmlns: "http://www.w3.org/2000/svg",
-                      width: "24",
-                      height: "24",
-                      viewBox: "0 0 24 24",
-                      fill: "none",
-                    },
+      _c(
+        "div",
+        {
+          staticClass:
+            "notice d-flex bg-light-warning rounded border-warning border border-dashed p-6",
+        },
+        [
+          _c(
+            "span",
+            { staticClass: "svg-icon svg-icon-2tx svg-icon-warning me-4" },
+            [
+              _c(
+                "svg",
+                {
+                  attrs: {
+                    xmlns: "http://www.w3.org/2000/svg",
+                    width: "24",
+                    height: "24",
+                    viewBox: "0 0 24 24",
+                    fill: "none",
                   },
-                  [
-                    _c("rect", {
-                      attrs: {
-                        opacity: "0.5",
-                        x: "11",
-                        y: "18",
-                        width: "13",
-                        height: "2",
-                        rx: "1",
-                        transform: "rotate(-90 11 18)",
-                        fill: "black",
-                      },
-                    }),
-                    _vm._v(" "),
-                    _c("path", {
-                      attrs: {
-                        d: "M11.4343 15.4343L7.25 11.25C6.83579 10.8358 6.16421 10.8358 5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75L11.2929 18.2929C11.6834 18.6834 12.3166 18.6834 12.7071 18.2929L18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25C17.8358 10.8358 17.1642 10.8358 16.75 11.25L12.5657 15.4343C12.2533 15.7467 11.7467 15.7467 11.4343 15.4343Z",
-                        fill: "black",
-                      },
-                    }),
-                  ]
-                ),
-              ]),
-            ]),
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "card-body py-3" },
-          [
-            _vm.loading
-              ? _c("LoadingPage")
-              : _c("div", { staticClass: "table-responsive" }, [
-                  _c(
-                    "table",
-                    {
-                      staticClass:
-                        "table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3",
+                },
+                [
+                  _c("rect", {
+                    attrs: {
+                      opacity: "0.3",
+                      x: "2",
+                      y: "2",
+                      width: "20",
+                      height: "20",
+                      rx: "10",
+                      fill: "black",
                     },
-                    [
-                      _c("thead", [
-                        _c("tr", { staticClass: "fw-bolder text-muted" }, [
-                          _c("th", [_vm._v("Thời gian")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Số tiền")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Trạng thái")]),
-                        ]),
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "tbody",
-                        _vm._l(_vm.dataTransaction, function (item) {
-                          return _c("tr", [
-                            _c("td", [
-                              _c("span", { staticClass: "time text-muted" }, [
-                                _vm._v(_vm._s(_vm.timeAgo(item.created_at))),
-                              ]),
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _c(
-                                "span",
-                                { staticClass: "fw-bold d-block fs-7" },
-                                [
-                                  _vm._v(
-                                    "+" +
-                                      _vm._s(
-                                        _vm.formatNumber(item.amount_end)
-                                      ) +
-                                      " VNĐ"
-                                  ),
-                                ]
-                              ),
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [
-                              item.status == "Updated"
-                                ? _c(
-                                    "span",
-                                    {
-                                      staticClass: "badge badge-light-success",
-                                    },
-                                    [_vm._v("Thành công")]
-                                  )
-                                : _vm._e(),
-                              _vm._v(" "),
-                              item.status == "New"
-                                ? _c(
-                                    "span",
-                                    {
-                                      staticClass: "badge badge-light-success",
-                                    },
-                                    [_vm._v("Thành công")]
-                                  )
-                                : _vm._e(),
-                            ]),
-                          ])
-                        }),
-                        0
-                      ),
-                    ]
-                  ),
-                ]),
-          ],
-          1
-        ),
-      ]),
+                  }),
+                  _vm._v(" "),
+                  _c("rect", {
+                    attrs: {
+                      x: "11",
+                      y: "14",
+                      width: "7",
+                      height: "2",
+                      rx: "1",
+                      transform: "rotate(-90 11 14)",
+                      fill: "black",
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("rect", {
+                    attrs: {
+                      x: "11",
+                      y: "17",
+                      width: "2",
+                      height: "2",
+                      rx: "1",
+                      transform: "rotate(-90 11 17)",
+                      fill: "black",
+                    },
+                  }),
+                ]
+              ),
+            ]
+          ),
+          _vm._v(" "),
+          _vm._m(1),
+        ]
+      ),
     ]),
   ])
 }
@@ -100942,6 +100696,26 @@ var staticRenderFns = [
           _vm._v(
             '" để hệ thống kiểm tra thủ công hoặc bạn có thể đợi 5-10 phút để hệ thống tự cập nhật số dư cho bạn.\n                    '
           ),
+        ]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "d-flex flex-stack flex-grow-1" }, [
+      _c("div", { staticClass: "fw-bold" }, [
+        _c("h4", { staticClass: "text-gray-900 fw-bolder" }, [
+          _vm._v("Lưu ý!"),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "fs-6 text-gray-700" }, [
+          _c("p", [
+            _vm._v(
+              "- Nạp sai cú pháp hoặc sai số tài khoản sẽ bị trừ 10% phí giao dịch, tối đa trừ 50.000 VNĐ. Ví dụ nạp sai 100.000 trừ 10.000, 200.000 trừ 20.000 , 500.000 trừ 50.000, 1 triệu trừ 50.000, 10 triệu trừ 50.000..."
+            ),
+          ]),
         ]),
       ]),
     ])
