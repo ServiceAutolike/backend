@@ -34,7 +34,7 @@
 											</span>
 
                                     <!--end::Svg Icon-->
-                                    <input type="text" id="kt_filter_search" class="form-control form-control-sm w-150px ps-9" placeholder="Nhập ID bài viết" />
+                                    <input type="text" @keyup="changeUp" class="form-control form-control-sm w-150px ps-9" placeholder="Nhập ID bài viết" />
                                 </div>
                                 <!--end::Search-->
                                 <a href="/" class="btn btn-primary btn-sm">Tìm Kiếm</a>
@@ -49,46 +49,89 @@
                     <!--begin::Tab create-->
                     <div class="tab-pane fade" :class="{ 'active show': isActive('create') }" id="create">
                         <div class="card-body">
-                            <form method="POST">
+
                                 <input type="hidden" name="warranty" value="7" id="warranty"/>
                                 <input type="hidden" value="post" id="type_check"/>
                                 <div class="form-group">
-                                    <label for="user_id">Nhập ID hoặc URL trang cá nhân <span
+                                    <label for="post_id">Nhập ID hoặc URL bài viết <span
                                         class="text-danger">*</span></label>
                                     <div v-bind:class="{'spinner spinner-success spinner-right': loading_input}">
                                         <input type="text" v-bind:class="[activeClass, errorClass]" class="form-control"
-                                               id="user_id" v-model="user_id" placeholder="Nhập URL hoặc ID bài viết"
-                                               @change="findID(user_id)" required>
+                                               id="post_id" v-model="post_id" placeholder="Nhập URL hoặc ID bài viết"
+                                               @change="findID(post_id)" required>
                                     </div>
                                 </div>
-                                <div role="alert" class="alert alert-custom fade show mt-4 bg-green-3">
-                                    <div v-if="isResult">
-                                        <div class="cl-green mb-0">
-                                            <i>Kết quả tìm kiếm:</i><br>
-                                            ID của bạn là: <b class="text-danger">{{ idFB }}</b><br>
-                                            Tên Facebook: <b class="text-danger">{{ name }}</b>
+                            <div v-if="isResult">
+                                <div class="d-flex align-items-center rounded p-5 mb-7 alert-custom alert alert-success">
+                                    <!--begin::Icon-->
+                                    <div class="svg-icon svg-icon-success me-5">
+                                        <img :src=picture alt="">
+                                    </div>
+                                    <!--end::Icon-->
+                                    <!--begin::Title-->
+                                    <div class="flex-grow-1 me-2">
+                                        <span class="fw-bolder text-gray-800 text-hover-primary fs-6">{{ namefb }}</span>
+                                        <span class="text-muted fw-bold d-block">
+                                                {{ timeAgo(time) }}
+                                            </span>
+                                        <span class="content">{{ content }}</span>
+                                    </div>
+
+                                    <!--end::Title-->
+                                </div>
+                            </div>
+                                <div class="row align-items-center">
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label>Chọn bộ comment <span
+                                                class="text-danger">*</span>
+                                            </label>
+                                            <el-select v-model="id_comment" filterable placeholder="Chọn list bình luận" style="display: block;" @change="getTotalComment">
+                                                <el-option
+                                                    v-for="getAllComment in allcomment"
+                                                    :key="getAllComment.id"
+                                                    :label="getAllComment.name"
+                                                    :value="getAllComment.id_comment">
+                                                    <span style="float: left">{{ getAllComment.name }}</span>
+                                                    <span style="float: right; color: #8492a6; font-size: 13px">{{ getAllComment.total }} bình luận</span>
+                                                </el-option>
+                                            </el-select>
                                         </div>
-
                                     </div>
-                                    <div v-else class="cl-green mb-0">
-                                        Get ID Facebook từ Link nhanh <a href="https://fb-search.com/find-my-facebook-id" target="_blank" class="font-bold cl-green">tại đây</a><br />
-                                        Vui lòng công khai Theo dõi để Buff theo hướng dẫn dưới đây trước khi Order <a href="http://www.dungqb.com/2019/07/huong-dan-cong-khai-cac-thong-tin.html" target="_blank" class="font-bold cl-green">Click Tại Đây Để Xem Hướng Dẫn</a>
+                                    <div class="col-md-2">
+                                        <el-button type="primary" @click="dialogVisible = true"><i class="el-icon-circle-plus-outline color-white"></i> Tạo List Comment</el-button>
+                                        <el-dialog
+                                            title="Tạo List Comment"
+                                            :visible.sync="dialogVisible"
+                                            width="30%">
+                                            <el-form :model="commentForm" :rules="rules" ref="ruleForm" class="commentForm">
+                                                <el-form-item label="Tên thể loại" prop="name_comment">
+                                                    <el-input placeholder="Mỹ phẩm, Đông y..." v-model="commentForm.name_comment"></el-input>
+                                                </el-form-item>
+                                                <el-form-item :label="totalcomment" prop="comment">
+                                                    <el-input :rows="5" placeholder="Nhập comment, mỗi dòng 1 nội dung được tính là 1 lần seeding" type="textarea" v-model="commentForm.comment" @input="changeUp"></el-input>
+                                                </el-form-item>
+                                                <div class="notice bg-light-warning rounded border-warning border border-dashed p-5 mt-7">
+                                                    <p><b class="text-danger">Lưu ý: </b><br>
+                                                    1. Cứ mỗi dòng tính là 1 comment<br>
+                                                    2. Yêu cầu tối thiểu 20 comment<br>
+                                                    3. Nghiêm cấm bình luận những nội có cử chỉ, lời nói thô bạo, khiêu khích, trêu ghẹo, xúc phạm nhân phẩm, danh dự của Cá nhân hoặc Tổ chức.<br>
+                                                    4. Hệ thống chỉ xét duyệt từ 8h sáng đến 12h đêm hằng ngày</p>
+                                                </div>
+                                                <div class="el-dialog__footer" style="padding: 10px 0px 20px;">
+                                                    <button type="button" @click="submitForm('ruleForm')" class="btn btn-primary"><i v-if="btnLoading" class="el-icon-loading"></i> Tạo Comment</button>
+                                                    <el-button @click="dialogVisible = false">Đóng</el-button>
+                                                </div>
+                                            </el-form>
+                                        </el-dialog>
                                     </div>
                                 </div>
 
-
-                                <div class="form-group">
-                                    <label for="number_seeding">Số lượng cần tăng <span
-                                        class="text-danger">*</span></label>
-                                    <input type="number" class="form-control form-control-solid" id="number_seeding"
-                                           name="number" min="20" value="20" v-model="number_seeding"
-                                           @keyup="changeTotal()">
-                                </div>
 
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="sitePrice">Giá/1 lượt theo dõi (VNĐ) <span
+                                            <label for="sitePrice">Giá/1 bình luận (VNĐ) <span
                                                 class="text-danger">*</span></label>
                                             <input type="number" class="form-control form-control-solid" id="sitePrice"
                                                    name="sitePrice" value="80" v-model="sitePrice" disabled>
@@ -96,21 +139,22 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="sitePrice">Chọn tốc độ <span
-                                                class="text-danger">*</span></label>
-                                            <select class="form-select form-select-sm bg-body border-body" v-model="speedServices" @change="changeTotal">
-                                                <option value="low" selected="selected">Rất Chậm</option>
-                                                <option value="normal">Chậm</option>
-                                                <option value="medium">Trung Bình</option>
-                                                <option value="high">Nhanh</option>
-                                            </select>
+                                            <label for="sitePrice">Chọn tốc độ <span class="text-danger">*</span>
+                                            </label>
+                                            <el-select v-model="speedServices" placeholder="Chọn tốc độ" style="display: block" @change="changeTotal">
+                                                <el-option label="Rất Chậm" value="low"></el-option>
+                                                <el-option label="Chậm" value="normal"></el-option>
+                                                <el-option label="Trung Bình" value="medium"></el-option>
+                                                <el-option label="Nhanh" value="high"></el-option>
+                                            </el-select>
+
                                         </div>
                                     </div>
                                 </div>
 
 
                                 <div class="form-group">
-                                    <label for="number_seeding">Ghi chú</label>
+                                    <label :for="note">Ghi chú</label>
                                     <input type="text" class="form-control form-control-solid" id="note" v-model="note" placeholder="Nhập ghi chú về tiến trình của bạn">
                                 </div>
 
@@ -122,17 +166,16 @@
                                             class="text-danger">{{ Number(totalPrice).toLocaleString() }} VNĐ</strong>
                                         </h2>
                                         <div>Bạn sẽ mua <strong
-                                            class="text-danger">{{ Number(number_seeding).toLocaleString() }} follow</strong> với giá <strong class="text-danger">{{ sitePrice }}<sup>đ</sup>/1</strong>
-                                            <strong class="text-danger">follow</strong></div>
+                                            class="text-danger">{{ Number(total_comment).toLocaleString() }} bình luận</strong> với giá <strong class="text-danger">{{ sitePrice }}<sup>đ</sup>/1</strong>
+                                            <strong class="text-danger">bình luận</strong> với tốc độ <b class="text-success">{{ speed }}</b></div>
                                     </div>
                                 </div>
-                            </form>
+
                         </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-primary  btn-lg btn-block mr-2" :disabled="isDisabled" @click="createOrder"><i
-                                v-if="isLoading" class="fas fa-circle-notch fa-spin"></i> Tạo Tiến Trình
+                                v-if="isLoading" class="el-icon-loading"></i> Tạo Tiến Trình
                             </button>
-
                         </div>
 
                     </div>
@@ -181,13 +224,7 @@
                                             </td>
                                             <td>{{ timeAgo(historyData.created_at) }}</td>
                                             <td class="textend">
-                                                <el-button
-                                                    size="mini"
-                                                    @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
-                                                <el-button
-                                                    size="mini"
-                                                    type="danger"
-                                                    @click="handleDelete(scope.$index, scope.row)">Delete</el-button>
+
                                             </td>
                                         </tr>
                                         </tbody>
@@ -207,9 +244,7 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
-
                 </div>
             </div>
         </div>
@@ -220,25 +255,39 @@
 export default {
     data() {
         return {
+            commentForm: {
+                name_comment: '',
+                comment: '',
+            },
             loading: true,
             loading_input: false,
             isTable: false,
             hideIcon: true,
+            btnLoading: false,
+            listcomment: [],
+            id_comment: '',
+            totalcomment: "Số lượng (0 bình luận)",
+            allcomment: Object,
+            post_comment: '',
+            speed: 'Nhanh',
             activeItem: 'create',
-            user_id: "",
+            post_id: "",
+            namefb: '',
+            picture: '',
+            content: '',
+            showModal: false,
             note: '',
+            dialogVisible: false,
             activeClass: '',
             errorClass: '',
-            speedServices: '',
+            speedServices: 'high',
             sv: 'sv_like',
             type_check: 'user',
-            number_seeding: 100,
-            sitePrice: 50,
+            number_seeding: 0,
+            sitePrice: 500,
             isCheckID: false,
             isResult: false,
-            name: '',
-            idFB: '',
-            totalPrice: 5000,
+            totalPrice: 0,
             isLoading: false,
             isDisabled: false,
             historyServices: Object,
@@ -247,14 +296,25 @@ export default {
             loadingTable: false,
             spinActive: false,
             loading_t: false,
+            total_comment: 0,
             pagination: {
                 'current_page': 1
             },
             pagination_payout: {
                 'current_page': 1
             },
-
-        }
+            rules: {
+                name_comment: [
+                    { required: true, message: 'Vui lòng nhập tên thể loại', trigger: 'blur' },],
+                comment: [
+                    { required: true, message: 'Vui lòng nhập ít nhất 1 bình luận', trigger: 'change' }
+                ],
+            }
+        };
+    },
+    created() {
+        this.getListComment()
+        this.totalPrice = this.total_comment * this.sitePrice
     },
     methods: {
         isActive(menuItem) {
@@ -269,47 +329,62 @@ export default {
             }
             this.activeItem = menuItem
         },
-        timeAgo(dateString) {
-            const date = new Date(dateString);
-            const DAY_IN_MS = 86400000; // 24 * 60 * 60 * 1000
-            const today = new Date();
-            const seconds = Math.round((today - date) / 1000);
-
-            if (seconds < 20) {
-                return 'Vừa xong';
+        changeUp() {
+            if(this.commentForm.comment != "") {
+                this.listcomment = this.commentForm.comment.split('\n')
+                this.totalcomment = "Số lượng (" + this.listcomment.length + " bình luận)"
             }
-            else if (seconds < 60) {
-                return '1 phút trước';
+            else {
+                console.log(this.listcomment)
+                this.totalcomment = "Số lượng (0 bình luận)"
             }
-
-            const minutes = Math.round(seconds / 60);
-            if (minutes < 60) {
-                return `${minutes} phút trước`;
+        },
+        createComment() {
+            this.btnLoading = true
+            this.listcomment = this.commentForm.comment.split('\n')
+            let data = {
+                "name": this.commentForm.name_comment,
+                "comment": this.listcomment
             }
+            axios.post('/facebook/createListComment',data).then(res => {
+                this.btnLoading = false
+                if(res.data.code == 200) {
+                    Swal.fire('Thành Công', 'Tạo comment '+this.commentForm.name_comment+' thành công', 'success');
+                    this.dialogVisible = false
+                    this.getListComment()
+                }
+                else {
+                    this.$message({
+                        showClose: true,
+                        message: res.data.message,
+                        type: 'error'
+                    });
+                }
 
-            const isToday = today.toDateString() === date.toDateString();
-            if (isToday) {
-                return 'Hôm nay'
-            }
+            })
+        },
+        submitForm(formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    this.createComment()
+                } else {
+                    return false;
+                }
+            });
+        },
 
-            const yesterday = new Date(today - DAY_IN_MS);
-            const isYesterday = yesterday.toDateString() === date.toDateString();
-            if (isYesterday) {
-                return 'Hôm qua'
-            }
+        getTotalComment() {
+            axios.post('/facebook/'+this.id_comment, {id_comment: this.id_comment}).then(res => {
+                this.total_comment = res.data.total
+                this.post_comment = res.data.comment
+                this.totalPrice = this.total_comment * this.sitePrice
+            })
+        },
 
-            const daysDiff = Math.round((today - date) / (1000 * 60 * 60 * 24));
-            if (daysDiff < 30) {
-                return `${daysDiff} ngày trước`;
-            }
-
-            const monthsDiff = today.getMonth() - date.getMonth() + (12 * (today.getFullYear() - date.getFullYear()));
-            if (monthsDiff < 12) {
-                return `${monthsDiff} tháng trước`;
-            }
-
-            const yearsDiff = today.getYear() - date.getYear();
-            return `${yearsDiff} năm trước`;
+        getListComment() {
+            axios.get('/facebook/listcomment').then(res => {
+                this.allcomment = res.data
+            })
         },
         updateTransaction() {
             let obj = this
@@ -331,40 +406,40 @@ export default {
             })
         },
         isValidate() {
-            if (this.user_id == '') {
-                this.errorClass = 'is-invalid'
+            if(this.post_id === '') {
                 return false
-
-            } else {
-                this.activeClass = 'is-valid'
+            }
+            else if(this.total_comment <= 0) {
+                return false
+            }
+            else {
                 return true
             }
-            return false
         },
-        redirectHistory() {
-            let obj = this
-            obj.$router.push('/facebook/history/sub')
-        },
-
         changeTotal() {
             let obj = this
             switch (obj.speedServices) {
                 case "low":
-                    obj.sitePrice = 50
+                    obj.speed = "Rất Chậm"
+                    obj.sitePrice = 150
                     break
                 case "normal":
-                    obj.sitePrice = 60
+                    obj.speed = "Chậm"
+                    obj.sitePrice = 300
                     break
                 case "medium":
-                    obj.sitePrice = 80
+                    obj.speed = "Bình Thường"
+                    obj.sitePrice = 400
                     break
                 case "high":
-                    obj.sitePrice = 100
+                    obj.speed = "Nhanh"
+                    obj.sitePrice = 500
                     break
                 default:
-                    obj.sitePrice = 50
+                    obj.speed = "Nhanh"
+                    obj.sitePrice = 500
             }
-            obj.totalPrice = obj.number_seeding * obj.sitePrice
+            obj.totalPrice = obj.total_comment * obj.sitePrice
         },
 
         findID(url) {
@@ -372,18 +447,26 @@ export default {
             obj.loading_input = true
             let data = {
                 "url": url,
-                "type": 'user'
+                "type": 'post'
             }
             axios.post('/api/find-id', data).then(res => {
                 if (res.data.code != 400) {
-                    this.isCheckID = true;
-                    this.user_id = res.data.id
+                    this.isCheckID = true
                     this.isResult = true
-                    this.name = res.data.name
-                    this.idFB = res.data.id
-                    toastr.success("Đã tìm thấy thông tin ID: "+res.data.name);
+                    this.post_id = res.data.id_post
+                    this.time = res.data.time
+                    this.picture = res.data.picture
+                    this.namefb = res.data.name
+                    this.content = res.data.content
+                    this.activeClass = 'is-valid'
+                    this.errorClass = ''
+                    toastr.success("Đã tìm thấy thông tin ID bài viết");
                 } else {
                     this.isCheckID = false;
+                    this.isResult = false
+                    this.errorClass = 'is-invalid'
+                    this.activeClass = ''
+                    this.result_id = false
                     toastr.error(res.data.message);
                 }
                 obj.loading_input = false
@@ -397,38 +480,42 @@ export default {
             })
         },
         createOrder() {
-            this.isValidate()
-            let obj = this
-            obj.isLoading = true
-            obj.isDisabled = true
-            let data = {
-                user_id: obj.user_id,
-                type_check: obj.type_check,
-                number_seeding: obj.number_seeding,
-                sitePrice: obj.sitePrice,
-                warranty: 7,
-                speed: obj.speedServices,
+            let validate = this.isValidate()
+            console.log(validate)
+            if(validate != false) {
+                let obj = this
+                obj.isLoading = true
+                obj.isDisabled = true
+                let data = {
+                    post_id: obj.post_id,
+                    number_seeding: obj.total_comment,
+                    id_comment: obj.id_comment,
+                    sitePrice: obj.sitePrice,
+                    warranty: 7,
+                    speed: obj.speedServices,
 
-            }
-            axios.post('/facebook/buff-follow', data).then(res => {
-                if (res.data.code != 400) {
-                    Swal.fire("Thành công!", res.data.messages, res.data.status);
-                } else {
-                    Swal.fire("Có lỗi xảy ra!", res.data.messages, res.data.status);
                 }
-                obj.isLoading = false
-                obj.isDisabled = false
-            }).catch(e => {
-                obj.isLoading = false
-                obj.isDisabled = false
-                var response = JSON.parse(xhr.responseText);
-                Swal.fire(
-                    'Có lỗi xảy ra!',
-                    response.messages,
-                    'error'
-                )
-            })
-
+                axios.post('/facebook/buff-comment', data).then(res => {
+                    if (res.data.code != 400) {
+                        Swal.fire("Thành công!", res.data.messages, res.data.status);
+                    } else {
+                        Swal.fire("Có lỗi xảy ra!", res.data.messages, res.data.status);
+                    }
+                    obj.isLoading = false
+                    obj.isDisabled = false
+                }).catch(e => {
+                    obj.isLoading = false
+                    obj.isDisabled = false
+                    Swal.fire(
+                        'Có lỗi xảy ra!',
+                        'Không thể tạo mới giao dịch này',
+                        'error'
+                    )
+                })
+            }
+            else {
+                Swal.fire('Thông Báo','Vui lòng kiểm tra các trường nhập vào trống hoặc ID Post không hợp lệ!','error')
+            }
 
         }
 

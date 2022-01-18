@@ -38,7 +38,7 @@
                                 <span class="text-gray-600 fw-bold d-block fs-8 mb-1">{{ Auth::user()->phone }}</span>
                                 <!--end::Description-->
                                 <!--begin::Label-->
-                                <div class="d-flex align-items-center text-success fs-9"><span class="bullet bullet-dot bg-success me-1"></span>Online</div>
+                                <div class="d-flex align-items-center text-success fs-9"><span class="badge badge-light-success">Cá Nhân</span></div>
                                 <!--end::Label-->
                             </div>
                             <!--end::Info-->

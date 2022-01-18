@@ -1,4 +1,5 @@
 @extends('layout.index')
-@section('title', 'Youtube - Buff Subscriber')
+@section('title', 'Buff Follow Youtube')
 @section('content')
+    <router-view></router-view>
 @endsection
