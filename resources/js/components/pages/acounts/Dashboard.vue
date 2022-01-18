@@ -31,10 +31,13 @@
                         <!--end::Header-->
                         <!--begin::Post-->
                         <div class="mb-5">
-                            <div v-if="getpostData.image != '' ">
-                                <img :src="'/storage/'+getpostData.image" width="100%" alt="" class="rounded mb-2">
-                            </div>
-                            <div v-else></div>
+                            <!--begin::Text-->
+                            <!--                            <div v-if="hasImage">-->
+                            <!--                                <img src="" alt="" style="width:100%" class="rounded mb-4">-->
+                            <!--                            </div>-->
+                            <!--                            <div v-else>-->
+                            <!--                                Không có ảnh-->
+                            <!--                            </div>-->
                             <p v-html="getpostData.content" class="text-gray-800 fw-normal mb-5">
                                 {{ getpostData.content }}
                             </p>
@@ -380,8 +383,8 @@ export default {
         this.loadNotification()
     },
     methods: {
-        formatNumber(num) {
-            return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+        formatNumber(number) {
+            return Intl.NumberFormat().format(number);
         },
         timeAgo(dateString) {
             const date = new Date(dateString);
@@ -435,6 +438,7 @@ export default {
             })
         },
         handleLoadMore($state) {
+            this.loading = true
             axios.post('/loadPost', {'page': this.page})
                 .then(res => {
                     return res.data;
@@ -452,6 +456,7 @@ export default {
                 }).catch(e => {
                 console.log("Load")
             })
+            this.loading = false
             this.page = this.page + 1;
         },
 
