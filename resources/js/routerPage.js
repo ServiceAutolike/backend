@@ -17,6 +17,16 @@ import CategoryRechargeCard from './components/pages/recharge/Card'
 import CategoryRechargeHistory from './components/pages/recharge/History'
 import FacebookAddMemGroup from "./components/pages/facebook/FacebookAddMemGroup";
 
+
+//admin
+import PostAuth from './components/pages/auth/Posts'
+import ServiceAuth from './components/pages/auth/Service'
+import SupportAuth from './components/pages/auth/Support'
+import SupportApp from './components/pages/app/Support'
+import Chat from './components/pages/auth/Chat'
+import UserAuth from './components/pages/auth/User'
+import UserChangeAuth from './components/pages/auth/ChangeUser'
+
 export const routes = [
     // Recharge
     { path: '/recharge/bank', name: 'RechargeBank', component: CategoryRechargeBank},
@@ -36,5 +46,13 @@ export const routes = [
     { path: '/facebook/buff-livestream', name: 'FacebookBuffLiveStream', component: CategoryFacebookLiveStream},
     { path: '/facebook/buff-member-group', name: 'FacebookAddMemberGroup', component: FacebookAddMemGroup},
 
+    //admin
+    { path: '/admin/post', name: 'Post', component: PostAuth},
+    { path: '/admin/service', name: 'Service', component: ServiceAuth},
+    { path: '/admin/support', name: 'SupportAuth', component: SupportAuth},
+    { path: '/support/user', name: 'SupportApp', component: SupportApp},
+    { path: '/support/chat/:code', name: 'Chat', component: Chat},
+    { path: '/admin/user', name: 'User', component: UserAuth},
+    { path: '/admin/user/change/:id', name: 'ChangeUser', component: UserChangeAuth},
 
 ];

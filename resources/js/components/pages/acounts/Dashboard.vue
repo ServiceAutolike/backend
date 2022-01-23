@@ -32,12 +32,12 @@
                         <!--begin::Post-->
                         <div class="mb-5">
                             <!--begin::Text-->
-<!--                            <div v-if="hasImage">-->
-<!--                                <img src="" alt="" style="width:100%" class="rounded mb-4">-->
-<!--                            </div>-->
-<!--                            <div v-else>-->
-<!--                                Không có ảnh-->
-<!--                            </div>-->
+                            <!--                            <div v-if="hasImage">-->
+                            <!--                                <img src="" alt="" style="width:100%" class="rounded mb-4">-->
+                            <!--                            </div>-->
+                            <!--                            <div v-else>-->
+                            <!--                                Không có ảnh-->
+                            <!--                            </div>-->
                             <p v-html="getpostData.content" class="text-gray-800 fw-normal mb-5">
                                 {{ getpostData.content }}
                             </p>

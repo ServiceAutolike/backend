@@ -65,7 +65,7 @@ class HomeController extends Controller
 
     }
     function loadPostData(Request $request) {
-        $data = Post::orderBy('id')->paginate(3);
+        $data = Post::orderBy('id')->paginate(1);
         return \response()->json($data);
     }
     public function findID()

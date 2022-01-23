@@ -44,7 +44,6 @@ Route::group(['middleware' => 'login'], function () {
     });
 
     Route::post('/updateTransaction/{type}', 'FacebookController@updateTransaction')->name('faceUser.updateTransaction');
-
     Route::group(['prefix' => 'facebook'], function (){
         Route::get('/buff-follow', 'FacebookController@buffFollowUser')->name('faceUser.flow');
         Route::post('/buff-follow', 'FacebookController@postBuffFollowUser')->name('faceUser.postFlow');
@@ -90,13 +89,13 @@ Route::group(['middleware' => 'login'], function () {
         });
     });
     Route::group(['prefix' => 'support'], function (){
-        Route::get('/user', 'SupportController@indexUser')->name('user.support.list');
-        Route::post('/create', 'SupportController@storeUser')->name('support.create');
-        Route::post('/set-status', 'SupportController@setStatus')->name('support.set');
-    });
-    Route::group(['prefix' => 'support_chat'], function (){
-        Route::get('/{id}', 'SupportChatController@formChat')->name('support.chat.form');
-        Route::post('/', 'SupportChatController@chat')->name('support.chat');
+        Route::get('/user', 'SupportController@viewUser')->name('user.support.list');
+        Route::post('/dataUser', 'SupportController@indexUser');
+//        Route::post('/create', 'SupportController@storeUser')->name('support.create');
+        Route::post('/update', 'SupportController@setStatus');
+        Route::get('/chat/{code}', 'SupportChatController@formChat');
+        Route::get('/data/{code}', 'SupportChatController@dataChat');
+        Route::post('/sendMess', 'SupportChatController@chat');
     });
 });
 Route::group(['middleware' => 'login'], function () {
@@ -104,18 +103,32 @@ Route::group(['middleware' => 'login'], function () {
         Route::group(['prefix' => 'admin'], function (){
             Route::group(['prefix' => 'post'], function (){
                 Route::get('/', 'PostController@index')->name('post.index');
-                Route::post('/', 'PostController@store')->name('post.create');
+                Route::get('/data', 'PostController@getAll')->name('post.data');
+                Route::get('/create', 'PostController@formCreate')->name('post.create.form');
+                Route::post('/create', 'PostController@store')->name('post.create');
                 Route::get('/update/{id}', 'PostController@formUpdate')->name('post.update.form');
                 Route::post('/update', 'PostController@update')->name('post.update');
                 Route::get('delete/{id}', 'PostController@delete');
             });
             Route::group(['prefix' => 'support'], function (){
                 Route::get('/', 'SupportController@indexAdmin')->name('support.index');
+                Route::post('/data', 'SupportController@getData');
                 Route::post('/update', 'SupportController@updateAdmin')->name('support.update');
             });
             Route::group(['prefix' => 'service'], function (){
-                Route::get('/', 'ServiceController@indexAdmin')->name('service.admin.index');
-                Route::post('/', 'ServiceController@updateAdmin')->name('service.admin.update');
+                Route::get('/', 'ServiceController@index')->name('service.admin.index');
+                Route::post('/data', 'ServiceController@indexAdmin');
+                Route::post('/update', 'ServiceController@updateAdmin')->name('service.admin.update');
+            });
+            Route::group(['prefix' => 'user'], function (){
+                Route::get('/', 'UserController@index');
+                Route::post('/data', 'UserController@data');
+                Route::get('/change/{id}', 'UserController@change');
+                Route::get('/dataChange/{id}', 'UserController@dataChange');
+                Route::post('/addPrice', 'UserController@addPrice');
+                Route::post('/update', 'UserController@updateData');
+                Route::post('/loginUser', 'UserController@loginUser');
+
             });
         });
     });
