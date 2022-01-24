@@ -243,7 +243,7 @@
                                                     <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify a subject for your issue"></i>
                                                 </label>
                                                 <!--end::Label-->
-                                                <input type="text" class="form-control form-control-solid" placeholder="Vui lòng nhập tiêu đề của bạn" name="subject" />
+                                                <input type="text" class="form-control form-control-solid" v-model="subject" placeholder="Vui lòng nhập tiêu đề của bạn" name="subject" />
                                                 <p class="text-danger p-2">Chú ý: <br>Tiêu đề ngắn gọn, nói vào nội dung chính ví dụ: Nạp tiền momo bị lỗi, chưa được cộng tiền momo, tăng like bị lỗi,.... Tránh những từ ngữ thô tục. Nếu vi phạm những điều này Admin có quyền khóa tài khoản của bạn!</p>
                                             </div>
                                             <!--end::Input group-->
@@ -252,8 +252,7 @@
                                                 <!--begin::Col-->
                                                 <div class="col-md-6 fv-row">
                                                     <label class="required fs-6 fw-bold mb-2">Dịch vụ</label>
-                                                    <select class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Chọn một dịch vụ" name="service">
-                                                        <option value="">Chọn một dịch vụ...</option>
+                                                    <select class="form-select form-select-solid" @change="onChangeService($event)" v-model="service"  data-placeholder="Chọn một dịch vụ" >
                                                         <option value="1">Nạp tiền</option>
                                                         <option value="2">Facebook</option>
                                                         <option value="3">Facebook Vip</option>
@@ -271,7 +270,7 @@
                                                         <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify a subject for your issue"></i>
                                                     </label>
                                                     <!--end::Label-->
-                                                    <input type="text" class="form-control form-control-solid" placeholder="Nhập id bài viết" name="id_port" />
+                                                    <input type="text" v-model="idPost" class="form-control form-control-solid" placeholder="Nhập id bài viết" name="id_port" />
                                                 </div>
                                                 <!--end::Col-->
                                             </div>
@@ -279,7 +278,7 @@
                                             <!--begin::Input group-->
                                             <div class="d-flex flex-column mb-8 fv-row">
                                                 <label class="fs-6 fw-bold mb-2 required">Mô tả</label>
-                                                <textarea class="form-control form-control-solid" rows="4" name="description" placeholder="Nhập mô tả chi tiết về vấn đề cần hỗ trợ"></textarea>
+                                                <textarea class="form-control form-control-solid" rows="4" v-model="description" placeholder="Nhập mô tả chi tiết về vấn đề cần hỗ trợ"></textarea>
                                                 <p class="text-danger p-2">Nếu hỗ trợ là một lỗi của hệ thống bạn vui lòng miêu tả lại chi tiết các bước xảy ra lỗi .<br> Những điều này giúp cho admin giải quyết vấn đề cho bạn nhanh hơn!</p>
                                             </div>
                                             <!--end::Input group-->
@@ -332,7 +331,7 @@
                                             <!--begin::Actions-->
                                             <div class="text-center">
                                                 <button type="button" class="btn btn-light me-3" @click="activeToolbar(1)">Trở lại</button>
-                                                <button type="button" class="btn btn-primary" @click="createSp()">Gửi hỗ trợ</button>
+                                                <button type="button" class="btn btn-primary" @click="create()">Gửi hỗ trợ</button>
                                             </div>
                                             <!--end::Actions-->
                                         <!--end:Form-->
@@ -353,6 +352,12 @@
 export default {
     data() {
         return {
+            idUser : '',
+            codeUser : '',
+            subject : '',
+            service : 1,
+            idPost : '',
+            description : '',
             image: '',
             status1 : '',
             status2 : '',
@@ -373,6 +378,9 @@ export default {
         this.fetchData()
     },
     methods: {
+        onChangeService(e){
+            this.service = e.target.value
+        },
         activeToolbar(number){
             if (number == 1){
                 this.activeClass = "list"
@@ -391,8 +399,19 @@ export default {
         deleteImage(){
           this.image = ''
         },
-        createSp(){
-
+        create(){
+            let obj = this
+            let data = {
+                id_user : obj.idUser,
+                code_user : obj.codeUser,
+                id_port : obj.idPost,
+                subject : obj.subject,
+                service : obj.service,
+                description : obj.description,
+                image : obj.image
+            }
+            axios.post('/support/create', data)
+            obj.fetchData()
         },
         fetchData() {
             let obj = this
@@ -403,6 +422,8 @@ export default {
                 obj.status3 = res.data.status3
                 obj.data = res.data.data.data
                 obj.pagination = res.data.pagination
+                obj.idUser = res.data.idUser
+                obj.codeUser = res.data.codeUser
             })
         },
         timeAgo(dateString) {

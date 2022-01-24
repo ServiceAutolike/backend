@@ -92,7 +92,7 @@ Route::group(['middleware' => 'login'], function () {
     Route::group(['prefix' => 'support'], function (){
         Route::get('/user', 'SupportController@viewUser')->name('user.support.list');
         Route::post('/dataUser', 'SupportController@indexUser');
-//        Route::post('/create', 'SupportController@storeUser')->name('support.create');
+        Route::post('/create', 'SupportController@storeUser');
         Route::post('/update', 'SupportController@setStatus');
         Route::get('/chat/{code}', 'SupportChatController@formChat');
         Route::get('/data/{code}', 'SupportChatController@dataChat');
