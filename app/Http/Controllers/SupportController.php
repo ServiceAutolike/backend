@@ -14,6 +14,7 @@ class SupportController extends Controller
     public function indexUser(Request $request)
     {
         $code = Auth::user()->code;
+        $id = Auth::user()->id;
         $select_service = config('common.select_support');
         $count_status1 = count(SupportModel::where('status', 0)->where('code_user',$code )->get());
         $count_status2 = count(SupportModel::where('status', 1)->where('code_user',$code )->get());
@@ -39,7 +40,9 @@ class SupportController extends Controller
             'data' => $data,
             'status1' => $count_status1,
             'status2' => $count_status2,
-            'status3' => $count_status3
+            'status3' => $count_status3,
+            'idUser' => $id,
+            'codeUser' => $code,
         ]);
     }
 
@@ -105,13 +108,11 @@ class SupportController extends Controller
     {
         $model = new SupportModel();
         $model->fill($request->all());
-        if ($request->hasFile('image')){
-            $newFileName = uniqid(). '-' . $request->image->getClientOriginalName();
-            $path = $request->image->storeAs('public/uploads/support', $newFileName);
-            $model->image = str_replace('public/', '', $path);
+        if ($request->image){
+            $model->image = $request->image;
         }
         $model->code_chat = substr(md5(uniqid(mt_rand(), true)) , 0, 20);
         $model->save();
-        return redirect(route('user.support.list'));
+        return response()->json(true);
     }
 }
