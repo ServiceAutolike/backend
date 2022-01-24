@@ -22,6 +22,7 @@ Route::group(['prefix' => 'account'], function (){
 
 });
 Route::group(['middleware' => 'login'], function () {
+    Route::post('/upload', 'UploadController@upload');
     Route::get('/home', 'HomeController@dash')->name('home.dash');
     Route::post('/loadNotification', 'HomeController@loadNotification')->name('home.test');
     Route::post('/updateNofitication', 'HomeController@updateNotification')->name('home.updated');
