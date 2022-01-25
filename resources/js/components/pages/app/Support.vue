@@ -149,19 +149,19 @@
                                                                     <div class="align-items-center mb-2">
                                                                         <!--begin::Svg Icon | path: assets/media/icons/duotune/social/soc008.svg-->
                                                                         <span v-if="item.service == 'Nạp tiền'" class="btn btn-icon btn-warning me-5">
-                                                                    <i class="las la-wallet fs-4"></i>
-                                                                </span>
-                                                                        <span v-else-if="item.service == 'Tiktok'" class="btn btn-icon btn-light-facebook me-5 ">
-                                                                    <i class="fab fa-tiktok fs-4"></i>
-                                                                </span>
-                                                                        <span v-else-if="item.service == 'Shoppe'" class="btn btn-icon btn-light-youtube me-5 ">
-                                                                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 109.59 122.88" xml:space="preserve" style="width: 15px;fill: #e55940;">
-                                                                        <g><path class="st0" d="M74.98,91.98C76.15,82.36,69.96,76.22,53.6,71c-7.92-2.7-11.66-6.24-11.57-11.12 c0.33-5.4,5.36-9.34,12.04-9.47c4.63,0.09,9.77,1.22,14.76,4.56c0.59,0.37,1.01,0.32,1.35-0.2c0.46-0.74,1.61-2.53,2-3.17 c0.26-0.42,0.31-0.96-0.35-1.44c-0.95-0.7-3.6-2.13-5.03-2.72c-3.88-1.62-8.23-2.64-12.86-2.63c-9.77,0.04-17.47,6.22-18.12,14.47 c-0.42,5.95,2.53,10.79,8.86,14.47c1.34,0.78,8.6,3.67,11.49,4.57c9.08,2.83,13.8,7.9,12.69,13.81c-1.01,5.36-6.65,8.83-14.43,8.93 c-6.17-0.24-11.71-2.75-16.02-6.1c-0.11-0.08-0.65-0.5-0.72-0.56c-0.53-0.42-1.11-0.39-1.47,0.15c-0.26,0.4-1.92,2.8-2.34,3.43 c-0.39,0.55-0.18,0.86,0.23,1.2c1.8,1.5,4.18,3.14,5.81,3.97c4.47,2.28,9.32,3.53,14.48,3.72c3.32,0.22,7.5-0.49,10.63-1.81 C70.63,102.67,74.25,97.92,74.98,91.98L74.98,91.98z M54.79,7.18c-10.59,0-19.22,9.98-19.62,22.47h39.25 C74.01,17.16,65.38,7.18,54.79,7.18L54.79,7.18z M94.99,122.88l-0.41,0l-80.82-0.01h0c-5.5-0.21-9.54-4.66-10.09-10.19l-0.05-1 l-3.61-79.5v0C0,32.12,0,32.06,0,32c0-1.28,1.03-2.33,2.3-2.35l0,0h25.48C28.41,13.15,40.26,0,54.79,0s26.39,13.15,27.01,29.65 h25.4h0.04c1.3,0,2.35,1.05,2.35,2.35c0,0.04,0,0.08,0,0.12v0l-3.96,79.81l-0.04,0.68C105.12,118.21,100.59,122.73,94.99,122.88 L94.99,122.88z"/></g>
-                                                                    </svg>
-                                                                </span>
-                                                                        <span v-else class="btn btn-icon me-5 " :class="'btn-light-'+item.class_icon_service">
-                                                                    <i class="fab fs-4" :class="'fa-'+item.class_icon_service"></i>
-                                                                </span>
+                                                                            <i class="las la-wallet fs-4"></i>
+                                                                        </span>
+                                                                                <span v-else-if="item.service == 'Tiktok'" class="btn btn-icon btn-light-facebook me-5 ">
+                                                                            <i class="fab fa-tiktok fs-4"></i>
+                                                                        </span>
+                                                                                <span v-else-if="item.service == 'Shoppe'" class="btn btn-icon btn-light-youtube me-5 ">
+                                                                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 109.59 122.88" xml:space="preserve" style="width: 15px;fill: #e55940;">
+                                                                                <g><path class="st0" d="M74.98,91.98C76.15,82.36,69.96,76.22,53.6,71c-7.92-2.7-11.66-6.24-11.57-11.12 c0.33-5.4,5.36-9.34,12.04-9.47c4.63,0.09,9.77,1.22,14.76,4.56c0.59,0.37,1.01,0.32,1.35-0.2c0.46-0.74,1.61-2.53,2-3.17 c0.26-0.42,0.31-0.96-0.35-1.44c-0.95-0.7-3.6-2.13-5.03-2.72c-3.88-1.62-8.23-2.64-12.86-2.63c-9.77,0.04-17.47,6.22-18.12,14.47 c-0.42,5.95,2.53,10.79,8.86,14.47c1.34,0.78,8.6,3.67,11.49,4.57c9.08,2.83,13.8,7.9,12.69,13.81c-1.01,5.36-6.65,8.83-14.43,8.93 c-6.17-0.24-11.71-2.75-16.02-6.1c-0.11-0.08-0.65-0.5-0.72-0.56c-0.53-0.42-1.11-0.39-1.47,0.15c-0.26,0.4-1.92,2.8-2.34,3.43 c-0.39,0.55-0.18,0.86,0.23,1.2c1.8,1.5,4.18,3.14,5.81,3.97c4.47,2.28,9.32,3.53,14.48,3.72c3.32,0.22,7.5-0.49,10.63-1.81 C70.63,102.67,74.25,97.92,74.98,91.98L74.98,91.98z M54.79,7.18c-10.59,0-19.22,9.98-19.62,22.47h39.25 C74.01,17.16,65.38,7.18,54.79,7.18L54.79,7.18z M94.99,122.88l-0.41,0l-80.82-0.01h0c-5.5-0.21-9.54-4.66-10.09-10.19l-0.05-1 l-3.61-79.5v0C0,32.12,0,32.06,0,32c0-1.28,1.03-2.33,2.3-2.35l0,0h25.48C28.41,13.15,40.26,0,54.79,0s26.39,13.15,27.01,29.65 h25.4h0.04c1.3,0,2.35,1.05,2.35,2.35c0,0.04,0,0.08,0,0.12v0l-3.96,79.81l-0.04,0.68C105.12,118.21,100.59,122.73,94.99,122.88 L94.99,122.88z"/></g>
+                                                                            </svg>
+                                                                        </span>
+                                                                                <span v-else class="btn btn-icon me-5 " :class="'btn-light-'+item.class_icon_service">
+                                                                            <i class="fab fs-4" :class="'fa-'+item.class_icon_service"></i>
+                                                                        </span>
                                                                         <!--end::Svg Icon-->
 
                                                                         <span>
@@ -243,8 +243,8 @@
                                                     <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify a subject for your issue"></i>
                                                 </label>
                                                 <!--end::Label-->
-                                                <input type="text" class="form-control form-control-solid" v-model="subject" placeholder="Vui lòng nhập tiêu đề của bạn" name="subject" />
-                                                <p class="text-danger p-2">Chú ý: <br>Tiêu đề ngắn gọn, nói vào nội dung chính ví dụ: Nạp tiền momo bị lỗi, chưa được cộng tiền momo, tăng like bị lỗi,.... Tránh những từ ngữ thô tục. Nếu vi phạm những điều này Admin có quyền khóa tài khoản của bạn!</p>
+                                                <input type="text" class="form-control form-control-solid" :class="messageError.subject || !requireSub ? 'is-invalid' : ''" :style="messageError.subject || !requireSub ? 'border-color: #f1416c !important;' : ''" v-model="subject" placeholder="Vui lòng nhập tiêu đề của bạn" />
+                                                <p class="text-danger p-2" v-if="messageError.subject">{{messageError.subject}}</p>
                                             </div>
                                             <!--end::Input group-->
                                             <!--begin::Input group-->
@@ -278,7 +278,9 @@
                                             <!--begin::Input group-->
                                             <div class="d-flex flex-column mb-8 fv-row">
                                                 <label class="fs-6 fw-bold mb-2 required">Mô tả</label>
-                                                <textarea class="form-control form-control-solid" rows="4" v-model="description" placeholder="Nhập mô tả chi tiết về vấn đề cần hỗ trợ"></textarea>
+                                                <textarea class="form-control form-control-solid" rows="4" v-model="description" placeholder="Nhập mô tả chi tiết về vấn đề cần hỗ trợ" :class="!requireDes ? 'is-invalid' : ''" :style="!requireDes ? 'border-color: #f1416c !important;' : ''">
+
+                                                </textarea>
                                                 <p class="text-danger p-2">Nếu hỗ trợ là một lỗi của hệ thống bạn vui lòng miêu tả lại chi tiết các bước xảy ra lỗi .<br> Những điều này giúp cho admin giải quyết vấn đề cho bạn nhanh hơn!</p>
                                             </div>
                                             <!--end::Input group-->
@@ -359,11 +361,14 @@ export default {
             idPost : '',
             description : '',
             image: '',
+            messageError : [],
+            requireSub : true,
+            requireDes : true,
             status1 : '',
             status2 : '',
             status3 : '',
             data: Object,
-            loadingTable: true,
+            loadingTable: false,
             activeClass : 'list',
             pagination: {
                 'current_page': 1
@@ -374,14 +379,37 @@ export default {
 
         }
     },
+    watch: {
+        subject(value){
+            this.requireSub = true
+            this.subject = value
+            this.validateSubject(value)
+        },
+        description(value){
+            this.requireDes = true
+        }
+    },
     created() {
         this.fetchData()
     },
     methods: {
+        validateSubject(value){
+            if (value.length < 10) {
+                this.messageError['subject'] = 'Tiêu đề không được dưới 10 ký tự'
+            }
+            else if (value.length > 30) {
+                this.messageError['subject'] = 'Tiêu đề không được quá 30 ký tự'
+            }
+            else {
+                this.messageError['subject'] = ''
+            }
+        },
         onChangeService(e){
             this.service = e.target.value
         },
         activeToolbar(number){
+            this.loadingTable = true
+            this.fetchData()
             if (number == 1){
                 this.activeClass = "list"
             }
@@ -401,17 +429,34 @@ export default {
         },
         create(){
             let obj = this
-            let data = {
-                id_user : obj.idUser,
-                code_user : obj.codeUser,
-                id_port : obj.idPost,
-                subject : obj.subject,
-                service : obj.service,
-                description : obj.description,
-                image : obj.image
+            if (obj.subject == '' && obj.description == ''){
+                obj.requireSub = false
+                obj.requireDes = false
+                toastr.error('Không để trống các trường yêu cầu')
+            }else if(obj.description == '' && obj.subject !== ''){
+                obj.requireDes = false
+                toastr.error('Không để trống các trường yêu cầu')
+            }else if(obj.description !== '' && obj.subject == ''){
+                obj.requireSub = false
+                toastr.error('Không để trống các trường yêu cầu')
             }
-            axios.post('/support/create', data)
-            obj.fetchData()
+            else {
+                if (obj.messageError.subject){
+                    toastr.error('Vui lòng nhập hợp lệ các trường yêu cầu')
+                }else {
+                    let data = {
+                        id_user: obj.idUser,
+                        code_user: obj.codeUser,
+                        id_port: obj.idPost,
+                        subject: obj.subject,
+                        service: obj.service,
+                        description: obj.description,
+                        image: obj.image
+                    }
+                    axios.post('/support/create', data)
+                    toastr.success('Tạo hỗ trợ thành công')
+                }
+            }
         },
         fetchData() {
             let obj = this

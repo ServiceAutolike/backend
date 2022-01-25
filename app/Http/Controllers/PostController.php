@@ -51,23 +51,17 @@ class PostController extends Controller
         return redirect(route('post.index'));
     }
 
-    public function formCreate()
-    {
-        return view('page.auth.posts.create');
-    }
     public function store(Request $request)
     {
         $model = new PostModel();
         $model->fill($request->all());
-        if ($request->hasFile('image')){
-            $newFileName = uniqid(). '-' . $request->image->getClientOriginalName();
-            $path = $request->image->storeAs('public/uploads/post', $newFileName);
-            $model->image = str_replace('public/', '', $path);
-        }else{
+        if ($request->image == ''){
             $model->image = "";
+        }else{
+            $model->image = $request->image;
         }
         $model->save();
-        return redirect(route('post.index'));
+        return response()->json(true);
     }
 
     public function delete($id)
