@@ -105,8 +105,7 @@ Route::group(['middleware' => 'login'], function () {
             Route::group(['prefix' => 'post'], function (){
                 Route::get('/', 'PostController@index')->name('post.index');
                 Route::get('/data', 'PostController@getAll')->name('post.data');
-                Route::get('/create', 'PostController@formCreate')->name('post.create.form');
-                Route::post('/create', 'PostController@store')->name('post.create');
+                Route::post('/create', 'PostController@store');
                 Route::get('/update/{id}', 'PostController@formUpdate')->name('post.update.form');
                 Route::post('/update', 'PostController@update')->name('post.update');
                 Route::get('delete/{id}', 'PostController@delete');
