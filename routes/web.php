@@ -22,6 +22,7 @@ Route::group(['prefix' => 'account'], function (){
 
 });
 Route::group(['middleware' => 'login'], function () {
+    Route::post('/upload', 'UploadController@upload');
     Route::get('/home', 'HomeController@dash')->name('home.dash');
     Route::post('/loadNotification', 'HomeController@loadNotification')->name('home.test');
     Route::post('/updateNofitication', 'HomeController@updateNotification')->name('home.updated');
@@ -91,7 +92,7 @@ Route::group(['middleware' => 'login'], function () {
     Route::group(['prefix' => 'support'], function (){
         Route::get('/user', 'SupportController@viewUser')->name('user.support.list');
         Route::post('/dataUser', 'SupportController@indexUser');
-//        Route::post('/create', 'SupportController@storeUser')->name('support.create');
+        Route::post('/create', 'SupportController@storeUser');
         Route::post('/update', 'SupportController@setStatus');
         Route::get('/chat/{code}', 'SupportChatController@formChat');
         Route::get('/data/{code}', 'SupportChatController@dataChat');
@@ -104,8 +105,7 @@ Route::group(['middleware' => 'login'], function () {
             Route::group(['prefix' => 'post'], function (){
                 Route::get('/', 'PostController@index')->name('post.index');
                 Route::get('/data', 'PostController@getAll')->name('post.data');
-                Route::get('/create', 'PostController@formCreate')->name('post.create.form');
-                Route::post('/create', 'PostController@store')->name('post.create');
+                Route::post('/create', 'PostController@store');
                 Route::get('/update/{id}', 'PostController@formUpdate')->name('post.update.form');
                 Route::post('/update', 'PostController@update')->name('post.update');
                 Route::get('delete/{id}', 'PostController@delete');

@@ -7,26 +7,23 @@
                     <ul class="nav nav-stretch nav-line-tabs border-transparent">
                         <!--begin::Tab item-->
                         <li class="nav-item" role="presentation">
-                            <a data-toggle="tab" class="nav-link fs-5 fw-bolder" @click.prevent="setActive('list')" :class="{ active: isActive('list') }" href="#list">Danh sách</a>
+                            <a data-toggle="tab" class="nav-link fs-5 fw-bolder" :class="activeClass == 'list' ? 'active' : ''" @click="activeToolbar(1)">Danh sách</a>
                         </li>
                         <!--end::Tab item-->
                         <!--begin::Tab item-->
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link fs-5 fw-bolder me-5" href="/admin/post/create">Tạo bài viết</a>
+                            <a class="nav-link fs-5 fw-bolder me-5" :class="activeClass == 'create' ? 'active' : ''" @click="activeToolbar(2)">Tạo bài viết</a>
                         </li>
                         <!--end::Tab item-->
                     </ul>
                     <!--end::Title-->
                     <!--begin::Toolbar-->
-                    <div class="card-toolbar m-0" v-if="isTable">
+                    <div class="card-toolbar m-0" >
                         <div class="d-flex flex-wrap flex-stack">
                             <!--begin::Controls-->
                             <div class="d-flex my-2">
                                 <!--begin::Search-->
                                 <div class="mr-3">
-                                    <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2" v-on:click="updateTransaction" data-bs-toggle="tooltip" title="" data-bs-original-title="Cập nhật dữ liệu lịch sử">
-                                    <i class="fas fa-sync" v-bind:class="{ 'fa-spin': spinActive }"></i>
-                                    </button>
                                 </div>
                                 <div class="d-flex align-items-center position-relative me-4">
                                     <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
@@ -38,7 +35,7 @@
                                     </span>
 
                                     <!--end::Svg Icon-->
-                                    <input type="text" id="kt_filter_search" class="form-control form-control-sm w-150px ps-9" placeholder="Nhập ID bài viết" />
+                                    <input type="text" class="form-control form-control-sm w-150px ps-9" placeholder="Nhập ID bài viết" />
                                 </div>
                                 <!--end::Search-->
                                 <a href="/" class="btn btn-primary btn-sm">Tìm Kiếm</a>
@@ -49,11 +46,10 @@
                     <!--end::Toolbar-->
                 </div>
 
-                <div id="tab_content" class="tab-content">
+                <div class="tab-content">
                     <!--begin::Tab create-->
 
-
-                    <div class="tab-pane fade" :class="{ 'active show': isActive('list') }" id="list">
+                    <div class="tab-pane fade" :class="activeClass == 'list' ? 'active show' : ''">
 
                         <div class="card p-0">
                             <LoadingPage v-if="loadingTable"></LoadingPage>
@@ -81,7 +77,7 @@
 
                                         <tr v-for="historyData in historyServices" :key="historyData.id">
                                             <td v-if="historyData.image != '' ">
-                                                <img :src="'/storage/'+historyData.image" width="50" alt="" class="rounded">
+                                                <img :src="historyData.image" width="50" alt="" class="rounded">
                                             </td>
                                             <td v-else></td>
                                             <td v-html="historyData.content">{{historyData.content}}</td>
@@ -115,6 +111,59 @@
                         </div>
 
                     </div>
+                    <div class="tab-pane fade" :class="activeClass == 'create' ? 'active show' : ''">
+                        <div class="card-body">
+                            <!--end::Input group-->
+                            <editor :content.sync="contentForEditor"></editor>
+                            <!--begin::Input group-->
+                            <div class="fv-row mb-8">
+                                <label class="fs-6 fw-bold mb-2">Thêm hình ảnh</label>
+                                <!--begin::Dropzone-->
+                                <div class="dropzone" >
+                                    <!--begin::Message-->
+                                    <div class="dz-message needsclick align-items-center">
+                                        <!--begin::Icon-->
+                                        <!--begin::Svg Icon | path: icons/duotune/files/fil010.svg-->
+                                        <span class="svg-icon svg-icon-3hx svg-icon-primary">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                        <path opacity="0.3" d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22ZM16 12.6L12.7 9.3C12.3 8.9 11.7 8.9 11.3 9.3L8 12.6H11V18C11 18.6 11.4 19 12 19C12.6 19 13 18.6 13 18V12.6H16Z" fill="black" />
+                                                        <path d="M15 8H20L14 2V7C14 7.6 14.4 8 15 8Z" fill="black" />
+                                                    </svg>
+                                                </span>
+                                        <!--end::Svg Icon-->
+                                        <!--end::Icon-->
+                                        <!--begin::Info-->
+                                        <div class="ms-4">
+                                            <h3 class="fs-5 fw-bolder text-gray-900 mb-1">Chọn một bức ảnh mà bạn chụp lại khi gặp lỗi</h3>
+                                            <div v-if="image == ''">
+                                                <input type="file" v-on:change="onImageChange">
+                                            </div>
+                                            <div v-else class="mt-2">
+                                                <div class="image-input image-input-outline" data-kt-image-input="true">
+                                                    <!--begin::Preview existing avatar-->
+                                                    <div class="image-input-wrapper w-125px h-125px">
+                                                        <img :src="image" class="rounded" style="object-fit: cover;width: 120px;height: 120px" alt="">
+                                                    </div>
+                                                    <!--end::Preview existing avatar-->
+
+                                                    <!--begin::Remove-->
+                                                    <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" @click="deleteImage" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="" data-bs-original-title="Remove avatar">
+                                                                        <i class="bi bi-x fs-2"></i>
+                                                                    </span>
+                                                    <!--end::Remove-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--end::Info-->
+                                    </div>
+                                </div>
+                                <!--end::Dropzone-->
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary btn-block mr-2 right mb-5" @click="create()"> Tạo Bài Viết</button>
+                        </div>
+                    </div>
 
                 </div>
             </div>
@@ -123,90 +172,59 @@
 </template>
 
 <script>
-
+import Editor from "./Editor";
 export default {
+    components: {
+        Editor
+    },
     data() {
         return {
-            loading: true,
-            loading_input: false,
-            isTable: false,
-            hideIcon: true,
-            activeItem: 'list',
-            content: '',
-            activeClass: '',
-            errorClass: '',
-            isResult: false,
-            isLoading: false,
-            isDisabled: false,
+            activeClass : 'list',
             historyServices: Object,
             loadingTable: true,
-            spinActive: false,
-            loading_t: false,
             pagination: {
                 'current_page': 1
             },
             pagination_payout: {
                 'current_page': 1
             },
-
+            contentForEditor: '',
+            image: '',
         }
     },
     created() {
         this.fetchData()
     },
     methods: {
-        isActive(menuItem) {
-            return this.activeItem === menuItem
-
+        activeToolbar(number){
+            this.loadingTable = true
+            this.fetchData()
+            if (number == 1){
+                this.activeClass = "list"
+            }
+            else {
+                this.activeClass = "create"
+            }
         },
-        setActive(menuItem) {
-            if(menuItem == "list") {
-                this.isTable = true
-                this.fetchData()
-            }
-            this.activeItem = menuItem
+        onImageChange(e){
+            let formData = new FormData();
+            formData.append('image', e.target.files[0]);
+            axios.post('/upload', formData).then(res => {
+                this.image = res.data
+            })
         },
-        timeAgo(dateString) {
-            const date = new Date(dateString);
-            const DAY_IN_MS = 86400000; // 24 * 60 * 60 * 1000
-            const today = new Date();
-            const seconds = Math.round((today - date) / 1000);
+        deleteImage(){
+            this.image = ''
+        },
+        create(){
+            let obj = this
+            let data = {
+                content : obj.contentForEditor,
+                image : obj.image,
 
-            if (seconds < 20) {
-                return 'Vừa xong';
             }
-            else if (seconds < 60) {
-                return '1 phút trước';
-            }
-
-            const minutes = Math.round(seconds / 60);
-            if (minutes < 60) {
-                return `${minutes} phút trước`;
-            }
-
-            const isToday = today.toDateString() === date.toDateString();
-            if (isToday) {
-                return 'Hôm nay'
-            }
-
-            const yesterday = new Date(today - DAY_IN_MS);
-            const isYesterday = yesterday.toDateString() === date.toDateString();
-            if (isYesterday) {
-                return 'Hôm qua'
-            }
-
-            const daysDiff = Math.round((today - date) / (1000 * 60 * 60 * 24));
-            if (daysDiff < 30) {
-                return `${daysDiff} ngày trước`;
-            }
-
-            const monthsDiff = today.getMonth() - date.getMonth() + (12 * (today.getFullYear() - date.getFullYear()));
-            if (monthsDiff < 12) {
-                return `${monthsDiff} tháng trước`;
-            }
-
-            const yearsDiff = today.getYear() - date.getYear();
-            return `${yearsDiff} năm trước`;
+            axios.post('/admin/post/create', data)
+            toastr.success('Thêm bài viết thành công')
         },
         fetchData() {
             let obj = this
@@ -217,10 +235,6 @@ export default {
             })
         },
 
-        redirectHistory() {
-            let obj = this
-            obj.$router.push('/facebook/history/')
-        },
         handleDelete(id){
             let obj = this
             obj.loadingTable = true
