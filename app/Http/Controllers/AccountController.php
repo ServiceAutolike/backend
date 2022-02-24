@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AccountController extends Controller
 {
@@ -20,25 +21,22 @@ class AccountController extends Controller
 
     public function login(Request $request)
     {
-        $request->validate(
-            [
-                'email' => 'required',
-                'password' => "required",
-            ],
-            [
-                'email.required' => "Không để trống trường này",
-                'password.required' => "Không để trống trường này",
-            ]
-
-        );
-        if (!Auth::check()){
-            if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
-                return redirect()->route('home.dash');
-            }else {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(["status" => false, "message" => "Đăng nhập thất bại"]);
+        } else {
+            if (!Auth::check()){
+                if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
+                    return response()->json(["status" => true]);
+                }else {
+                    return response()->json(["status" => false, "message" => "Tài khoản hoặc mật khẩu không chính xác. Vui lòng thử lại!"]);
+                }
+            }else{
                 return redirect()->back();
             }
-        }else{
-            return redirect()->back();
         }
 
     }

@@ -9,6 +9,8 @@ import CategoryFacebookAddMemGroup from './components/pages/facebook/FacebookAdd
 
 /// Acount
 import CategoryDashboard from './components/pages/acounts/Dashboard'
+import LoginAccount from './components/pages/acounts/Signin'
+import RegisterAccount from './components/pages/acounts/Signup'
 
 // Recharge
 import CategoryRechargeBank from './components/pages/recharge/Bank'
@@ -35,7 +37,8 @@ export const routes = [
     { path: '/recharge/history', name: 'RechargeHistory', component: CategoryRechargeHistory},
     // Account Page
     { path: '/home', name: 'Dashboard', component: CategoryDashboard},
-
+    { path: '/account/login', name: 'LoginAccount', component: LoginAccount},
+    { path: '/account/register', name: 'RegisterAccount', component: RegisterAccount},
     /// Facebook
     { path: '/facebook/history/:type', name: 'Transaction History',params: { type: "like"}, component: CategoryTransactionHistory},
     { path: '/facebook/history/:type', name: 'Transaction History Sub',params: { type: "sub"}, component: CategoryTransactionHistory},

@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'account'], function (){
     Route::get('/login', 'AccountController@formLogin')->name('account.login');
-    Route::post('/login', 'AccountController@login');
+    Route::post('/loginData', 'AccountController@login');
     Route::get('/register', 'AccountController@formRegister')->name('account.register');
     Route::post('/register', 'AccountController@register');
 
