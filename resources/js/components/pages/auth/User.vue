@@ -74,7 +74,7 @@
 
                             <tr v-for="data in dataAll" :key="data.id">
                                 <td>
-                                    <div class="symbol symbol-50px"><img :src="'/storage/'+data.image" alt=""></div>
+                                    <div class="symbol symbol-50px"><img :src="'/'+data.image" alt=""></div>
                                 </td>
                                 <td>
                                     <span >{{data.name}}</span>
