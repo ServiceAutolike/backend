@@ -66,6 +66,14 @@ export default {
             Loading: false
         }
     },
+    watch: {
+        email(value){
+            this.checkEmail = true
+        },
+        password(value){
+            this.checkPass = true
+        }
+    },
     methods: {
         LoginAccount(){
             const obj = this
