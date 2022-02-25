@@ -1,5 +1,5 @@
 <template>
-    <div class="w-lg-500px bg-body rounded shadow-sm p-10 p-lg-15 mx-auto" v-loading="loading">
+    <div class="w-lg-500px bg-body rounded shadow-sm p-10 p-lg-15 mx-auto">
         <form class="form w-100" novalidate="novalidate"  action="#">
             <!--begin::Heading-->
             <div class="text-center mb-10">
@@ -93,13 +93,13 @@ export default {
                         setTimeout(() => {
                             obj.Loading = false;
                             toastr.error(res.data.message)
-                        }, 1000);
+                        }, 500);
                     }else {
                         obj.Loading = true;
                         setTimeout(() => {
                             obj.Loading = false;
                             window.location.href = '/home'
-                        }, 1000);
+                        }, 500);
                     }
                 })
             }
