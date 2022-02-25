@@ -126,7 +126,7 @@
                         <div class="image-input image-input-outline" data-kt-image-input="true" >
                             <!--begin::Preview existing avatar-->
                             <div class="image-input-wrapper w-125px h-125px" >
-                                <img width="100%" :src="'/storage/'+image" alt="">
+                                <img width="100%" :src="'/'+image" alt="">
                             </div>
                             <!--end::Preview existing avatar-->
 
