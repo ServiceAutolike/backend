@@ -49,52 +49,57 @@ class AccountController extends Controller
             return redirect()->back();
         }
     }
-
+    public function registerUserName(Request $request){
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|unique:users',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(false);
+        } else{
+            return response()->json(true);
+        }
+    }
+    public function registerEmail(Request $request){
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|unique:users',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(false);
+        } else{
+            return response()->json(true);
+        }
+    }
+    public function registerPhone(Request $request){
+        $validator = Validator::make($request->all(), [
+            'phone' => 'required|unique:users',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(false);
+        } else{
+            return response()->json(true);
+        }
+    }
     public function register(Request $request)
     {
-        $request->validate(
-            [
-                'name' => 'required|alpha|max:20|min:6',
-                'email' => [
-                    "required",
-                    "email",
-                    "unique:users",
-                    function($attribute, $value, $fail){
-                        if (!strpos($value, "@gmail.com")){
-                            $fail("$attribute Không đúng định dạng");
-                        }
-                    }
-                ],
-                'password' => "required|min:6",
-                'phone' => "required|regex:/(0)[3,6,8,9,5]/|not_regex:/[a-z]/|min:10|max:10|unique:users",
-            ],
-            [
-                'name.required' => "Không để trống trường này",
-                'name.alpha' => "User name không được chứa kí tự đặc biệt",
-                'name.max' => "User name không được vượt quá 20 kí tự",
-                'name.min' => "User name phải ít nhất 6 kí tự",
-                'email.required' => "Không để trống trường này",
-                'email.unique' => "Email đã tồn tại",
-                'email.email' => "Email không đúng định dạng",
-                'password.required' => "Không để trống trường này",
-                'phone.required' => "Không để trống trường này",
-                'phone.regex' => "Số điện thoại Không hợp lệ",
-                'phone.min' => "Số điện thoại Không hợp lệ",
-                'phone.max' => "Số điện thoại Không hợp lệ",
-                'phone.unique' => "Số điện thoại đã tồn tại",
-
-            ]
-
-        );
-        $model = new User();
-        $model->name = $request->name;
-        $model->email = $request->email;
-        $model->phone = $request->phone;
-        $model->password = Hash::make($request->password);
-        $model->code = substr(md5(uniqid(mt_rand(), true)) , 0, 25);
-        $model->image = "uploads/default-avatar.png";
-        $model->save();
-        return redirect()->route('account.login');
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|unique:users',
+            'email' => 'required|unique:users',
+            'phone' => 'required|unique:users',
+            'password' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(false);
+        } else {
+            $model = new User();
+            $model->name = $request->name;
+            $model->email = $request->email;
+            $model->phone = $request->phone;
+            $model->password = Hash::make($request->password);
+            $model->code = substr(md5(uniqid(mt_rand(), true)) , 0, 25);
+            $model->image = "avatar/img_avatar.png";
+            $model->save();
+            return response()->json(true);
+        }
     }
 
     public function logout()

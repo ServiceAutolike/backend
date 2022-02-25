@@ -141,7 +141,7 @@ export default {
                 service : name
             }
             if (price == "" || price == 0){
-                toastr.error("Giá trị phải truyền vào lỗi, vui lòng thử lại")
+                toastr.error("Giá trị truyền vào lỗi, vui lòng thử lại")
             }else {
                 axios.post('/admin/service/update', data)
                 toastr.success("Bạn vừa cập nhật thành công " +name+ " với giá " +price+ " đồng")
