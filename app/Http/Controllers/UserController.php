@@ -50,6 +50,7 @@ class UserController extends Controller
     {
         $title = "Cập nhật tài khoản";
         $data = User::find($id);
+        $data->level_text = config('common.level')[$data->level];
         return response()->json(['data' => $data, 'title' => $title]);
     }
 
