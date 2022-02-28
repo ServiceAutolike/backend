@@ -43,19 +43,19 @@
                                         </span>
                                             <!--end::Svg Icon-->
                                         </a>
-                                        <a href="#" class="btn btn-sm btn-light-success fw-bolder ms-2 fs-8 py-1 px-3" data-bs-toggle="modal" data-bs-target="#kt_modal_upgrade_plan">{{level}}</a>
+                                        <a href="#" class="btn btn-sm btn-light-success fw-bolder ms-2 fs-8 py-1 px-3" data-bs-toggle="modal" data-bs-target="#kt_modal_upgrade_plan">{{levelText}}</a>
                                     </div>
                                     <!--end::Name-->
                                     <!--begin::Info-->
                                     <div class="d-flex flex-wrap fw-bold fs-6 mb-4 pe-2">
                                         <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
                                             <!--begin::Svg Icon | path: icons/duotune/general/gen018.svg-->
-                                            <span class="svg-icon svg-icon-4 me-1">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                <path opacity="0.3" d="M18.0624 15.3453L13.1624 20.7453C12.5624 21.4453 11.5624 21.4453 10.9624 20.7453L6.06242 15.3453C4.56242 13.6453 3.76242 11.4453 4.06242 8.94534C4.56242 5.34534 7.46242 2.44534 11.0624 2.04534C15.8624 1.54534 19.9624 5.24534 19.9624 9.94534C20.0624 12.0453 19.2624 13.9453 18.0624 15.3453Z" fill="black" />
-                                                <path d="M12.0624 13.0453C13.7193 13.0453 15.0624 11.7022 15.0624 10.0453C15.0624 8.38849 13.7193 7.04535 12.0624 7.04535C10.4056 7.04535 9.06241 8.38849 9.06241 10.0453C9.06241 11.7022 10.4056 13.0453 12.0624 13.0453Z" fill="black" />
-                                            </svg>
-                                        </span>
+                                            <span class="svg-icon svg-icon-muted me-1">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <path d="M5 20H19V21C19 21.6 18.6 22 18 22H6C5.4 22 5 21.6 5 21V20ZM19 3C19 2.4 18.6 2 18 2H6C5.4 2 5 2.4 5 3V4H19V3Z" fill="black"/>
+                                                    <path opacity="0.3" d="M19 4H5V20H19V4Z" fill="black"/>
+                                                </svg>
+                                            </span>
                                             <!--end::Svg Icon-->
                                             {{ phone }}
                                         </a>
@@ -304,9 +304,10 @@
 export default {
     data() {
         return {
-            activeClass: 'recharge',
+            activeClass: 'change',
             inputPrice : '',
             level : '1',
+            levelText : '',
             name : '',
             email : '',
             image : '',
@@ -388,6 +389,7 @@ export default {
                 this.phone = res.data.data.phone
                 this.image = res.data.data.image
                 this.level = res.data.data.level
+                this.levelText = res.data.data.level_text
             })
         },
 
