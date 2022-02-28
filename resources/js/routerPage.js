@@ -17,7 +17,7 @@ import CategoryRechargeBank from './components/pages/recharge/Bank'
 import CategoryRechargeMomo from './components/pages/recharge/Momo'
 import CategoryRechargeCard from './components/pages/recharge/Card'
 import CategoryRechargeHistory from './components/pages/recharge/History'
-import FacebookAddMemGroup from "./components/pages/facebook/FacebookAddMemGroup";
+import FacebookAddMemGroup from "./components/pages/facebook/FacebookAddMemGroup"
 
 
 //admin
@@ -28,6 +28,8 @@ import SupportApp from './components/pages/app/Support'
 import Chat from './components/pages/auth/Chat'
 import UserAuth from './components/pages/auth/User'
 import UserChangeAuth from './components/pages/auth/ChangeUser'
+import RechargeUser from './components/pages/auth/Recharge'
+
 
 export const routes = [
     // Recharge
@@ -57,5 +59,6 @@ export const routes = [
     { path: '/support/chat/:code', name: 'Chat', component: Chat},
     { path: '/admin/user', name: 'User', component: UserAuth},
     { path: '/admin/user/change/:id', name: 'ChangeUser', component: UserChangeAuth},
+    { path: '/admin/user/recharge/:id', name: 'ChangeUser', component: RechargeUser},
 
 ];

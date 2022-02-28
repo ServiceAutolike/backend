@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Recharge;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -88,5 +89,41 @@ class UserController extends Controller
         auth()->logout();
         Auth::loginUsingId($request->id);
         return response()->json(true);
+    }
+
+    public function recharge()
+    {
+        return view('page.auth.user.recharge');
+    }
+
+    public function dataRecharge(Request $request)
+    {
+        $fee = 0;
+        if ($request->type == 'card'){
+            $fee = 30;
+        }
+        $fee_money = ($request->amount/100)*$fee;
+        $promotion = ($request->amount/100)*$request->discount;
+        $amount_end = $request->amount - $fee_money + $promotion;
+        $code = strtoupper(substr(md5(uniqid(mt_rand(), true)) , 0, 6));
+        $type_mess = config('common.payment')[$request->type];
+        $memo = "Nạp $amount_end đồng thành công từ cổng $type_mess";
+        $model = new Recharge();
+        $model->id_user = $request->id_user;
+        $model->type = $request->type;
+        $model->transaction_code = $code;
+        $model->amount = $request->amount;
+        $model->fee = $fee;
+        $model->amount_end = $amount_end;
+        $model->discount = $request->discount;
+        $model->memo = $memo;
+        $model->type_recharge = 'handword';
+        $model->save();
+        $user = User::find($request->id_user);
+        $point = $user->point;
+        $user->point = $point + $amount_end;
+        $user->save();
+
+        return response()->json(['status'=>$model->save(), 'message'=>$memo]);
     }
 }

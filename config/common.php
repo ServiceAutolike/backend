@@ -49,5 +49,10 @@ return [
         3 => "badge-info",
         4 => "badge-danger",
     ],
+    'payment' => [
+        'bank' => "tài khoản ngân hàng",
+        'momo' => "ví momo",
+        'card' => "thẻ điện thoại",
+    ],
 ]
 ?>
