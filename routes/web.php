@@ -128,6 +128,8 @@ Route::group(['middleware' => 'login'], function () {
                 Route::post('/data', 'UserController@data');
                 Route::get('/change/{id}', 'UserController@change');
                 Route::get('/dataChange/{id}', 'UserController@dataChange');
+                Route::get('/recharge/{id}', 'UserController@recharge');
+                Route::post('/dataRecharge', 'UserController@dataRecharge');
                 Route::post('/addPrice', 'UserController@addPrice');
                 Route::post('/update', 'UserController@updateData');
                 Route::post('/loginUser', 'UserController@loginUser');
